@@ -4,8 +4,8 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import CourseStackNavigator from "./CourseStackNavigator";
-import LoginScreen from "../screens/LoginScreen";
 import ProgressionScreen from "../screens/ProgressionScreen";
+import UserStackNavigator from "./UserStackNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -30,11 +30,14 @@ const RootTabNavigator = () => {
           tabBarActiveTintColor: "#00216d",
           tabBarInactiveTintColor: "gray",
           headerShown: false,
+          tabBarLabelStyle: {
+            fontSize: 12,
+          },
         })}
       >
         <Tab.Screen name="Apprendre" component={CourseStackNavigator} />
         <Tab.Screen name="Progression" component={ProgressionScreen} />
-        <Tab.Screen name="Profil" component={LoginScreen} />
+        <Tab.Screen name="Profil" component={UserStackNavigator} />
       </Tab.Navigator>
     </NavigationContainer>
   );

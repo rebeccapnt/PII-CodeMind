@@ -2,10 +2,10 @@ import { StyleSheet, View, Text, ScrollView } from "react-native";
 import React from "react";
 import { ContainerCourse } from "../components/ContainerCourse";
 
+
 const CourseScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Les enseignements disponibles </Text>
       <ScrollView>
         <ContainerCourse
           title="Débuter avec PHP"
@@ -45,7 +45,6 @@ const CourseScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#e1ecff",
     paddingHorizontal: 10,
   },
   title: {

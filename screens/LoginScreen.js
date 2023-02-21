@@ -12,7 +12,7 @@ import { Button } from "../components/Button";
 import { ButtonOutline } from "../components/ButtonOutline";
 import { useNavigation } from "@react-navigation/native";
 
-const LoginScreen = () => {
+const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -46,7 +46,6 @@ const LoginScreen = () => {
   //       })
   //       .catch((error) => alert(error.message));
   //   };
-  const navigation = useNavigation();
 
   const onLoginPress = () => {
     navigation.navigate("Apprendre");

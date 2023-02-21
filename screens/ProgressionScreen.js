@@ -4,7 +4,7 @@ import React from "react";
 const ProgressionScreen = () => {
   return (
     <View style={styles.container}>
-      <Text>ProgressionScreen</Text>
+      <Text> ProgressionScreen </Text>
     </View>
   );
 };
@@ -14,7 +14,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#e1ecff",
   },
 });
 export default ProgressionScreen;

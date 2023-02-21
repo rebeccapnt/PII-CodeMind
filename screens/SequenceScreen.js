@@ -3,8 +3,13 @@ import React from "react";
 
 const Sequence = () => {
   return (
-    <View>
-      <Text style={styles.title}>Début du cours </Text>
+    <View style={styles.container}>
+      <Text style={styles.title}> Introduction </Text>
+      <Text style={styles.content}>
+        Le PHP est un langage de programmation qui est utilisé pour créer des
+        sites web dynamiques. Cela signifie que le contenu des pages peut
+        changer en fonction de l'interaction de l'utilisateur avec le site.
+      </Text>
     </View>
   );
 };
@@ -12,7 +17,16 @@ const Sequence = () => {
 export default Sequence;
 
 const styles = StyleSheet.create({
-  title: {
-    fontSize: "18px",
+  container: {
+    flex: 1,
+    paddingHorizontal: 10,
   },
+  title: {
+    paddingTop: 30,
+    paddingBottom: 20,
+    fontWeight: "500",
+    fontSize: 20,
+    color: "#00216d",
+  },
+  content: {},
 });

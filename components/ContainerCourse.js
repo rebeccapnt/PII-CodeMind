@@ -1,6 +1,7 @@
 import { Text, TouchableOpacity, StyleSheet, View, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
+import { Button } from "../components/Button";
 
 export const ContainerCourse = ({ title, image, resume, actionStart }) => {
   const navigation = useNavigation();
@@ -20,9 +21,7 @@ export const ContainerCourse = ({ title, image, resume, actionStart }) => {
           <Text style={styles.resume}>{resume}</Text>
         </View>
         <View style={styles.buttonStart}>
-          <TouchableOpacity onPress={onStartPress}>
-            <Text style={styles.textButtonStart}>Commencer &gt;</Text>
-          </TouchableOpacity>
+          <Button text={"Commencer"} action={onStartPress} />
         </View>
       </View>
     </>
@@ -49,18 +48,18 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
     fontWeight: "700",
     textAlign: "left",
+    fontSize: "20px",
+    color:"#00216d"
   },
   resume: {
     fontWeight: "300",
   },
   buttonStart: {
-    paddingTop: 12,
+    paddingTop: 8,
     justifyContent: "flex-end",
     flexDirection: "row",
   },
-  textButtonStart: {
-    fontWeight: "700",
-  },
+
   logo: {
     width: 80,
     height: 80,

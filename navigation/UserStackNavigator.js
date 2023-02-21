@@ -1,20 +1,20 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import CourseScreen from "../screens/CourseScreen";
-import SequenceScreen from "../screens/CourseScreen";
+import AccountScreen from "../screens/AccountScreen";
+import LoginScreen from "../screens/LoginScreen";
 
 // Screen stack for home tab
 const UserStack = createNativeStackNavigator();
 
 const UserStackNavigator = () => {
   return (
-    <UserStack.Navigator initialRouteName="Apprendre">
+    <UserStack.Navigator initialRouteName="Profil">
       <UserStack.Screen
-        name="Apprendre"
-        component={CourseScreen}
-        options={{ title: "Apprendre" }}
+        name="Profil"
+        component={AccountScreen}
+        options={{ title: "Mon compte" }}
       />
-      <UserStack.Screen name="Sequence" component={SequenceScreen} />
+      <UserStack.Screen name="Login" component={LoginScreen} />
     </UserStack.Navigator>
   );
 };
