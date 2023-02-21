@@ -7,6 +7,9 @@ export const ContainerCourse = ({ title, image, resume, actionStart }) => {
   const navigation = useNavigation();
 
   const onStartPress = () => {
+    navigation.setOptions({
+      headerBackTitle: "Retour",
+    });
     navigation.navigate(actionStart);
   };
   return (
@@ -49,7 +52,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     textAlign: "left",
     fontSize: "20px",
-    color:"#00216d"
+    color: "#00216d",
   },
   resume: {
     fontWeight: "300",

@@ -1,29 +1,31 @@
 import {
-  View,
-  Text,
-  KeyboardAvoidingView,
   StyleSheet,
-  Image,
+  Text,
+  View,
+  KeyboardAvoidingView,
   TextInput,
-  TouchableOpacity,
+  Image,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Button } from "../components/Button";
-import { ButtonOutline } from "../components/ButtonOutline";
 import { useNavigation } from "@react-navigation/native";
 
-const LoginScreen = ({ navigation }) => {
+const SignInScreen = ({ navigation }) => {
+  const [nickname, setNickname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  
-  const onLoginPress = () => {
-    navigation.navigate("Apprendre");
-  };
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <Image style={styles.logo} source={require("../assets/logo.png")} />
+
       <View style={styles.inputContainer}>
+        <TextInput
+          placeholder="Surnom"
+          value={nickname}
+          onChangeText={(text) => setNickname(text)}
+          style={styles.input}
+        />
         <TextInput
           placeholder="Email"
           value={email}
@@ -37,14 +39,20 @@ const LoginScreen = ({ navigation }) => {
           style={styles.input}
           secureTextEntry
         />
+        <TextInput
+          placeholder="Saisir à nouveau le mot de passe"
+          value={password}
+          onChangeText={(text) => setPassword(text)}
+          style={styles.input}
+          secureTextEntry
+        />
       </View>
-      <Button action={onLoginPress} text="Se connecter" />
-      <ButtonOutline action={() => {}} text="Créer mon compte" />
+      <Button action={() => {}} text="Créer mon compte" />
     </KeyboardAvoidingView>
   );
 };
 
-export default LoginScreen;
+export default SignInScreen;
 
 const styles = StyleSheet.create({
   container: {

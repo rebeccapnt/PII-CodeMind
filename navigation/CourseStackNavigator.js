@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import CourseScreen from "../screens/CourseScreen";
 import SequenceScreen from "../screens/SequenceScreen";
 
+
 // Screen stack for home tab
 const CourseStack = createNativeStackNavigator();
 

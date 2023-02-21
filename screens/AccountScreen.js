@@ -7,10 +7,14 @@ const AccountScreen = ({ navigation }) => {
   const onLoginPress = () => {
     navigation.navigate("Login");
   };
+  const onSignInPress = () => {
+    navigation.navigate("SignIn");
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.title}> Mon compte </Text>
       <Button text="Se connecter" action={onLoginPress} />
+      <Button text="Créer son compte" action={onSignInPress} />
     </View>
   );
 };
