@@ -1,6 +1,5 @@
 import {
   StyleSheet,
-  Text,
   View,
   KeyboardAvoidingView,
   TextInput,
@@ -9,8 +8,26 @@ import {
 import React, { useEffect, useState } from "react";
 import { Button } from "../components/Button";
 import { useNavigation } from "@react-navigation/native";
+import { db } from "../firebase";
+import { ref, set, update, onValue, remove } from "firebase/database";
 
 const SignInScreen = ({ navigation }) => {
+  const createUser = () => {
+    set(ref(db, "users/" + nickname), {
+      nickname: nickname,
+      email: email,
+      password: password,
+    })
+      .then(() => {
+        // Data saved successfully!
+        alert("data updated!");
+      })
+      .catch((error) => {
+        // The write failed...
+        alert(error);
+      });
+  };
+
   const [nickname, setNickname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,31 +40,31 @@ const SignInScreen = ({ navigation }) => {
         <TextInput
           placeholder="Surnom"
           value={nickname}
-          onChangeText={(text) => setNickname(text)}
+          onChangeText={(nickname) => setNickname(nickname)}
           style={styles.input}
         />
         <TextInput
           placeholder="Email"
           value={email}
-          onChangeText={(text) => setEmail(text)}
+          onChangeText={(email) => setEmail(email)}
           style={styles.input}
         />
         <TextInput
           placeholder="Mot de passe"
           value={password}
-          onChangeText={(text) => setPassword(text)}
+          onChangeText={(password) => setPassword(password)}
           style={styles.input}
           secureTextEntry
         />
         <TextInput
           placeholder="Saisir à nouveau le mot de passe"
           value={password}
-          onChangeText={(text) => setPassword(text)}
+          onChangeText={(password) => setPassword(password)}
           style={styles.input}
           secureTextEntry
         />
       </View>
-      <Button action={() => {}} text="Créer mon compte" />
+      <Button action={createUser} text="Créer mon compte" />
     </KeyboardAvoidingView>
   );
 };
