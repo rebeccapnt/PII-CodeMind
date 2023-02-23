@@ -2,7 +2,6 @@ import { StyleSheet, View, Text, ScrollView } from "react-native";
 import React from "react";
 import { ContainerCourse } from "../components/ContainerCourse";
 
-
 const CourseScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>

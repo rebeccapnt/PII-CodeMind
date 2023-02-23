@@ -8,13 +8,12 @@ const ProgressStack = createNativeStackNavigator();
 
 const ProgressStackNavigator = () => {
   return (
-    <ProgressStack.Navigator initialRouteName="Apprendre">
+    <ProgressStack.Navigator initialRouteName="Progress">
       <ProgressStack.Screen
-        name="Apprendre"
-        component={CourseScreen}
-        options={{ title: "Apprendre" }}
+        name="Progression"
+        component={ProgressionScreen}
+        options={{ title: "Ma progression" }}
       />
-      <ProgressStack.Screen name="Sequence" component={SequenceScreen} />
     </ProgressStack.Navigator>
   );
 };

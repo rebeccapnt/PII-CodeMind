@@ -20,10 +20,10 @@ const SignInScreen = ({ navigation }) => {
     })
       .then(() => {
         // Data saved successfully!
-        alert("data updated!");
+        console.log("Compte crée avec succès !");
+        //TODO : se connecter automatiquement au compte
       })
       .catch((error) => {
-        // The write failed...
         alert(error);
       });
   };
@@ -76,7 +76,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#e1ecff",
   },
   logo: {
     width: 150,

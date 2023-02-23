@@ -6,6 +6,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import CourseStackNavigator from "./CourseStackNavigator";
 import ProgressionScreen from "../screens/ProgressionScreen";
 import UserStackNavigator from "./UserStackNavigator";
+import HomeStackNavigator from "./HomeStackNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -23,6 +24,8 @@ const RootTabNavigator = () => {
               iconName = focused ? "bar-chart" : "bar-chart-outline";
             } else if (route.name === "Profil") {
               iconName = focused ? "person" : "person-outline";
+            } else if (route.name === "Accueil") {
+              iconName = focused ? "home" : "home-outline";
             }
 
             return <Ionicons name={iconName} size={size} color={color} />;
@@ -35,6 +38,7 @@ const RootTabNavigator = () => {
           },
         })}
       >
+        <Tab.Screen name="Accueil" component={HomeStackNavigator} />
         <Tab.Screen name="Apprendre" component={CourseStackNavigator} />
         <Tab.Screen name="Progression" component={ProgressionScreen} />
         <Tab.Screen name="Profil" component={UserStackNavigator} />

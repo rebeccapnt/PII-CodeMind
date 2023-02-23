@@ -11,7 +11,7 @@ const UserStackNavigator = () => {
   return (
     <UserStack.Navigator initialRouteName="Profil">
       <UserStack.Screen
-        name="Profil"
+        name="Compte"
         component={AccountScreen}
         options={{ title: "Mon compte" }}
       />

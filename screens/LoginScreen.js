@@ -15,14 +15,17 @@ import { useNavigation } from "@react-navigation/native";
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  
+
   const onLoginPress = () => {
     navigation.navigate("Apprendre");
   };
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
-      <Image style={styles.logo} source={require("../assets/logo.png")} />
+      <Image
+        style={styles.logo}
+        source={require("../assets/romy/romysmile.png")}
+      />
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Email"
@@ -51,11 +54,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#e1ecff",
   },
   logo: {
-    width: 150,
-    height: 150,
+    width: 250,
+    height: 250,
     marginBottom: 40,
   },
   inputContainer: {
