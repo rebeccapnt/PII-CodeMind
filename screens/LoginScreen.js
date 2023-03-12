@@ -10,7 +10,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { Button } from "../components/Button";
 import { ButtonOutline } from "../components/ButtonOutline";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -19,8 +19,10 @@ const LoginScreen = ({ navigation }) => {
 
   const OnHandleLogin = () => {
     if (email !== "" && password !== "") {
-      signInWithEmailAndPassword(email, password)
-        .then(() => {
+      const auth = getAuth();
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
           navigation.navigate("Accueil");
         })
         .catch((error) => {

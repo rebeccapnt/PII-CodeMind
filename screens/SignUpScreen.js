@@ -24,14 +24,15 @@ const SignUpScreen = ({ navigation }) => {
           // Stockage du nom de l'utilisateur dans Firestore
           const user = userCredential.user;
           // Enregistrement des informations supplémentaires dans Firebase Realtime Database
-          const timestamp = firebase.database.ServerValue.TIMESTAMP;
-          await firebase
-            .db()
-            .ref(`users/${user.uid}`)
+          const currentDate = new Date().toISOString();
+          const userRef = firebase.db
+            .collection("users")
+            .doc(userCredential.user.uid);
+          await userRef
             .set({
-              nickname: nickname,
-              email: email,
-              createdAt: timestamp,
+              nickname,
+              email,
+              createdAt: currentDate,
             })
             .catch((error) => console.error(error));
         })
