@@ -1,9 +1,10 @@
 import { Text, TouchableOpacity, StyleSheet, View, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { Button } from "../components/Button";
+import { Button } from "./Button";
 
-export const ContainerCourse = ({ title, image, resume, actionStart }) => {
+//Changer les attributs par item
+export const CourseCard = ({ title, resume, image, actionStart }) => {
   const navigation = useNavigation();
 
   const onStartPress = () => {
@@ -15,13 +16,13 @@ export const ContainerCourse = ({ title, image, resume, actionStart }) => {
   return (
     <>
       <View style={styles.container}>
-        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.title}> {title} </Text>
         <View style={styles.headerContainer}>
           <Image
             style={styles.logo}
             source={require("../assets/javaLogo.png")}
           />
-          <Text style={styles.resume}>{resume}</Text>
+          <Text style={styles.resume}> {resume} </Text>
         </View>
         <View style={styles.buttonStart}>
           <Button text={"Commencer"} action={onStartPress} />

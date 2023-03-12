@@ -1,22 +1,17 @@
-import React from "react";
+import * as React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AccountScreen from "../screens/AccountScreen";
 import LoginScreen from "../screens/LoginScreen";
-import SignInScreen from "../screens/SignInScreen";
+import SignUpScreen from "../screens/SignUpScreen";
 
 // Screen stack for home tab
 const UserStack = createNativeStackNavigator();
 
 const UserStackNavigator = () => {
   return (
-    <UserStack.Navigator initialRouteName="Profil">
-      <UserStack.Screen
-        name="Compte"
-        component={AccountScreen}
-        options={{ title: "Mon compte" }}
-      />
+    <UserStack.Navigator screenOptions={{ headerShown: false }}>
       <UserStack.Screen name="Login" component={LoginScreen} />
-      <UserStack.Screen name="SignIn" component={SignInScreen} />
+      <UserStack.Screen name="SignUp" component={SignUpScreen} />
     </UserStack.Navigator>
   );
 };

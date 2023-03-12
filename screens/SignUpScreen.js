@@ -4,33 +4,43 @@ import {
   KeyboardAvoidingView,
   TextInput,
   Image,
+  Alert,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button } from "../components/Button";
-import { useNavigation } from "@react-navigation/native";
-import { db } from "../firebase";
-import { ref, set, update, onValue, remove } from "firebase/database";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import firebase from "../firebaseConfig.js";
 
-const SignInScreen = ({ navigation }) => {
-  const createUser = () => {
-    set(ref(db, "users/" + nickname), {
-      nickname: nickname,
-      email: email,
-      password: password,
-    })
-      .then(() => {
-        // Data saved successfully!
-        console.log("Compte crée avec succès !");
-        //TODO : se connecter automatiquement au compte
-      })
-      .catch((error) => {
-        alert(error);
-      });
-  };
-
+const SignUpScreen = ({ navigation }) => {
   const [nickname, setNickname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const onHandleSignup = () => {
+    if (email !== "" && password !== "") {
+      const auth = getAuth();
+      createUserWithEmailAndPassword(auth, email, password)
+        .then(async (userCredential) => {
+          // Stockage du nom de l'utilisateur dans Firestore
+          const user = userCredential.user;
+          // Enregistrement des informations supplémentaires dans Firebase Realtime Database
+          const timestamp = firebase.database.ServerValue.TIMESTAMP;
+          await firebase
+            .db()
+            .ref(`users/${user.uid}`)
+            .set({
+              nickname: nickname,
+              email: email,
+              createdAt: timestamp,
+            })
+            .catch((error) => console.error(error));
+        })
+        .then(() => {
+          navigation.navigate("Accueil");
+        })
+        .catch((err) => Alert.alert("Erreur de connexion :", err.message));
+    }
+  };
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
@@ -64,12 +74,12 @@ const SignInScreen = ({ navigation }) => {
           secureTextEntry
         />
       </View>
-      <Button action={createUser} text="Créer mon compte" />
+      <Button action={onHandleSignup} text="Créer mon compte" />
     </KeyboardAvoidingView>
   );
 };
 
-export default SignInScreen;
+export default SignUpScreen;
 
 const styles = StyleSheet.create({
   container: {

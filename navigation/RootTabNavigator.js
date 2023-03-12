@@ -6,7 +6,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import CourseStackNavigator from "./CourseStackNavigator";
 import ProgressionScreen from "../screens/ProgressionScreen";
 import UserStackNavigator from "./UserStackNavigator";
-import HomeStackNavigator from "./HomeStackNavigator";
+import QuizScreen from "../screens/QuizScreen";
+import HomeScreen from "../screens/HomeScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -38,9 +39,9 @@ const RootTabNavigator = () => {
           },
         })}
       >
-        <Tab.Screen name="Accueil" component={HomeStackNavigator} />
+        <Tab.Screen name="Accueil" component={HomeScreen} />
         <Tab.Screen name="Apprendre" component={CourseStackNavigator} />
-        <Tab.Screen name="Progression" component={ProgressionScreen} />
+        <Tab.Screen name="Progression" component={QuizScreen} />
         <Tab.Screen name="Profil" component={UserStackNavigator} />
       </Tab.Navigator>
     </NavigationContainer>

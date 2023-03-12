@@ -6,28 +6,35 @@ import {
   TouchableHighlight,
   StyleSheet,
   Text,
+  ScrollView,
   View,
 } from "react-native";
+import { getAuth, signOut } from "firebase/auth";
 
 const AccountScreen = ({ navigation }) => {
   const onLoginPress = () => {
     navigation.navigate("Login");
   };
-  const onSignInPress = () => {
-    navigation.navigate("SignIn");
+  const onSignOut = () => {
+    const auth = getAuth();
+    signOut(auth)
+      .then(() => {
+        navigation.navigate("Login");
+      })
+      .catch((err) => Alert.alert("Erreur de connexion :", err.message));
   };
+
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.header}>
         <TouchableHighlight style={styles.circle}>
           <Text style={styles.nicknameInitial}> RP</Text>
         </TouchableHighlight>
-        <Text style={styles.footer}>Actif depuis le 02 janvier 2023.</Text>
+        <Text style={styles.userName}>Rebecca Pinoteau</Text>
       </View>
-
-      <Button text="Se connecter" action={onLoginPress} />
-      <Button text="Créer son compte" action={onSignInPress} />
-    </View>
+      <Button text="Modifier mes informations" action={onLoginPress} />
+      <Button text="Me déconnecter" action={onSignOut} />
+    </ScrollView>
   );
 };
 
