@@ -34,6 +34,9 @@ const LoginScreen = ({ navigation }) => {
             );
           }
         });
+    } else {
+      setErrorMessage("Veuillez remplir tous les champs");
+      return;
     }
   };
 
@@ -45,7 +48,9 @@ const LoginScreen = ({ navigation }) => {
       />
       <View style={styles.inputContainer}>
         {errorMessage ? (
-          <Text style={{ color: "red" }}>{errorMessage}</Text>
+          <Text style={{ color: "red", textAlign: "center" }}>
+            {errorMessage}
+          </Text>
         ) : null}
         <TextInput
           placeholder="Email"

@@ -5,6 +5,7 @@ import {
   TextInput,
   Image,
   Alert,
+  Text,
 } from "react-native";
 import React, { useState } from "react";
 import { Button } from "../components/Button";
@@ -15,6 +16,7 @@ const SignUpScreen = ({ navigation }) => {
   const [nickname, setNickname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const onHandleSignup = () => {
     if (email !== "" && password !== "") {
@@ -40,6 +42,9 @@ const SignUpScreen = ({ navigation }) => {
           navigation.navigate("Accueil");
         })
         .catch((err) => Alert.alert("Erreur de connexion :", err.message));
+    } else {
+      setErrorMessage("Veuillez remplir tous les champs");
+      return;
     }
   };
 
@@ -48,6 +53,11 @@ const SignUpScreen = ({ navigation }) => {
       <Image style={styles.logo} source={require("../assets/logo.png")} />
 
       <View style={styles.inputContainer}>
+        {errorMessage ? (
+          <Text style={{ color: "red", textAlign: "center" }}>
+            {errorMessage}
+          </Text>
+        ) : null}
         <TextInput
           placeholder="Surnom"
           value={nickname}

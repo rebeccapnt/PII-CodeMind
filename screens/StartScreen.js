@@ -12,10 +12,7 @@ const QuizScreen = ({ navigation }) => {
         source={require("../assets/romy/romyhappy.png")}
       />
       <Text>Es-tu prêt à démarrer le cours ? </Text>
-      <Button
-      text="Commencer"
-      action ="Sequence"
-      />
+      <Button text="Commencer" action="Sequence" />
     </View>
   );
 };
@@ -25,7 +22,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-  }
+  },
   logo: {
     width: 100,
     height: 100,
