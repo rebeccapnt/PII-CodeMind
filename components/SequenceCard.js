@@ -1,7 +1,6 @@
 import { Text, TouchableOpacity, StyleSheet, View, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { Button } from "./Button";
 
 //Changer les attributs par item
 export const SequenceCard = ({ title, actionStart }) => {
@@ -17,7 +16,9 @@ export const SequenceCard = ({ title, actionStart }) => {
     <View style={styles.container}>
       <Text style={styles.title}> {title} </Text>
       <View style={styles.buttonStart}>
-        <Button text={"Voir"} action={onStartPress} />
+        <TouchableOpacity action={onStartPress}>
+          <Text>Voir</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

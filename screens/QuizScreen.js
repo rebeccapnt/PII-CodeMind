@@ -3,7 +3,7 @@ import React from "react";
 import ChoiceAnswer from "../components/ChoiceAnswer";
 import Question from "../components/Question";
 
-const QuizScreen = () => {
+const QuizScreen = ({ navigation }) => {
   return (
     <ImageBackground
       source={require("../assets/quiz-bg.png")}

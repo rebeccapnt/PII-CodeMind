@@ -3,8 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Button } from "./Button";
 
-//Changer les attributs par item
-export const CourseCard = ({ title, resume, image, actionStart }) => {
+export const CourseCard = ({ item, actionStart }) => {
   const navigation = useNavigation();
 
   const onStartPress = () => {
@@ -16,16 +15,16 @@ export const CourseCard = ({ title, resume, image, actionStart }) => {
   return (
     <>
       <View style={styles.container}>
-        <Text style={styles.title}> {title} </Text>
+        <Text style={styles.title}> {item.name} </Text>
         <View style={styles.headerContainer}>
-          <Image
-            style={styles.logo}
-            source={require("../assets/CourseIcon/javaLogo.png")}
-          />
-          <Text style={styles.resume}> {resume} </Text>
+          <Image style={styles.logo} source={item.image} />
+          <Text style={styles.resume} numberOfLines={3}>
+            {item.resume}
+          </Text>
         </View>
         <View style={styles.buttonStart}>
-          <Text style={styles.footer}> 3 chapitres</Text>
+          <Text style={styles.footer}> {item.nbReadings} lectures</Text>
+          <Text style={styles.footer}> {item.nbSequences} chapitres</Text>
           <Button text={"Voir"} action={onStartPress} />
         </View>
       </View>

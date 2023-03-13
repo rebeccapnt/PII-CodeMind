@@ -1,5 +1,6 @@
 import { StyleSheet, View, Text, ImageBackground } from "react-native";
 import React from "react";
+import Button from "../components/Button";
 
 const ContentScreen = ({ navigation }) => {
   return (

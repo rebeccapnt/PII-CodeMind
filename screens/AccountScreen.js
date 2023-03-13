@@ -23,6 +23,10 @@ const AccountScreen = ({ navigation }) => {
           </TouchableHighlight>
           <Text style={styles.userName}>Rebecca Pinoteau</Text>
         </View>
+        <View style={styles.cardResume}></View>
+        <View>
+          <Text style={styles.title}>Cours commencé(s)</Text>
+        </View>
       </ScrollView>
     </ImageBackground>
   );
@@ -69,6 +73,14 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: "#00216d",
     paddingTop: 20,
+  },
+  cardResume: {
+    width: "100%",
+    backgroundColor: "white",
+    paddingVertical: 20,
+    paddingHorizontal: 10,
+    marginTop: 10,
+    borderRadius: 8,
   },
 });
 export default AccountScreen;

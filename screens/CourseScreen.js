@@ -4,12 +4,31 @@ import {
   Text,
   ScrollView,
   ImageBackground,
+  FlatList,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { CourseCard } from "../components/CourseCard";
+import { Card } from "../components/Card";
 import { Input } from "../components/Input";
+import firebase from "../firebaseConfig.js";
 
 const CourseScreen = ({ navigation }) => {
+  const [courses, setCourses] = useState([]);
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      const coursesCollection = firebase.db.collection("courses");
+      const snapshot = await coursesCollection.get();
+      const coursesList = [];
+      snapshot.forEach((doc) => {
+        coursesList.push(doc.data());
+      });
+      setCourses(coursesList);
+    };
+
+    fetchCourses();
+  }, []);
+
   return (
     <ImageBackground
       source={require("../assets/home.png")}
@@ -21,14 +40,13 @@ const CourseScreen = ({ navigation }) => {
         Trouver les cours que vous souhaitez à l'aide de la recherche.
       </Text>
       <Input placeholder="Rechercher un cours..." />
-      <ScrollView>
-        <CourseCard
-          title="Débuter avec PHP"
-          image="../assets/CourseIcon/phpLogo.png"
-          resume="Apprendre les bases de PHP. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie "
-          actionStart="Sequence"
-        />
-      </ScrollView>
+      <FlatList
+        data={courses}
+        keyExtractor={(item) => item.courseId}
+        renderItem={({ item }) => (
+          <Card item={item} actionStart="Sequence" />
+        )}
+      />
     </ImageBackground>
   );
 };
