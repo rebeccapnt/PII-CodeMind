@@ -1,20 +1,19 @@
-import { StyleSheet, View, Text, Image } from "react-native";
+import { StyleSheet, View, Text, Image, ImageBackground } from "react-native";
 import React from "react";
 import ChoiceAnswer from "../components/ChoiceAnswer";
 import Question from "../components/Question";
-import { LinearGradient } from "expo-linear-gradient";
 
 const QuizScreen = () => {
   return (
-    <View style={styles.container}>
-      <LinearGradient
-        colors={["rgba(245, 116, 39, 0.8)", "white"]}
-        style={styles.background}
-      />
+    <ImageBackground
+      source={require("../assets/quiz-bg.png")}
+      resizeMode="cover"
+      style={styles.container}
+    >
       <View style={styles.counterPoints}>
         <Image
           style={styles.logo}
-          source={require("../assets/romy/romyhappy.png")}
+          source={require("../assets/romy.png")}
         />
       </View>
       <Question content="Quel est le mot clé utilisé pour commencer une boucle for en PHP ?" />
@@ -22,7 +21,7 @@ const QuizScreen = () => {
       <ChoiceAnswer answer="foreach" />
       <ChoiceAnswer answer="while" />
       <ChoiceAnswer answer="do while" />
-    </View>
+    </ImageBackground>
   );
 };
 

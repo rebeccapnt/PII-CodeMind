@@ -1,10 +1,26 @@
-import { StyleSheet, View, Text, ScrollView } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  ScrollView,
+  ImageBackground,
+} from "react-native";
 import React from "react";
 import { CourseCard } from "../components/CourseCard";
+import { Input } from "../components/Input";
 
 const CourseScreen = ({ navigation }) => {
   return (
-    <View style={styles.container}>
+    <ImageBackground
+      source={require("../assets/home.png")}
+      resizeMode="cover"
+      style={styles.container}
+    >
+      <Text style={styles.title}>Rechercher des cours</Text>
+      <Text style={styles.titleBottom}>
+        Trouver les cours que vous souhaitez à l'aide de la recherche.
+      </Text>
+      <Input placeholder="Rechercher un cours..." />
       <ScrollView>
         <CourseCard
           title="Débuter avec PHP"
@@ -37,20 +53,23 @@ const CourseScreen = ({ navigation }) => {
           actionStart="Sequence"
         />
       </ScrollView>
-    </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 10,
+    paddingHorizontal: 15,
   },
   title: {
-    paddingTop: 30,
-    paddingBottom: 20,
+    paddingVertical: 10,
     fontWeight: "500",
     fontSize: 20,
+    color: "#00216d",
+  },
+  titleBottom: {
+    fontSize: 14,
     color: "#00216d",
   },
 });

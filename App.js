@@ -1,7 +1,6 @@
 import React, { useState, createContext, useContext, useEffect } from "react";
 import RootTabNavigator from "./navigation/RootTabNavigator";
 import { NavigationContainer } from "@react-navigation/native";
-import HomeStackNavigator from "./navigation/HomeStackNavigator";
 import AuthentificationStackNavigator from "./navigation/AuthentificationStackNavigator";
 import { onAuthStateChanged } from "firebase/auth";
 import { View, ActivityIndicator } from "react-native";
@@ -31,7 +30,6 @@ const RootNavigator = () => {
         setIsLoading(false);
       }
     );
-    // unsubscribe auth listener on unmount
     return unsubscribeAuth;
   }, [user]);
   if (isLoading) {
@@ -43,7 +41,7 @@ const RootNavigator = () => {
   }
   return (
     <NavigationContainer>
-      {user ? <HomeStackNavigator /> : <AuthentificationStackNavigator />}
+      {user ? <RootTabNavigator /> : <AuthentificationStackNavigator />}
     </NavigationContainer>
   );
 };

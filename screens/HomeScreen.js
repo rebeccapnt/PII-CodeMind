@@ -1,4 +1,11 @@
-import { StyleSheet, View, Text, Image, ScrollView } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  ScrollView,
+  ImageBackground,
+} from "react-native";
 import React, { useState, useEffect } from "react";
 import { FlatList } from "react-native-gesture-handler";
 import { CourseCard } from "../components/CourseCard";
@@ -18,34 +25,35 @@ const HomeScreen = ({ navigation }) => {
   if (!user) {
     return <Text>Vous n'êtes pas connecté</Text>;
   }
-  const onSignOut = () => {
-    const auth = getAuth();
-    signOut(auth)
-      .then(() => {
-        navigation.navigate("Login");
-      })
-      .catch((err) => Alert.alert("Erreur de connexion :", err.message));
-  };
 
   return (
-    <ScrollView style={styles.container}>
-      <Text>Coucou {user.email}</Text>
-      <Button text="Me déconnecter" action={onSignOut} />
+    <ImageBackground
+      source={require("../assets/home.png")}
+      resizeMode="cover"
+      style={styles.container}
+    >
+      <ScrollView>
+        {/* <Text>Coucou {user.email}</Text> */}
+        <View style={styles.header}>
+          <Image style={styles.logo} source={require("../assets/romy.png")} />
+          <Text style={styles.headerTitle}>Bienvenue sur CodeMind !</Text>
+          <Text style={styles.headerContext}>
+            Je m'appelle Sophie et je t'aiderai tout au long de ton
+            apprentissage.
+          </Text>
 
-      <View style={styles.header}>
-        <Image
-          style={styles.logo}
-          source={require("../assets/romy/romyhappy.png")}
-        />
-        <Text style={styles.headerTitle}>Bienvenue sur CodeMind</Text>
-      </View>
-      {/* <FlatList
+          <View style={styles.bestCourses}>
+            <Text style={styles.bestTitle}>Les formations populaires</Text>
+          </View>
+        </View>
+        {/* <FlatList
         data={courses}
         renderItem={({ item }) => <CourseCard item={item} onPress={() => {}} />}
         keyExtractor={(item) => item.id}
         showsVerticalScrollIndicator={false}
       /> */}
-    </ScrollView>
+      </ScrollView>
+    </ImageBackground>
   );
 };
 
@@ -55,10 +63,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   header: {
-    marginVertical: 10,
     justifyContent: "center",
     width: "100%",
-    backgroundColor: "white",
+    // backgroundColor: "white",
     alignItems: "center",
     borderRadius: 50,
   },
@@ -68,9 +75,20 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   headerTitle: {
-    fontSize: 18,
+    textAlign: "center",
+    fontSize: 22,
     fontWeight: "700",
     paddingBottom: 10,
+  },
+  headerContext: {
+    fontSize: 14,
+    paddingBottom: 10,
+  },
+  bestCourses: {},
+  bestTitle: {
+    alignItems: "left",
+    fontSize: 18,
+    fontWeight: "600",
   },
 });
 export default HomeScreen;

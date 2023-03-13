@@ -6,10 +6,11 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
+  ImageBackground,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Button } from "../components/Button";
-import { ButtonOutline } from "../components/ButtonOutline";
+import { Input } from "../components/Input";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 const LoginScreen = ({ navigation }) => {
@@ -35,52 +36,62 @@ const LoginScreen = ({ navigation }) => {
           }
         });
     } else {
-      setErrorMessage("Veuillez remplir tous les champs");
+      setErrorMessage("Attention ! Veuillez remplir tous les champs.");
       return;
     }
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="padding">
-      <Image
-        style={styles.logo}
-        source={require("../assets/romy/romysmile.png")}
-      />
-      <View style={styles.inputContainer}>
-        {errorMessage ? (
-          <Text style={{ color: "red", textAlign: "center" }}>
-            {errorMessage}
+    <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
+      <ImageBackground
+        source={require("../assets/authentification.png")}
+        resizeMode="cover"
+        style={styles.container}
+      >
+        <Image style={styles.logo} source={require("../assets/icon-512.png")} />
+        <View style={styles.inputContainer}>
+          <TextInput
+            placeholder="Email"
+            value={email}
+            autoCapitalize="none"
+            keyboardType="email-adress"
+            textContentType="emailAdress"
+            onChangeText={(text) => setEmail(text)}
+            style={styles.input}
+          />
+          <TextInput
+            placeholder="Mot de passe"
+            autoCapitalize="none"
+            autoCorrect={false}
+            secureTextEntry={true}
+            value={password}
+            textContentType="password"
+            onChangeText={(text) => setPassword(text)}
+            style={styles.input}
+          />
+          {errorMessage ? (
+            <Text
+              style={{
+                color: "red",
+                textAlign: "center",
+                fontSize: 16,
+                paddingTop: 10,
+              }}
+            >
+              {errorMessage}
+            </Text>
+          ) : null}
+        </View>
+        <Button action={OnHandleLogin} text="Se connecter" />
+        <View style={styles.signUp}>
+          <Text style={{ color: "dimgrey", fontWeight: "600", fontSize: 14 }}>
+            Pas encore de compte ?{" "}
           </Text>
-        ) : null}
-        <TextInput
-          placeholder="Email"
-          value={email}
-          autoCapitalize="none"
-          keyboardType="email-adress"
-          textContentType="emailAdress"
-          onChangeText={(text) => setEmail(text)}
-          style={styles.input}
-        />
-        <TextInput
-          placeholder="Mot de passe"
-          autoCapitalize="none"
-          autoCorrect={false}
-          secureTextEntry={true}
-          value={password}
-          textContentType="password"
-          onChangeText={(text) => setPassword(text)}
-          style={styles.input}
-        />
-      </View>
-      <Button action={OnHandleLogin} text="Se connecter" />
-      <View style={styles.signUp}>
-        <Text style={{ color: "gray", fontWeight: "600", fontSize: 14 }}>
-          Pas encore de compte ?{" "}
-        </Text>
-        <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
-          <Text style={styles.subscribe}>S'inscrire</Text>
-        </TouchableOpacity>
-      </View>
+          <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
+            <Text style={styles.signUpButton}>S'inscrire</Text>
+          </TouchableOpacity>
+        </View>
+      </ImageBackground>
     </KeyboardAvoidingView>
   );
 };
@@ -94,16 +105,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   logo: {
-    width: 250,
-    height: 250,
-    marginBottom: 40,
+    width: 220,
+    height: 220,
+    marginBottom: 60,
   },
   inputContainer: {
     width: "80%",
     fontSize: 16,
   },
   input: {
-    backgroundColor: "white",
+    backgroundColor: "#FAFCFA",
     paddingHorizontal: 20,
     paddingVertical: 15,
     borderRadius: 8,
@@ -115,5 +126,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     alignSelf: "center",
   },
-  subscribe: { color: "#00216d", fontWeight: "600", fontSize: 16 },
+  signUpButton: { color: "#00216d", fontWeight: "600", fontSize: 15 },
 });

@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "../components/Button";
-import { useNavigation } from "@react-navigation/native";
+import { ButtonOutline } from "../components/ButtonOutline";
+
 import {
   Dimensions,
   TouchableHighlight,
@@ -8,13 +9,13 @@ import {
   Text,
   ScrollView,
   View,
+  ImageBackground,
 } from "react-native";
 import { getAuth, signOut } from "firebase/auth";
 
 const AccountScreen = ({ navigation }) => {
-  const onLoginPress = () => {
-    navigation.navigate("Login");
-  };
+
+  const onUpdatePress = () => {};
   const onSignOut = () => {
     const auth = getAuth();
     signOut(auth)
@@ -25,16 +26,22 @@ const AccountScreen = ({ navigation }) => {
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.header}>
-        <TouchableHighlight style={styles.circle}>
-          <Text style={styles.nicknameInitial}> RP</Text>
-        </TouchableHighlight>
-        <Text style={styles.userName}>Rebecca Pinoteau</Text>
-      </View>
-      <Button text="Modifier mes informations" action={onLoginPress} />
-      <Button text="Me déconnecter" action={onSignOut} />
-    </ScrollView>
+    <ImageBackground
+      source={require("../assets/authentification.png")}
+      resizeMode="cover"
+      style={styles.container}
+    >
+      <ScrollView style={styles.container}>
+        <View style={styles.header}>
+          <TouchableHighlight style={styles.circle}>
+            <Text style={styles.nicknameInitial}> RP</Text>
+          </TouchableHighlight>
+          <Text style={styles.userName}>Rebecca Pinoteau</Text>
+        </View>
+        <Button text="Modifier mes informations" action={onUpdatePress} />
+        <ButtonOutline text="Me déconnecter" action={onSignOut} />
+      </ScrollView>
+    </ImageBackground>
   );
 };
 
@@ -74,6 +81,11 @@ const styles = StyleSheet.create({
   },
   footer: {
     paddingTop: 8,
+  },
+  userName: {
+    fontSize: 20,
+    color: "#00216d",
+    paddingTop: 20,
   },
 });
 export default AccountScreen;

@@ -10,7 +10,7 @@ const CourseStackNavigator = () => {
   return (
     <CourseStack.Navigator initialRouteName="Apprendre">
       <CourseStack.Screen
-        name="Enseignements"
+        name="Apprendre"
         component={CourseScreen}
         options={{ title: "Les enseignements disponibles" }}
       />
