@@ -35,7 +35,10 @@ const HomeScreen = ({ navigation }) => {
       <ScrollView>
         {/* <Text>Coucou {user.email}</Text> */}
         <View style={styles.header}>
-          <Image style={styles.logo} source={require("../assets/romy.png")} />
+          <Image
+            style={styles.logo}
+            source={require("../assets/romy/romy.png")}
+          />
           <Text style={styles.headerTitle}>Bienvenue sur CodeMind !</Text>
           <Text style={styles.headerContext}>
             Je m'appelle Sophie et je t'aiderai tout au long de ton
@@ -44,6 +47,7 @@ const HomeScreen = ({ navigation }) => {
 
           <View style={styles.bestCourses}>
             <Text style={styles.bestTitle}>Les formations populaires</Text>
+            <Text>Voir tout</Text>
           </View>
         </View>
         {/* <FlatList

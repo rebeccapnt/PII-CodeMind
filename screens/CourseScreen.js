@@ -24,32 +24,8 @@ const CourseScreen = ({ navigation }) => {
       <ScrollView>
         <CourseCard
           title="Débuter avec PHP"
-          image="../assets/phpLogo.png"
+          image="../assets/CourseIcon/phpLogo.png"
           resume="Apprendre les bases de PHP. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie "
-          actionStart="Sequence"
-        />
-        <CourseCard
-          title="Les bases de Java"
-          image="../assets/javaLogo.png"
-          resume="Apprendre les bases de Java. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie "
-          actionStart="Sequence"
-        />
-        <CourseCard
-          title="Apprendre C#"
-          image="../assets/javaLogo.png"
-          resume="Apprendre les bases de C#. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie "
-          actionStart="Sequence"
-        />
-        <CourseCard
-          title="Python"
-          image="../assets/javaLogo.png"
-          resume="Apprendre les bases de Python. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie "
-          actionStart="Sequence"
-        />
-        <CourseCard
-          title="Test"
-          image="../assets/javaLogo.png"
-          resume="Apprendre les bases de Python. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie "
           actionStart="Sequence"
         />
       </ScrollView>

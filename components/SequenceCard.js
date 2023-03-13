@@ -4,7 +4,7 @@ import React from "react";
 import { Button } from "./Button";
 
 //Changer les attributs par item
-export const CourseCard = ({ title, resume, image, actionStart }) => {
+export const SequenceCard = ({ title, actionStart }) => {
   const navigation = useNavigation();
 
   const onStartPress = () => {
@@ -14,22 +14,12 @@ export const CourseCard = ({ title, resume, image, actionStart }) => {
     navigation.navigate(actionStart);
   };
   return (
-    <>
-      <View style={styles.container}>
-        <Text style={styles.title}> {title} </Text>
-        <View style={styles.headerContainer}>
-          <Image
-            style={styles.logo}
-            source={require("../assets/CourseIcon/javaLogo.png")}
-          />
-          <Text style={styles.resume}> {resume} </Text>
-        </View>
-        <View style={styles.buttonStart}>
-          <Text style={styles.footer}> 3 chapitres</Text>
-          <Button text={"Voir"} action={onStartPress} />
-        </View>
+    <View style={styles.container}>
+      <Text style={styles.title}> {title} </Text>
+      <View style={styles.buttonStart}>
+        <Button text={"Voir"} action={onStartPress} />
       </View>
-    </>
+    </View>
   );
 };
 
@@ -42,12 +32,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     borderRadius: 8,
   },
-  headerContainer: {
-    flex: 1,
-    alignItems: "center",
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
   title: {
     paddingLeft: 10,
     paddingBottom: 15,
@@ -56,17 +40,9 @@ const styles = StyleSheet.create({
     fontSize: "20px",
     color: "#00216d",
   },
-  resume: {
-    fontWeight: "300",
-  },
   buttonStart: {
     paddingTop: 8,
     justifyContent: "flex-end",
     flexDirection: "row",
   },
-  logo: {
-    width: 80,
-    height: 80,
-  },
-  footer: { color: "dimgrey", fontWeight: "600", fontSize: 14 },
 });
