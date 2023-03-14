@@ -1,6 +1,5 @@
 import React from "react";
 import { StyleSheet, Text, ImageBackground, FlatList } from "react-native";
-import { SequenceCard } from "../components/SequenceCard";
 
 const Sequence = ({ route, navigation }) => {
   const { sequences } = route.params;
@@ -13,13 +12,13 @@ const Sequence = ({ route, navigation }) => {
     >
       <Text style={styles.title}> Php </Text>
       {/* Ici afficher les chapitres, avec un badge/jauge si commencé à lire, terminer */}
-      <FlatList
+      {/* <FlatList
         data={sequences}
         keyExtractor={(item) => item.Id}
         renderItem={({ item }) => (
           <SequenceCard title={item.name} actionStart="Content" />
         )}
-      />
+      /> */}
       {/* <SequenceCard title="Les variables" actionStart="Content" />
       <SequenceCard title="Les boucles" actionStart="Content" /> */}
     </ImageBackground>

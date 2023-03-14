@@ -14,7 +14,11 @@ export const CourseCard = ({ item, actionStart, params }) => {
   };
 
   return (
-    <TouchableOpacity onPress={onStartPress} style={styles.card}>
+    <TouchableOpacity
+      onPress={onStartPress}
+      style={styles.card}
+      activeOpacity={0.6}
+    >
       <View style={styles.header}>
         <View style={styles.logoContainer}>
           <Image
@@ -39,9 +43,9 @@ export const CourseCard = ({ item, actionStart, params }) => {
         <View style={styles.footerBar}></View>
         <View style={styles.footerItem}>
           <Text style={styles.footerText}>
-            {item.nbReadings} <Ionicons name="glasses" size="18" />
+            {item.nbReadings} <Ionicons name="book" size="16" />
           </Text>
-          <Text style={styles.footerLabel}>Lecteurs</Text>
+          <Text style={styles.footerLabel}>Lectures</Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -101,7 +105,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#335296",
     flexDirection: "row",
     alignItems: "center",
-    padding: 5,
+    padding: 2,
     borderRadius: 4,
   },
   footerItem: {

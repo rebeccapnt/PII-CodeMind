@@ -1,9 +1,10 @@
 import React from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 export const HomeCard = ({ action, progress }) => {
   return (
-    <TouchableOpacity onPress={action} style={styles.card}>
+    <TouchableOpacity onPress={action} style={styles.card} activeOpacity={0.6}>
       <View style={styles.container}>
         <Image
           source={require("../assets/CourseIcon/javaLogo.png")}
@@ -11,10 +12,14 @@ export const HomeCard = ({ action, progress }) => {
         />
         <View style={styles.content}>
           <Text style={styles.title}>Les bases de Java</Text>
-          <Text style={styles.details}>28 lectures | 3 chapitres</Text>
+          <Text style={styles.details}>
+            28 lectures <Ionicons name="book" size="13" /> | 3 chapitres{" "}
+            <Ionicons name="library" size="15" />
+          </Text>
           <View style={styles.progressBar}>
             <View style={[styles.progress, { width: `${progress}%` }]} />
           </View>
+          <Text style={styles.progressText}> {progress}%</Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -25,7 +30,9 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    padding: 12,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+
     backgroundColor: "#fff",
     borderRadius: 8,
     shadowColor: "#000",
@@ -41,7 +48,7 @@ const styles = StyleSheet.create({
   logo: {
     width: 50,
     height: 50,
-    marginRight: 16,
+    marginRight: 12,
   },
   content: {
     flex: 1,
@@ -49,10 +56,10 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     fontWeight: "bold",
-    marginBottom: 4,
+    marginVertical: 2,
   },
   details: {
-    color: "#999",
+    color: "#335296",
     fontSize: 14,
     marginBottom: 8,
   },
@@ -61,9 +68,17 @@ const styles = StyleSheet.create({
     backgroundColor: "#ddd",
     borderRadius: 8,
     overflow: "hidden",
+    marginTop: 5,
   },
   progress: {
     height: 8,
-    backgroundColor: "#E75530",
+    backgroundColor: "#FF6600",
+  },
+  progressText: {
+    color: "#335296",
+    fontSize: 13,
+    fontWeight: "600",
+    textAlign: "right",
+    paddingTop: 5,
   },
 });
