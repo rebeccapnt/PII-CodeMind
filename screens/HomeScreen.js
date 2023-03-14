@@ -9,9 +9,8 @@ import {
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { FlatList } from "react-native-gesture-handler";
-import { CourseCard } from "../components/CourseCard";
-import { getAuth, signOut } from "firebase/auth";
-import { Button } from "../components/Button";
+import { getAuth } from "firebase/auth";
+import Ionicons from "react-native-vector-icons/Ionicons";
 import { SequenceCard } from "../components/SequenceCard";
 
 const HomeScreen = ({ navigation }) => {
@@ -44,15 +43,23 @@ const HomeScreen = ({ navigation }) => {
             apprentissage.
           </Text>
         </View>
+        <View style={styles.bestCourses}>
+          <Text style={styles.bestTitle}>Continuer mes cours</Text>
+          {/* Ici mettre formations de l'utilisateur, le voir tout ramène au profil ? */}
+          <TouchableOpacity onPress={() => navigation.navigate("Apprendre")}>
+            <Text style={styles.seeAllCourses}>Voir tout</Text>
+          </TouchableOpacity>
+        </View>
 
         <View style={styles.bestCourses}>
-          <Text style={styles.bestTitle}>Les formations populaires</Text>
+          <Text style={styles.bestTitle}>Les cours populaires</Text>
           <TouchableOpacity onPress={() => navigation.navigate("Apprendre")}>
             <Text style={styles.seeAllCourses}>Voir tout</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.contentCourses}>
           <SequenceCard title="coucou" actionStart="Apprendre" />
+          {/* Ici mettre 3 meilleurs formations ( à savoir celles avec le plus de vues mettre à la place de voir un icon ">") */}
           <SequenceCard title="coucou" actionStart="Apprendre" />
         </View>
         {/* <FlatList
@@ -69,7 +76,8 @@ const HomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 10,
+    paddingHorizontal: 15,
+    paddingTop: 10,
   },
   header: {
     justifyContent: "center",
@@ -85,6 +93,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     textAlign: "center",
+    color: "#00216d",
     fontSize: 22,
     fontWeight: "700",
     paddingBottom: 10,

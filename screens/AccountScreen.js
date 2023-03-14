@@ -26,6 +26,7 @@ const AccountScreen = ({ navigation }) => {
         <View style={styles.cardResume}></View>
         <View>
           <Text style={styles.title}>Cours commencé(s)</Text>
+          {/* Mettre ici un scrollview horizontal avec les courses commencés (attention ceux commencé et pas terminés, faire ça dans un autre scrollview) */}
         </View>
       </ScrollView>
     </ImageBackground>

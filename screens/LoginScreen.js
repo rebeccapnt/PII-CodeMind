@@ -10,7 +10,6 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Button } from "../components/Button";
-import { Input } from "../components/Input";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 const LoginScreen = ({ navigation }) => {

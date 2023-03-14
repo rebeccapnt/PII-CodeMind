@@ -14,36 +14,53 @@ export const SequenceCard = ({ title, actionStart }) => {
   };
   return (
     <View style={styles.container}>
-      <Text style={styles.title}> {title} </Text>
-      <View style={styles.buttonStart}>
-        <TouchableOpacity action={onStartPress}>
-          <Text>Voir</Text>
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity style={styles.item}>
+        <Text style={styles.nom}>Apprendre PHP</Text>
+        <Text style={styles.info}>Lecteurs : 3</Text>
+        <Text style={styles.info}>Chapitres : 12</Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
-    backgroundColor: "white",
-    paddingVertical: 20,
-    paddingHorizontal: 10,
-    marginTop: 10,
-    borderRadius: 8,
+    flex: 1,
+    paddingTop: 10,
   },
-  title: {
-    paddingLeft: 10,
-    paddingBottom: 15,
-    fontWeight: "700",
-    textAlign: "left",
-    fontSize: "20px",
-    color: "#00216d",
+  item: {
+    backgroundColor: "#fff",
+    padding: 20,
+    marginBottom: 10,
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    elevation: 2,
   },
-  buttonStart: {
-    paddingTop: 8,
-    justifyContent: "flex-end",
-    flexDirection: "row",
+  nom: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
+  info: {
+    fontSize: 14,
+    marginBottom: 3,
+  },
+  bouton: {
+    backgroundColor: "#fff",
+    padding: 15,
+    alignItems: "center",
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  texteBouton: {
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });

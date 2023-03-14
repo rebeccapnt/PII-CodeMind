@@ -6,13 +6,14 @@ import { LinearGradient } from "expo-linear-gradient";
 
 const QuizScreen = ({ navigation }) => {
   return (
+    //Ici,page détail avec description, s'affiche uniquement s'il n'a pas encore commencé le cours
     <View style={styles.container}>
       <Image
         style={styles.logo}
         source={require("../assets/romy/romyhappy.png")}
       />
       <Text>Es-tu prêt à démarrer le cours ? </Text>
-      <Button text="Commencer" action="Sequence" />
+      <Button text="Commencer >" action="Sequence" />
     </View>
   );
 };

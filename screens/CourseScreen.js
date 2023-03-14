@@ -2,18 +2,27 @@ import {
   StyleSheet,
   View,
   Text,
-  ScrollView,
   ImageBackground,
   FlatList,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { CourseCard } from "../components/CourseCard";
-import { Card } from "../components/Card";
 import { Input } from "../components/Input";
 import firebase from "../firebaseConfig.js";
 
 const CourseScreen = ({ navigation }) => {
   const [courses, setCourses] = useState([]);
+  const [sequences, setSequences] = useState([]);
+
+  // const loadCourses = async (search = "") => {
+  //   const coursesCollection = firebase.db.collection("courses");
+  //   const snapshot = await coursesCollection.get().Where("name", "==", search);
+  //   const coursesList = [];
+  //   snapshot.forEach((doc) => {
+  //     coursesList.push(doc.data());
+  //   });
+  //   setCourses(coursesList);
+  // };
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -29,6 +38,20 @@ const CourseScreen = ({ navigation }) => {
     fetchCourses();
   }, []);
 
+  useEffect(() => {
+    const fetchSequences = async () => {
+      const sequencesCollection = firebase.db.collection("sequences");
+      const snapshot = await sequencesCollection.get();
+      const sequencesList = [];
+      snapshot.forEach((doc) => {
+        sequencesList.push(doc.data());
+      });
+      setSequences(sequencesList);
+    };
+
+    fetchSequences();
+  }, []);
+
   return (
     <ImageBackground
       source={require("../assets/home.png")}
@@ -39,12 +62,16 @@ const CourseScreen = ({ navigation }) => {
       <Text style={styles.titleBottom}>
         Trouver les cours que vous souhaitez à l'aide de la recherche.
       </Text>
-      <Input placeholder="Rechercher un cours..." />
+      <Input
+        placeholder="Rechercher un cours..."
+        // onSearch={({ nativeEvent: { text } }) => loadCourses(text)}
+      />
+
       <FlatList
         data={courses}
         keyExtractor={(item) => item.courseId}
         renderItem={({ item }) => (
-          <Card item={item} actionStart="Sequence" />
+          <CourseCard item={item} actionStart="Sequence" params={sequences} />
         )}
       />
     </ImageBackground>
@@ -55,11 +82,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 15,
+    paddingTop: 10,
   },
   title: {
     paddingVertical: 10,
-    fontWeight: "500",
-    fontSize: 20,
+    fontWeight: "600",
+    fontSize: 22,
     color: "#00216d",
   },
   titleBottom: {

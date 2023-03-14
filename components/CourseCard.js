@@ -1,71 +1,124 @@
-import { Text, TouchableOpacity, StyleSheet, View, Image } from "react-native";
+import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
-import { Button } from "./Button";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 
-export const CourseCard = ({ item, actionStart }) => {
+export const CourseCard = ({ item, actionStart, params }) => {
   const navigation = useNavigation();
 
   const onStartPress = () => {
     navigation.setOptions({
       headerBackTitle: "Retour",
     });
-    navigation.navigate(actionStart);
+    navigation.navigate(actionStart, params);
   };
+
   return (
-    <>
-      <View style={styles.container}>
-        <Text style={styles.title}> {item.name} </Text>
-        <View style={styles.headerContainer}>
-          <Image style={styles.logo} source={item.image} />
-          <Text style={styles.resume} numberOfLines={3}>
+    <TouchableOpacity onPress={onStartPress} style={styles.card}>
+      <View style={styles.header}>
+        <View style={styles.logoContainer}>
+          <Image
+            source={require("../assets/CourseIcon/javaLogo.png")}
+            style={styles.logo}
+          />
+        </View>
+        <View style={styles.content}>
+          <Text style={styles.title}>{item.name}</Text>
+          <Text style={styles.summary} numberOfLines={6}>
             {item.resume}
           </Text>
         </View>
-        <View style={styles.buttonStart}>
-          <Text style={styles.footer}> {item.nbReadings} lectures</Text>
-          <Text style={styles.footer}> {item.nbSequences} chapitres</Text>
-          <Button text={"Voir"} action={onStartPress} />
+      </View>
+      <View style={styles.footer}>
+        <View style={styles.footerItem}>
+          <Text style={styles.footerText}>
+            <Ionicons name="library-outline" size="18" />
+            {item.nbSequences}
+          </Text>
+          <Text style={styles.footerLabel}>chapitres</Text>
+        </View>
+        <View style={styles.footerBar}></View>
+        <View style={styles.footerItem}>
+          <Text style={styles.footerText}>
+            <Ionicons name="glasses-outline" size="18" />
+            {item.nbReadings}
+          </Text>
+          <Text style={styles.footerLabel}>Lecteurs</Text>
         </View>
       </View>
-    </>
+    </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    width: "100%",
+  card: {
     backgroundColor: "white",
-    paddingVertical: 20,
-    paddingHorizontal: 10,
-    marginTop: 10,
-    borderRadius: 8,
+    borderRadius: 5,
+    shadowColor: "#000",
+    shadowOffset: { width: 1, height: 1 },
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+    elevation: 5,
+    marginBottom: 10,
+    borderWidth: 1,
+    borderColor: "#335296",
   },
-  headerContainer: {
-    flex: 1,
+  header: {
+    flexDirection: "row",
     alignItems: "center",
-    flexDirection: "row",
-    justifyContent: "space-between",
+    padding: 10,
   },
-  title: {
-    paddingLeft: 10,
-    paddingBottom: 15,
-    fontWeight: "700",
-    textAlign: "left",
-    fontSize: "20px",
-    color: "#00216d",
-  },
-  resume: {
-    fontWeight: "300",
-  },
-  buttonStart: {
-    paddingTop: 8,
-    justifyContent: "flex-end",
-    flexDirection: "row",
+  logoContainer: {
+    width: 90,
+    height: 90,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 30,
+    marginRight: 5,
   },
   logo: {
     width: 80,
     height: 80,
   },
-  footer: { color: "dimgrey", fontWeight: "600", fontSize: 14 },
+  content: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "center",
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: "500",
+    marginBottom: 5,
+    textAlign: "left",
+    color: "#0C2C75",
+  },
+  summary: {
+    fontSize: 14,
+    marginBottom: 10,
+  },
+  footer: {
+    backgroundColor: "#335296",
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 5,
+    borderRadius: 2,
+  },
+  footerItem: {
+    flex: 1,
+    alignItems: "center",
+  },
+  footerText: {
+    fontSize: 14,
+    fontWeight: "bold",
+    color: "white",
+  },
+  footerLabel: {
+    fontSize: 12,
+    color: "white",
+  },
+  footerBar: {
+    width: 1,
+    height: 15,
+    backgroundColor: "#aaa",
+    marginHorizontal: 10,
+  },
 });

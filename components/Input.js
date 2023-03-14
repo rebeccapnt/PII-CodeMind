@@ -21,7 +21,7 @@ export const Input = ({ placeholder }) => {
         <Ionicons
           name="close-circle"
           size={24}
-          color="gray"
+          color="#00216d"
           style={styles.icon}
           onPress={clearInput}
         />

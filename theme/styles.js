@@ -21,5 +21,6 @@ export const screenOptions = {
     fontWeight: "bold",
   },
 };
+StyleSheet.defaultFontFamily = "Roboto";
 
 export default styles;

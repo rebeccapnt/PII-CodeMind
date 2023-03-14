@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "../components/Button";
 import { ButtonOutline } from "../components/ButtonOutline";
 import {
@@ -9,12 +9,33 @@ import {
   View,
   ImageBackground,
 } from "react-native";
+import Ionicons from "react-native-vector-icons/Ionicons";
 import { getAuth, signOut } from "firebase/auth";
 
 const SettingsScreen = ({ navigation }) => {
-  const [surnom, setSurnom] = useState("");
-  const [email, setEmail] = useState("jean@example.com");
-  const [password, setPassword] = useState("");
+  const [user, setUser] = useState(null);
+
+  const auth = getAuth();
+  useEffect(() => {
+    const subscriber = auth.onAuthStateChanged((user) => {
+      setUser(user);
+    });
+
+    return subscriber;
+  }, []);
+
+  //Récupérer toutes les informations de l'utilisateur avec l'adresse mail :
+  useEffect(() => {
+    const fetchCourses = async () => {
+      const userCollection = firebase.db
+        .collection("users")
+        .where("email", "==", user.email);
+      const snapshot = await userCollection.get();
+      setUser(snapshot);
+    };
+
+    fetchCourses();
+  }, []);
 
   const onUpdatePress = () => {};
   const onSignOut = () => {
@@ -37,15 +58,21 @@ const SettingsScreen = ({ navigation }) => {
       </View>
       <View style={styles.background}>
         <View style={styles.formGroup}>
-          <Text style={styles.label}>Surnom:</Text>
-          <Text style={styles.input}>RebeccaPinoteau</Text>
+          <Text style={styles.label}>
+            <Ionicons name="happy-outline" size="18" /> Surnom :
+          </Text>
+          <Text style={styles.input}>rbk98</Text>
         </View>
         <View style={styles.formGroup}>
-          <Text style={styles.label}>Email:</Text>
-          <Text style={styles.input}>rgrenet@ensc.fr</Text>
+          <Text style={styles.label}>
+            <Ionicons name="mail-outline" size="18" /> Email :
+          </Text>
+          {/* <Text style={styles.input}>{user.email}</Text> */}
         </View>
         <View style={styles.formGroup}>
-          <Text style={styles.label}>Mot de passe:</Text>
+          <Text style={styles.label}>
+            <Ionicons name="lock-closed-outline" size="18" /> Mot de passe :
+          </Text>
           <Text style={styles.input}>........</Text>
         </View>
       </View>
@@ -85,11 +112,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   input: {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 5,
     fontSize: 16,
-    padding: 10,
     width: "100%",
   },
   inline: {},
