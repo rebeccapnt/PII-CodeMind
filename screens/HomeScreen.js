@@ -12,6 +12,7 @@ import { FlatList } from "react-native-gesture-handler";
 import { getAuth } from "firebase/auth";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { SequenceCard } from "../components/SequenceCard";
+import { HomeCard } from "../components/HomeCard";
 
 const HomeScreen = ({ navigation }) => {
   const [user, setUser] = useState(null);
@@ -33,24 +34,25 @@ const HomeScreen = ({ navigation }) => {
       <ScrollView>
         {/* <Text>Bonjour {user.email}</Text> */}
         <View style={styles.header}>
-          {/* <Image
+          <Image
             style={styles.logo}
             source={require("../assets/romy/romy.png")}
-          /> */}
+          />
           <Text style={styles.headerTitle}>Bienvenue sur CodeMind !</Text>
-          <Text style={styles.headerContext}>
-            Je m'appelle Sophie et je t'aiderai tout au long de ton
-            apprentissage.
-          </Text>
         </View>
         <View style={styles.bestCourses}>
           <Text style={styles.bestTitle}>Continuer mes cours</Text>
-          {/* Ici mettre formations de l'utilisateur, le voir tout ramène au profil ? */}
           <TouchableOpacity onPress={() => navigation.navigate("Apprendre")}>
             <Text style={styles.seeAllCourses}>Voir tout</Text>
           </TouchableOpacity>
         </View>
-
+        <View style={styles.contentCourses}>
+          {/* Ici mettre formations de l'utilisateur, le voir tout ramène au profil ? */}
+          <HomeCard
+            action={() => navigation.navigate("Apprendre")}
+            progress="80"
+          />
+        </View>
         <View style={styles.bestCourses}>
           <Text style={styles.bestTitle}>Les cours populaires</Text>
           <TouchableOpacity onPress={() => navigation.navigate("Apprendre")}>
@@ -58,9 +60,19 @@ const HomeScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
         <View style={styles.contentCourses}>
-          <SequenceCard title="coucou" actionStart="Apprendre" />
           {/* Ici mettre 3 meilleurs formations ( à savoir celles avec le plus de vues mettre à la place de voir un icon ">") */}
-          <SequenceCard title="coucou" actionStart="Apprendre" />
+          <HomeCard
+            action={() => navigation.navigate("Apprendre")}
+            progress="25"
+          />
+          <HomeCard
+            action={() => navigation.navigate("Apprendre")}
+            progress="50"
+          />
+          <HomeCard
+            action={() => navigation.navigate("Apprendre")}
+            progress="33"
+          />
         </View>
         {/* <FlatList
         data={courses}
@@ -77,7 +89,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 15,
-    paddingTop: 10,
   },
   header: {
     justifyContent: "center",
@@ -87,6 +98,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   logo: {
+    marginTop: 10,
     width: 260,
     height: 260,
     marginTop: 10,
@@ -113,11 +125,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "700",
     color: "#00216d",
+    marginBottom: 12,
   },
   seeAllCourses: {
     textAlign: "right",
     fontWeight: "600",
+    marginBottom: 12,
+    color: "#00216d",
   },
-  // contentCourses: { width: "100%", backgroundColor: "white", borderRadius: 10 },
 });
 export default HomeScreen;

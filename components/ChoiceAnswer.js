@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
 
-const ChoiceAnswer = ({ answer }) => {
+export const ChoiceAnswer = ({ answer }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.button} onPress={() => {}} key={"test"}>
@@ -10,8 +10,6 @@ const ChoiceAnswer = ({ answer }) => {
     </View>
   );
 };
-
-export default ChoiceAnswer;
 
 const styles = StyleSheet.create({
   container: {

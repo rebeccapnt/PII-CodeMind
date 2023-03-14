@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 export const CourseCard = ({ item, actionStart, params }) => {
   const navigation = useNavigation();
@@ -31,16 +32,14 @@ export const CourseCard = ({ item, actionStart, params }) => {
       <View style={styles.footer}>
         <View style={styles.footerItem}>
           <Text style={styles.footerText}>
-            <Ionicons name="library-outline" size="18" />
-            {item.nbSequences}
+            {item.nbSequences} <Ionicons name="library" size="18" />
           </Text>
           <Text style={styles.footerLabel}>chapitres</Text>
         </View>
         <View style={styles.footerBar}></View>
         <View style={styles.footerItem}>
           <Text style={styles.footerText}>
-            <Ionicons name="glasses-outline" size="18" />
-            {item.nbReadings}
+            {item.nbReadings} <Ionicons name="glasses" size="18" />
           </Text>
           <Text style={styles.footerLabel}>Lecteurs</Text>
         </View>
@@ -53,14 +52,17 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: "white",
     borderRadius: 5,
-    shadowColor: "#000",
-    shadowOffset: { width: 1, height: 1 },
-    shadowOpacity: 0.3,
-    shadowRadius: 2,
-    elevation: 5,
-    marginBottom: 10,
+    marginBottom: 15,
     borderWidth: 1,
     borderColor: "#335296",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
   },
   header: {
     flexDirection: "row",
@@ -100,7 +102,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     padding: 5,
-    borderRadius: 2,
+    borderRadius: 4,
   },
   footerItem: {
     flex: 1,
