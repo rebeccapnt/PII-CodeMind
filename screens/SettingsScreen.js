@@ -38,13 +38,19 @@ const SettingsScreen = ({ navigation }) => {
   }, []);
 
   const onUpdatePress = () => {};
+
   const onSignOut = () => {
+    // Récupération de l'objet d'authentification Firebase et appel de la fonction SignOut pour déconnecter l'utilisateur actuel
     const auth = getAuth();
     signOut(auth)
       .then(() => {
+        // Redirection vers la page de connexion
         navigation.navigate("Login");
       })
-      .catch((err) => Alert.alert("Erreur de connexion :", err.message));
+      .catch((err) => {
+        // Affichage d'une alerte en cas d'erreur lors de la déconnexion
+        Alert.alert("Erreur de connexion :", err.message);
+      });
   };
 
   return (

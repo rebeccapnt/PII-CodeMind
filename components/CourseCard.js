@@ -21,7 +21,10 @@ export const CourseCard = ({ item, actionStart, params }) => {
     >
       <View style={styles.header}>
         <View style={styles.logoContainer}>
-          <Image source={item.image} style={styles.logo} />
+          <Image
+            source={require("../assets/CourseIcon/javaLogo.png")}
+            style={styles.logo}
+          />
         </View>
         <View style={styles.content}>
           <Text style={styles.title}>{item.name}</Text>

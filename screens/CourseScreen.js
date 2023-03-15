@@ -65,7 +65,7 @@ const CourseScreen = ({ navigation }) => {
             <Text style={styles.title}>Rechercher des cours</Text>
             <Text style={styles.subtitle}>
               A l'aide de la barre de recherche, tu peux chercher les cours qui
-              t'intéresse.
+              t'intéressent.
             </Text>
           </View>
           <Image
