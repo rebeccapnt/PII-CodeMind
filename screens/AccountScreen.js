@@ -8,6 +8,7 @@ import {
   View,
   ImageBackground,
 } from "react-native";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 const AccountScreen = ({ navigation }) => {
   return (
@@ -22,11 +23,25 @@ const AccountScreen = ({ navigation }) => {
             <Text style={styles.nicknameInitial}> RP</Text>
           </TouchableHighlight>
           <Text style={styles.userName}>Rebecca Pinoteau</Text>
+          <Text style={styles.subtitle}>Actif depuis le 3 février 2023.</Text>
+          <View style={styles.cardResume}>
+            <View style={styles.section}>
+              <Ionicons name="book" size={25} style={styles.icon} />
+              <Text>Cours commencés</Text>
+              <Text style={styles.sectionNumber}>3</Text>
+            </View>
+            <View style={styles.section}>
+              <Ionicons name="checkmark-circle" size={27} style={styles.icon} />
+              <Text>Cours terminés</Text>
+              <Text style={styles.sectionNumber}>7</Text>
+            </View>
+          </View>
         </View>
-        <View style={styles.cardResume}></View>
-        <View>
-          <Text style={styles.title}>Cours commencé(s)</Text>
-          {/* Mettre ici un scrollview horizontal avec les courses commencés (attention ceux commencé et pas terminés, faire ça dans un autre scrollview) */}
+        <View style={styles.main}>
+          <View>
+            <Text style={styles.title}>Cours commencé(s)</Text>
+            {/* Mettre ici un scrollview horizontal avec les courses commencés (attention ceux commencé et pas terminés, faire ça dans un autre scrollview) */}
+          </View>
         </View>
       </ScrollView>
     </ImageBackground>
@@ -36,13 +51,20 @@ const AccountScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 10,
   },
   header: {
+    backgroundColor: "#335296",
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
+    borderWidth: 1,
+    borderColor: "#00216d",
+    padding: 18,
+    paddingHorizontal: 15,
+    marginBottom: 6,
     justifyContent: "center",
     alignItems: "center",
-    marginVertical: 25,
   },
+  main: { paddingHorizontal: 10 },
   title: {
     paddingTop: 30,
     paddingBottom: 20,
@@ -72,16 +94,38 @@ const styles = StyleSheet.create({
   },
   userName: {
     fontSize: 20,
-    color: "#00216d",
+    color: "white",
     paddingTop: 20,
   },
+  subtitle: {
+    color: "white",
+    paddingTop: 5,
+    fontSize: 13,
+    fontWeight: "300",
+  },
   cardResume: {
-    width: "100%",
-    backgroundColor: "white",
-    paddingVertical: 20,
     paddingHorizontal: 10,
-    marginTop: 10,
+    marginTop: 14,
     borderRadius: 8,
+    flexDirection: "row",
+  },
+  section: {
+    backgroundColor: "white",
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 20,
+    marginHorizontal: 15,
+    borderRadius: 10,
+  },
+  sectionNumber: {
+    marginTop: 12,
+    fontSize: 20,
+    fontWeight: "700",
+    color: "#00216d",
+  },
+  icon: {
+    marginBottom: 6,
   },
 });
 export default AccountScreen;

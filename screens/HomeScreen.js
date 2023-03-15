@@ -10,11 +10,13 @@ import {
 import React, { useState, useEffect } from "react";
 import { FlatList } from "react-native-gesture-handler";
 import { getAuth } from "firebase/auth";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import firebase from "../firebaseConfig.js";
 import { HomeCard } from "../components/HomeCard";
 
 const HomeScreen = ({ navigation }) => {
   const [user, setUser] = useState(null);
+  const [bestCourses, setBestCourses] = useState([]);
+
   const auth = getAuth();
   useEffect(() => {
     const subscriber = auth.onAuthStateChanged((user) => {
@@ -24,15 +26,34 @@ const HomeScreen = ({ navigation }) => {
     return subscriber;
   }, []);
 
+  useEffect(() => {
+    const fetchBestCourses = async () => {
+      // récupérer une référence à la collection "cours"
+      const coursesCollection = firebase.db.collection("courses");
+      // trier les cours par ordre décroissant de nbReadings et récupérer les trois premières
+      const snapshot = await coursesCollection
+        .orderBy("nbReadings", "desc")
+        .limit(3)
+        .get();
+      const bestCoursesList = [];
+      snapshot.forEach((doc) => {
+        bestCoursesList.push(doc.data());
+      });
+      setBestCourses(bestCoursesList);
+    };
+
+    fetchBestCourses();
+  }, []);
+
   return (
     <View style={styles.container}>
-      <ScrollView>
-        {/* <Text>Bonjour {user.email}</Text> */}
-        <ImageBackground
-          source={require("../assets/home.png")}
-          resizeMode="cover"
-          style={styles.container}
-        >
+      {/* <Text>Bonjour {user.email}</Text> */}
+      <ImageBackground
+        source={require("../assets/home.png")}
+        resizeMode="cover"
+        style={styles.container}
+      >
+        <ScrollView>
           <View style={styles.header}>
             <Image
               style={styles.logo}
@@ -68,30 +89,23 @@ const HomeScreen = ({ navigation }) => {
               </TouchableOpacity>
             </View>
             <View style={styles.contentCourses}>
-              {/* Ici mettre 3 meilleurs formations ( à savoir celles avec le plus de vues mettre à la place de voir un icon ">") */}
-              <HomeCard
-                action={() => navigation.navigate("Apprendre")}
-                progress="25"
-              />
-              <HomeCard
-                action={() => navigation.navigate("Apprendre")}
-                progress="50"
-              />
-              <HomeCard
-                action={() => navigation.navigate("Apprendre")}
-                progress="33"
+              <FlatList
+                nestedScrollEnabled
+                data={bestCourses}
+                showsVerticalScrollIndicator={false}
+                keyExtractor={(item) => item.courseId}
+                renderItem={({ item }) => (
+                  <HomeCard
+                    item={item}
+                    action={() => navigation.navigate("Apprendre")}
+                    progress="25"
+                  />
+                )}
               />
             </View>
           </View>
-
-          {/* <FlatList
-        data={courses}
-        renderItem={({ item }) => <CourseCard item={item} onPress={() => {}} />}
-        keyExtractor={(item) => item.id}
-        showsVerticalScrollIndicator={false}
-      /> */}
-        </ImageBackground>
-      </ScrollView>
+        </ScrollView>
+      </ImageBackground>
     </View>
   );
 };

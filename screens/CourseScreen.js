@@ -69,15 +69,15 @@ const CourseScreen = ({ navigation }) => {
           // onSearch={({ nativeEvent: { text } }) => loadCourses(text)}
         />
       </View>
-      <View style={styles.main}>
-        <FlatList
-          data={courses}
-          keyExtractor={(item) => item.courseId}
-          renderItem={({ item }) => (
-            <CourseCard item={item} actionStart="Sequence" params={sequences} />
-          )}
-        />
-      </View>
+      <FlatList
+        style={styles.main}
+        data={courses}
+        showsVerticalScrollIndicator={false}
+        keyExtractor={(item) => item.courseId}
+        renderItem={({ item }) => (
+          <CourseCard item={item} actionStart="Sequence" params={sequences} />
+        )}
+      />
     </ImageBackground>
   );
 };
@@ -94,6 +94,7 @@ const styles = StyleSheet.create({
     borderColor: "#00216d",
     paddingBottom: 16,
     paddingHorizontal: 15,
+    marginBottom: 6,
   },
   title: {
     paddingVertical: 10,
@@ -107,8 +108,7 @@ const styles = StyleSheet.create({
     fontWeight: "300",
   },
   main: {
-    marginTop: 20,
-    paddingHorizontal: 15,
+    padding: 15,
   },
 });
 

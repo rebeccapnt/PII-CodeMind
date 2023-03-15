@@ -11,10 +11,10 @@ export const HomeCard = ({ action, progress }) => {
           style={styles.logo}
         />
         <View style={styles.content}>
-          <Text style={styles.title}>Les bases de Java</Text>
+          <Text style={styles.title}></Text>
           <Text style={styles.details}>
-            28 lectures <Ionicons name="book" size="13" /> | 3 chapitres{" "}
-            <Ionicons name="library" size="15" />
+            28  <Ionicons name="book" size="13" /> |{" "}
+             chapitres <Ionicons name="library" size="15" />
           </Text>
           <View style={styles.progressBar}>
             <View style={[styles.progress, { width: `${progress}%` }]} />
