@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 23,
     fontWeight: "700",
-    paddingBottom: 10,
+    paddingVertical: 7,
   },
   headerSubtitle: {
     fontSize: 14,

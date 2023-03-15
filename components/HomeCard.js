@@ -13,8 +13,8 @@ export const HomeCard = ({ action, progress }) => {
         <View style={styles.content}>
           <Text style={styles.title}></Text>
           <Text style={styles.details}>
-            28  <Ionicons name="book" size="13" /> |{" "}
-             chapitres <Ionicons name="library" size="15" />
+            28 <Ionicons name="book" size="13" /> | chapitres{" "}
+            <Ionicons name="library" size="15" />
           </Text>
           <View style={styles.progressBar}>
             <View style={[styles.progress, { width: `${progress}%` }]} />
@@ -40,8 +40,8 @@ const styles = StyleSheet.create({
       width: 0,
       height: 1,
     },
-    shadowOpacity: 0.22,
-    shadowRadius: 2.22,
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
     elevation: 3,
     marginBottom: 5,
   },

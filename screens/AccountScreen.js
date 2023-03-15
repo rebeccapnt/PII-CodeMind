@@ -25,15 +25,31 @@ const AccountScreen = ({ navigation }) => {
           <Text style={styles.userName}>Rebecca Pinoteau</Text>
           <Text style={styles.subtitle}>Actif depuis le 3 février 2023.</Text>
           <View style={styles.cardResume}>
-            <View style={styles.section}>
-              <Ionicons name="book" size={25} style={styles.icon} />
-              <Text>Cours commencés</Text>
-              <Text style={styles.sectionNumber}>3</Text>
+            <View style={[styles.section, { backgroundColor: "#feb054" }]}>
+              <Ionicons
+                name="book"
+                size={25}
+                style={styles.icon}
+                color="white"
+              />
+              <Text style={[styles.sectionLabel, { color: "white" }]}>
+                Cours commencés
+              </Text>
+              <Text style={[styles.sectionNumber, { color: "white" }]}>3</Text>
             </View>
-            <View style={styles.section}>
-              <Ionicons name="checkmark-circle" size={27} style={styles.icon} />
-              <Text>Cours terminés</Text>
-              <Text style={styles.sectionNumber}>7</Text>
+            <View style={[styles.section, { backgroundColor: "white" }]}>
+              <Ionicons
+                name="checkmark-circle"
+                size={27}
+                style={styles.icon}
+                color="#00216d"
+              />
+              <Text style={[styles.sectionLabel, { color: "#00216d" }]}>
+                Cours terminés
+              </Text>
+              <Text style={[styles.sectionNumber, { color: "#00216d" }]}>
+                7
+              </Text>
             </View>
           </View>
         </View>
@@ -110,19 +126,26 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   section: {
-    backgroundColor: "white",
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
     paddingVertical: 20,
     marginHorizontal: 15,
     borderRadius: 10,
+    shadowColor: "#00216d",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 2.5,
+    elevation: 3,
   },
+  sectionLabel: { fontWeight: "500" },
   sectionNumber: {
     marginTop: 12,
-    fontSize: 20,
-    fontWeight: "700",
-    color: "#00216d",
+    fontSize: 24,
+    fontWeight: "500",
   },
   icon: {
     marginBottom: 6,

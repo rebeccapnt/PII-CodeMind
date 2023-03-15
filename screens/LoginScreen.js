@@ -18,24 +18,26 @@ const LoginScreen = ({ navigation }) => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const OnHandleLogin = () => {
+    // Vérification si les champs d'email et de mot de passe sont remplis
     if (email !== "" && password !== "") {
-      const auth = getAuth();
+      const auth = getAuth(); // Récupération de l'objet d'authentification Firebase et appel de la fonction signInWithEmailAndPassword
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           const user = userCredential.user;
-          navigation.navigate("Accueil");
+          navigation.navigate("Accueil"); // Redirection vers l'écran "Accueil" si la connexion a été effectuée
         })
         .catch((error) => {
+          // Si la connexion échoue, récupère l'objet d'erreur
           if (error.code === "auth/wrong-password") {
-            setErrorMessage("Mauvais mot de passe");
+            setErrorMessage("Mauvais mot de passe"); //Affichage d'un message d'erreur si le mot de passe est incorrect
           } else {
             setErrorMessage(
               "Il n'y a pas de compte associé à cette adresse mail."
-            );
+            ); //Affichage d'un message d'erreur s'il n'y a pas de compte associé à cette email
           }
         });
     } else {
-      setErrorMessage("Attention ! Veuillez remplir tous les champs.");
+      setErrorMessage("Attention ! Veuillez remplir tous les champs."); // Affichage d'un message d'erreur si les champs email et de mot de passe sont obligatoires
       return;
     }
   };

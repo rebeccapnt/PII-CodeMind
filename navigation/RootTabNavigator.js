@@ -3,9 +3,8 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import CourseStackNavigator from "./CourseStackNavigator";
 import UserStackNavigator from "./UserStackNavigator";
-import QuizScreen from "../screens/QuizScreen";
-import HomeScreen from "../screens/HomeScreen";
 import HomeStackNavigator from "./HomeStackNavigator";
+import ProgressStackNavigator from "./ProgressStackNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -38,7 +37,7 @@ const RootTabNavigator = () => {
     >
       <Tab.Screen name="Accueil" component={HomeStackNavigator} />
       <Tab.Screen name="Apprendre" component={CourseStackNavigator} />
-      <Tab.Screen name="Progression" component={QuizScreen} />
+      <Tab.Screen name="Progression" component={ProgressStackNavigator} />
       <Tab.Screen name="Profil" component={UserStackNavigator} />
     </Tab.Navigator>
   );

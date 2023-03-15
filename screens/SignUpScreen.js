@@ -22,18 +22,22 @@ const SignUpScreen = ({ navigation }) => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const onHandleSignup = () => {
+    // Vérification que les mots de passe correspondent
     if (password !== passwordValidate) {
       setErrorMessage("Les mots de passe ne correspondent pas");
       return;
     }
+    // Vérification que les champs email et mot de passe sont remplis
     if (email !== "" && password !== "") {
+      // Récupération de l'objet d'authentification Firebase et appel de la fonction createUserWithEmailAndPassword pour créer un nouvel utilisateur
       const auth = getAuth();
       createUserWithEmailAndPassword(auth, email, password)
         .then(async (userCredential) => {
-          // Stockage du nom de l'utilisateur dans Firestore
+          // Récupération de l'objet utilisateur
           const user = userCredential.user;
-          // Enregistrement des informations supplémentaires dans Firebase Realtime Database
           const currentDate = new Date().toISOString();
+
+          // Stockage du nom de l'utilisateur dans Firestore
           const userRef = firebase.db
             .collection("users")
             .doc(userCredential.user.uid);
@@ -46,11 +50,11 @@ const SignUpScreen = ({ navigation }) => {
             .catch((error) => console.error(error));
         })
         .then(() => {
-          navigation.navigate("Accueil");
+          navigation.navigate("Accueil"); // Redirection vers la page d'accueil si tout s'est bien passé
         })
-        .catch((err) => Alert.alert("Erreur de connexion :", err.message));
+        .catch((err) => Alert.alert("Erreur de connexion :", err.message)); // Affichage d'une alerte en cas d'erreur de connexion
     } else {
-      setErrorMessage("Attention ! Veuillez remplir tous les champs.");
+      setErrorMessage("Attention ! Veuillez remplir tous les champs."); // Affichage d'un message d'erreur si un ou plusieurs champs sont vides
       return;
     }
   };
