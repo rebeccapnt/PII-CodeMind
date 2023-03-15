@@ -57,11 +57,11 @@ const HomeScreen = ({ navigation }) => {
           <View style={styles.header}>
             <Image
               style={styles.logo}
-              source={require("../assets/romy/romy.png")}
+              source={require("../assets/romy/romyhappyfilled.png")}
             />
             <Text style={styles.headerTitle}>Bienvenue, Rebecca</Text>
             <Text style={styles.headerSubtitle}>
-              Commencez de nouvelles aventures.{" "}
+              Commencez de nouvelles aventures.
             </Text>
           </View>
           <View style={styles.main}>

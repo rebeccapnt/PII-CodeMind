@@ -25,25 +25,33 @@ const AccountScreen = ({ navigation }) => {
           <Text style={styles.userName}>Rebecca Pinoteau</Text>
           <Text style={styles.subtitle}>Actif depuis le 3 février 2023.</Text>
           <View style={styles.cardResume}>
-            <View style={[styles.section, { backgroundColor: "#feb054" }]}>
-              <Ionicons
-                name="book"
-                size={25}
-                style={styles.icon}
-                color="white"
-              />
+            <View style={[styles.section, { backgroundColor: "#d76e2c" }]}>
+              <View
+                style={[styles.iconBackground, { backgroundColor: "#e1a682" }]}
+              >
+                <Ionicons
+                  name="book"
+                  size={22}
+                  style={styles.icon}
+                  color="white"
+                />
+              </View>
               <Text style={[styles.sectionLabel, { color: "white" }]}>
                 Cours commencés
               </Text>
               <Text style={[styles.sectionNumber, { color: "white" }]}>3</Text>
             </View>
             <View style={[styles.section, { backgroundColor: "white" }]}>
-              <Ionicons
-                name="checkmark-circle"
-                size={27}
-                style={styles.icon}
-                color="#00216d"
-              />
+              <View
+                style={[styles.iconBackground, { backgroundColor: "#d4def6" }]}
+              >
+                <Ionicons
+                  name="checkmark-circle"
+                  size={24}
+                  style={styles.icon}
+                  color="#00216d"
+                />
+              </View>
               <Text style={[styles.sectionLabel, { color: "#00216d" }]}>
                 Cours terminés
               </Text>
@@ -147,8 +155,17 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "500",
   },
-  icon: {
-    marginBottom: 6,
+
+  iconBackground: {
+    borderRadius:
+      Math.round(
+        Dimensions.get("window").width + Dimensions.get("window").height
+      ) / 2,
+    width: Dimensions.get("window").width * 0.12,
+    height: Dimensions.get("window").width * 0.12,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 10,
   },
 });
 export default AccountScreen;

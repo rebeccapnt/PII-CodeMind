@@ -4,6 +4,7 @@ import {
   Text,
   ImageBackground,
   FlatList,
+  Image,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { CourseCard } from "../components/CourseCard";
@@ -59,10 +60,19 @@ const CourseScreen = ({ navigation }) => {
       style={styles.container}
     >
       <View style={styles.header}>
-        <Text style={styles.title}>Rechercher des cours</Text>
-        <Text style={styles.titleBottom}>
-          Trouver les cours que vous souhaitez à l'aide de la recherche.
-        </Text>
+        <View style={styles.headerSearch}>
+          <View style={styles.content}>
+            <Text style={styles.title}>Rechercher des cours</Text>
+            <Text style={styles.subtitle}>
+              A l'aide de la barre de recherche, tu peux chercher les cours qui
+              t'intéresse.
+            </Text>
+          </View>
+          <Image
+            source={require("../assets/romy/romysmilefilled.png")}
+            style={styles.icon}
+          />
+        </View>
         <Input
           style={styles.search}
           placeholder="Rechercher un cours..."
@@ -83,9 +93,7 @@ const CourseScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
+  container: { flex: 1 },
   header: {
     backgroundColor: "#335296",
     borderBottomLeftRadius: 30,
@@ -96,16 +104,27 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     marginBottom: 6,
   },
+  headerSearch: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 4,
+  },
+  content: {
+    flex: 1,
+  },
   title: {
-    paddingVertical: 10,
-    fontWeight: "600",
     fontSize: 22,
+    fontWeight: "600",
+    marginVertical: 4,
     color: "white",
   },
-  titleBottom: {
+  subtitle: {
     fontSize: 14,
     color: "white",
-    fontWeight: "300",
+  },
+  icon: {
+    width: 80,
+    height: 80,
   },
   main: {
     padding: 15,
