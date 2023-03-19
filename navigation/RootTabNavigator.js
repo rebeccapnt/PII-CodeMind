@@ -15,13 +15,13 @@ const RootTabNavigator = () => {
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
-          if (route.name === "Course") {
+          if (route.name === "Apprendre") {
             iconName = focused ? "book" : "book-outline";
-          } else if (route.name === "Progress") {
+          } else if (route.name === "Progression") {
             iconName = focused ? "bar-chart" : "bar-chart-outline";
-          } else if (route.name === "User") {
+          } else if (route.name === "Profil") {
             iconName = focused ? "person" : "person-outline";
-          } else if (route.name === "Home") {
+          } else if (route.name === "Accueil") {
             iconName = focused ? "home" : "home-outline";
           }
 
@@ -35,10 +35,10 @@ const RootTabNavigator = () => {
         },
       })}
     >
-      <Tab.Screen name="Home" component={HomeStackNavigator} />
-      <Tab.Screen name="Course" component={CourseStackNavigator} />
-      <Tab.Screen name="Progress" component={ProgressStackNavigator} />
-      <Tab.Screen name="User" component={UserStackNavigator} />
+      <Tab.Screen name="Accueil" component={HomeStackNavigator} />
+      <Tab.Screen name="Apprendre" component={CourseStackNavigator} />
+      <Tab.Screen name="Progression" component={ProgressStackNavigator} />
+      <Tab.Screen name="Profil" component={UserStackNavigator} />
     </Tab.Navigator>
   );
 };

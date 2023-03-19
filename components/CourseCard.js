@@ -1,30 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { IMAGES_PATH } from "./globals";
 
-export const CourseCard = ({ item, actionStart, params }) => {
-  const navigation = useNavigation();
-
-  const onStartPress = () => {
-    navigation.setOptions({
-      headerBackTitle: "Retour",
-    });
-    navigation.navigate(actionStart, params);
-  };
-
+export const CourseCard = ({ item, onPress }) => {
+  const image = item.image;
   return (
     <TouchableOpacity
-      onPress={onStartPress}
+      onPress={() => onPress(item)}
       style={styles.card}
       activeOpacity={0.6}
     >
       <View style={styles.header}>
         <View style={styles.logoContainer}>
-          <Image
-            source={require("../assets/CourseIcon/javaLogo.png")}
-            style={styles.logo}
-          />
+          <Image source={IMAGES_PATH.item.image} style={styles.logo} />
         </View>
         <View style={styles.content}>
           <Text style={styles.title}>{item.name}</Text>

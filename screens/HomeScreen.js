@@ -10,7 +10,7 @@ import {
 import React, { useState, useEffect } from "react";
 import { FlatList } from "react-native-gesture-handler";
 import { getAuth } from "firebase/auth";
-import firebase from "../firebaseConfig.js";
+import firebase from "../services/firebaseConfig.js";
 import { HomeCard } from "../components/HomeCard";
 
 const HomeScreen = ({ navigation }) => {
@@ -61,7 +61,7 @@ const HomeScreen = ({ navigation }) => {
             />
             <Text style={styles.headerTitle}>Bienvenue, Rebecca</Text>
             <Text style={styles.headerSubtitle}>
-              Commencez de nouvelles aventures.
+              Commençons de nouvelles aventures.
             </Text>
           </View>
           <View style={styles.main}>

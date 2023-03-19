@@ -10,9 +10,9 @@ const CourseStack = createNativeStackNavigator();
 
 const CourseStackNavigator = () => {
   return (
-    <CourseStack.Navigator initialRouteName="Apprendre">
+    <CourseStack.Navigator initialRouteName="Learn">
       <CourseStack.Screen
-        name="Apprendre"
+        name="Learn"
         component={CourseScreen}
         options={{ title: "Les enseignements disponibles" }}
       />

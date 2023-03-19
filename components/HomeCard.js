@@ -11,16 +11,17 @@ export const HomeCard = ({ action, progress }) => {
           style={styles.logo}
         />
         <View style={styles.content}>
-          <Text style={styles.title}></Text>
+          <Text style={styles.title}>Les bases de Java</Text>
           <Text style={styles.details}>
-            28 <Ionicons name="book" size="13" /> | chapitres{" "}
-            <Ionicons name="library" size="15" />
+            28 <Ionicons name="book" size={13} /> | chapitres{" "}
+            <Ionicons name="library" size={15} />
           </Text>
           <View style={styles.progressBar}>
             <View style={[styles.progress, { width: `${progress}%` }]} />
           </View>
           <Text style={styles.progressText}> {progress}%</Text>
         </View>
+        <Ionicons name="chevron-forward" size={24} color="#335296" />
       </View>
     </TouchableOpacity>
   );
@@ -51,27 +52,29 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
+    marginRight: 10,
   },
   title: {
     fontSize: 16,
     fontWeight: "bold",
-    marginVertical: 2,
+    marginVertical: 3,
   },
   details: {
     color: "#335296",
     fontSize: 14,
-    marginBottom: 8,
+    marginTop: 3,
+    marginBottom: 6,
   },
   progressBar: {
     height: 8,
     backgroundColor: "#ddd",
-    borderRadius: 8,
+    borderRadius: 2,
     overflow: "hidden",
     marginTop: 5,
   },
   progress: {
     height: 8,
-    backgroundColor: "#FF6600",
+    backgroundColor: "#ff6d0b",
   },
   progressText: {
     color: "#335296",

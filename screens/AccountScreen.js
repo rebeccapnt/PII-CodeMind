@@ -25,7 +25,7 @@ const AccountScreen = ({ navigation }) => {
           <Text style={styles.userName}>Rebecca Pinoteau</Text>
           <Text style={styles.subtitle}>Actif depuis le 3 février 2023.</Text>
           <View style={styles.cardResume}>
-            <View style={[styles.section, { backgroundColor: "#d76e2c" }]}>
+            <View style={[styles.section, { backgroundColor: "#e17618" }]}>
               <View
                 style={[styles.iconBackground, { backgroundColor: "#e1a682" }]}
               >
@@ -105,8 +105,8 @@ const styles = StyleSheet.create({
       Math.round(
         Dimensions.get("window").width + Dimensions.get("window").height
       ) / 2,
-    width: Dimensions.get("window").width * 0.4,
-    height: Dimensions.get("window").width * 0.4,
+    width: Dimensions.get("window").width * 0.3,
+    height: Dimensions.get("window").width * 0.3,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "white",

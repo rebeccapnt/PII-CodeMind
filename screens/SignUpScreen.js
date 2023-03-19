@@ -12,7 +12,7 @@ import {
 import React, { useState } from "react";
 import { Button } from "../components/Button";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import firebase from "../firebaseConfig.js";
+import firebase from "../services/firebaseConfig.js";
 
 const SignUpScreen = ({ navigation }) => {
   const [nickname, setNickname] = useState("");
@@ -75,7 +75,7 @@ const SignUpScreen = ({ navigation }) => {
             paddingBottom: 10,
           }}
         >
-          Veuillez inscrire les données suivantes :
+          Veuillez inscrire les données suivantes:
         </Text>
         <View style={styles.inputContainer}>
           <TextInput
@@ -122,10 +122,10 @@ const SignUpScreen = ({ navigation }) => {
         <Button action={onHandleSignup} text="Créer mon compte" />
         <View style={styles.login}>
           <Text style={{ color: "dimgrey", fontWeight: "600", fontSize: 14 }}>
-            Déjà inscrit ?{" "}
+            Déjà inscrit ?
           </Text>
           <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-            <Text style={styles.loginButton}>Se connecter</Text>
+            <Text style={styles.loginButton}> Se connecter </Text>
           </TouchableOpacity>
         </View>
       </ImageBackground>

@@ -9,49 +9,31 @@ import {
 import React, { useEffect, useState } from "react";
 import { CourseCard } from "../components/CourseCard";
 import { Input } from "../components/Input";
-import firebase from "../firebaseConfig.js";
+import firebase from "../services/firebaseConfig.js";
+import { CoursesServices } from "../services/CoursesServices";
 
 const CourseScreen = ({ navigation }) => {
   const [courses, setCourses] = useState([]);
-  const [sequences, setSequences] = useState([]);
+  const [error, setError] = useState(false);
 
-  // const loadCourses = async (search = "") => {
-  //   const coursesCollection = firebase.db.collection("courses");
-  //   const snapshot = await coursesCollection.get().Where("name", "==", search);
-  //   const coursesList = [];
-  //   snapshot.forEach((doc) => {
-  //     coursesList.push(doc.data());
-  //   });
-  //   setCourses(coursesList);
-  // };
-
-  useEffect(() => {
-    const fetchCourses = async () => {
-      const coursesCollection = firebase.db.collection("courses");
-      const snapshot = await coursesCollection.get();
-      const coursesList = [];
-      snapshot.forEach((doc) => {
-        coursesList.push(doc.data());
-      });
-      setCourses(coursesList);
-    };
-
-    fetchCourses();
-  }, []);
+  const loadCourses = async () => {
+    try {
+      const courses = await CoursesServices.fetchCourses();
+      console.log(courses);
+      setCourses(courses);
+    } catch (error) {
+      console.error(error);
+      setError(true);
+    }
+  };
 
   useEffect(() => {
-    const fetchSequences = async () => {
-      const sequencesCollection = firebase.db.collection("sequences");
-      const snapshot = await sequencesCollection.get();
-      const sequencesList = [];
-      snapshot.forEach((doc) => {
-        sequencesList.push(doc.data());
-      });
-      setSequences(sequencesList);
-    };
-
-    fetchSequences();
+    loadCourses();
   }, []);
+
+  const onPressCourse = (course) => {
+    navigation.navigate("Sequence", { courseId: course.id });
+  };
 
   return (
     <ImageBackground
@@ -83,9 +65,9 @@ const CourseScreen = ({ navigation }) => {
         style={styles.main}
         data={courses}
         showsVerticalScrollIndicator={false}
-        keyExtractor={(item) => item.courseId}
+        keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <CourseCard item={item} actionStart="Sequence" params={sequences} />
+          <CourseCard item={item} onPress={() => onPressCourse(item)} />
         )}
       />
     </ImageBackground>

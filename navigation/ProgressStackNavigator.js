@@ -9,7 +9,7 @@ const ProgressStackNavigator = () => {
   return (
     <ProgressStack.Navigator initialRouteName="Progress">
       <ProgressStack.Screen
-        name="Progression"
+        name="Progress"
         component={ProgressionScreen}
         options={{ title: "Ma progression" }}
       />

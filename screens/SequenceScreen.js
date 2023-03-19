@@ -1,8 +1,29 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, ImageBackground, FlatList } from "react-native";
+import { SequenceCard } from "../components/SequenceCard";
+import firebase from "../services/firebaseConfig.js";
 
-const Sequence = ({ route, navigation }) => {
-  const { sequences } = route.params;
+const SequenceScreen = ({ route, navigation }) => {
+  const { courseId } = route.params;
+  const [sequences, setSequences] = useState([]);
+
+  const loadSequences = async () => {
+    const sequencesCollection = firebase.db.collection("sequences");
+    const snapshot = await sequencesCollection
+      // .where("course", "==", courseId)
+      .get();
+    const sequencesList = [];
+    snapshot.forEach((doc) => {
+      const sequence = doc.data();
+      sequence.id = doc.id;
+      sequencesList.push(sequence);
+    });
+    setSequences(sequencesList);
+  };
+
+  useEffect(() => {
+    loadSequences();
+  }, []);
 
   return (
     <ImageBackground
@@ -10,22 +31,20 @@ const Sequence = ({ route, navigation }) => {
       resizeMode="cover"
       style={styles.container}
     >
-      <Text style={styles.title}> Php </Text>
-      {/* Ici afficher les chapitres, avec un badge/jauge si commencé à lire, terminer */}
-      {/* <FlatList
+      {/* <SequenceCard actionStart="Sequence" progress="18" />
+      <SequenceCard actionStart="Sequence" progress="0" /> */}
+      <FlatList
         data={sequences}
-        keyExtractor={(item) => item.Id}
+        keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <SequenceCard title={item.name} actionStart="Content" />
+          <SequenceCard item={item} progress="18" actionStart="Content" />
         )}
-      /> */}
-      {/* <SequenceCard title="Les variables" actionStart="Content" />
-      <SequenceCard title="Les boucles" actionStart="Content" /> */}
+      />
     </ImageBackground>
   );
 };
 
-export default Sequence;
+export default SequenceScreen;
 
 const styles = StyleSheet.create({
   container: {

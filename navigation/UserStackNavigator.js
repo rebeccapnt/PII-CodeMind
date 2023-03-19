@@ -11,16 +11,16 @@ const UserStack = createNativeStackNavigator();
 const UserStackNavigator = ({ navigation }) => {
   return (
     <UserStack.Navigator
-      initialRouteName="Profil"
+      initialRouteName="User"
       screenOptions={{ headerShown: true }}
     >
       <UserStack.Screen
-        name="Profil"
+        name="User"
         component={AccountScreen}
         options={({ route }) => ({
           headerTitle: "Profil",
           headerRight: () =>
-            route.name === "Profil" && (
+            route.name === "User" && (
               <Ionicons
                 name="settings-outline"
                 size={24}
