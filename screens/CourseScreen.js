@@ -9,7 +9,6 @@ import {
 import React, { useEffect, useState } from "react";
 import { CourseCard } from "../components/CourseCard";
 import { Input } from "../components/Input";
-import firebase from "../services/firebaseConfig.js";
 import { CoursesServices } from "../services/CoursesServices";
 
 const CourseScreen = ({ navigation }) => {

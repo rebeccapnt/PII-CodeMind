@@ -14,17 +14,18 @@ export const CoursesServices = {
       return coursesList;
     } catch (error) {
       console.error(error);
-      throw new Error("Failed to fetch courses");
+      throw new Error("Erreur dans la récupération des cours");
     }
   },
   // Récupère la liste des cours associés au nom "name" entré par l'utilisateur
   async searchCourses(name) {
     const coursesCollection = firebase.db.collection("courses");
-    const snapshot = await coursesCollection.get().Where("name", "==", search);
-    const coursesList = [];
-    snapshot.forEach((doc) => {
-      coursesList.push(doc.data());
+    const snapshot = await coursesCollection.where("name", "==", name).get();
+    const coursesList = snapshot.docs.map((doc) => {
+      const course = doc.data();
+      course.id = doc.id;
+      return course;
     });
-    setCourses(coursesList);
+    return coursesList;
   },
 };

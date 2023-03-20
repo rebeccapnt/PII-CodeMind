@@ -1,15 +1,13 @@
 import React from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { IMAGES_PATH } from "./globals";
 
 export const HomeCard = ({ action, progress }) => {
   return (
     <TouchableOpacity onPress={action} style={styles.card} activeOpacity={0.6}>
       <View style={styles.container}>
-        <Image
-          source={require("../assets/CourseIcon/javaLogo.png")}
-          style={styles.logo}
-        />
+        <Image source={IMAGES_PATH.iconJava} style={styles.logo} />
         <View style={styles.content}>
           <Text style={styles.title}>Les bases de Java</Text>
           <Text style={styles.details}>

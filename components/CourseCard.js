@@ -13,7 +13,7 @@ export const CourseCard = ({ item, onPress }) => {
     >
       <View style={styles.header}>
         <View style={styles.logoContainer}>
-          <Image source={IMAGES_PATH.item.image} style={styles.logo} />
+          <Image source={IMAGES_PATH[item.image]} style={styles.logo} />
         </View>
         <View style={styles.content}>
           <Text style={styles.title}>{item.name}</Text>
