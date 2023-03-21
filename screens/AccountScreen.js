@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Dimensions,
   TouchableHighlight,
@@ -9,8 +9,11 @@ import {
   ImageBackground,
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { AuthenticatedUserContext } from "../App.js";
 
 const AccountScreen = ({ navigation }) => {
+  const { user } = useContext(AuthenticatedUserContext);
+
   return (
     <ImageBackground
       source={require("../assets/authentification.png")}
@@ -22,7 +25,7 @@ const AccountScreen = ({ navigation }) => {
           <TouchableHighlight style={styles.circle}>
             <Text style={styles.nicknameInitial}> RP</Text>
           </TouchableHighlight>
-          <Text style={styles.userName}>Rebecca Pinoteau</Text>
+          <Text style={styles.userName}>{user.email}</Text>
           <Text style={styles.subtitle}>Actif depuis le 3 février 2023.</Text>
           <View style={styles.cardResume}>
             <View style={[styles.section, { backgroundColor: "#e17618" }]}>

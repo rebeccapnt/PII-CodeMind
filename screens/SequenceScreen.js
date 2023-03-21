@@ -1,29 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, ImageBackground, FlatList } from "react-native";
 import { SequenceCard } from "../components/SequenceCard";
-import firebase from "../services/firebaseConfig.js";
+import { SequencesServices } from "../services/SequencesServices";
 
 const SequenceScreen = ({ route, navigation }) => {
   const { courseId } = route.params;
   const [sequences, setSequences] = useState([]);
+  const [error, setError] = useState(false);
 
   const loadSequences = async () => {
-    const sequencesCollection = firebase.db.collection("sequences");
-    const snapshot = await sequencesCollection
-      // .where("course", "==", courseId)
-      .get();
-    const sequencesList = [];
-    snapshot.forEach((doc) => {
-      const sequence = doc.data();
-      sequence.id = doc.id;
-      sequencesList.push(sequence);
-    });
-    setSequences(sequencesList);
+    try {
+      const sequences = await SequencesServices.fetchSequences(courseId);
+      setSequences(sequences);
+    } catch (error) {
+      console.error(error);
+      setError(true);
+    }
   };
 
   useEffect(() => {
     loadSequences();
   }, []);
+
+  const onPressSequence = (sequence) => {
+    navigation.navigate("Detail", { sequenceId: sequence.id });
+  };
 
   return (
     <ImageBackground
@@ -31,13 +32,15 @@ const SequenceScreen = ({ route, navigation }) => {
       resizeMode="cover"
       style={styles.container}
     >
-      {/* <SequenceCard actionStart="Sequence" progress="18" />
-      <SequenceCard actionStart="Sequence" progress="0" /> */}
       <FlatList
         data={sequences}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <SequenceCard item={item} progress="18" actionStart="Content" />
+          <SequenceCard
+            item={item}
+            progress="18"
+            onPress={() => onPressSequence(item)}
+          />
         )}
       />
     </ImageBackground>

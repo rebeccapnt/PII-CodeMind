@@ -6,7 +6,10 @@ import { onAuthStateChanged } from "firebase/auth";
 import { View, ActivityIndicator } from "react-native";
 import { getAuth } from "firebase/auth";
 
-const AuthenticatedUserContext = createContext({});
+export const AuthenticatedUserContext = createContext({
+  user: null,
+  setUser: () => {},
+});
 
 const AuthenticatedUserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -20,6 +23,7 @@ const AuthenticatedUserProvider = ({ children }) => {
 const RootNavigator = () => {
   const { user, setUser } = useContext(AuthenticatedUserContext);
   const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     const auth = getAuth();
     // onAuthStateChanged returns an unsubscriber

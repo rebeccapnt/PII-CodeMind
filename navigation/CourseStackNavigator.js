@@ -2,7 +2,7 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import CourseScreen from "../screens/CourseScreen";
 import SequenceScreen from "../screens/SequenceScreen";
-import ContentScreen from "../screens/ContentScreen";
+import DetailSequenceScreen from "../screens/DetailSequenceScreen";
 import QuizScreen from "../screens/QuizScreen";
 
 // Screen stack for home tab
@@ -22,8 +22,8 @@ const CourseStackNavigator = () => {
         options={{ title: "Chapitres" }}
       />
       <CourseStack.Screen
-        name="Content"
-        component={ContentScreen}
+        name="Detail"
+        component={DetailSequenceScreen}
         options={{ title: "Contenu" }}
       />
       <CourseStack.Screen

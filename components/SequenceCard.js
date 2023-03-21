@@ -8,23 +8,33 @@ import {
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-export const SequenceCard = ({ item, progress, action }) => {
+export const SequenceCard = ({ item, progress, onPress }) => {
   return (
-    <TouchableOpacity onPress={action} style={styles.card} activeOpacity={0.6}>
+    <TouchableOpacity
+      onPress={() => onPress(item)}
+      style={styles.card}
+      activeOpacity={0.6}
+    >
       <View style={styles.container}>
-        <View style={styles.circle}>
-          <Text style={styles.sequenceNumber}>{item.nbSequence}</Text>
+        <View
+          style={[
+            styles.circle,
+            {
+              backgroundColor: progress < 0 ? "green" : "silver",
+              borderColor: progress < 0 ? "darkgreen" : "lightslategrey",
+            },
+          ]}
+        >
+          {progress < 0 ? (
+            <Ionicons name="checkmark-sharp" size={24} color="#FFF" />
+          ) : (
+            <Ionicons name="checkmark-sharp" size={24} color="white" />
+          )}
         </View>
         <View style={styles.content}>
-          <Text style={styles.sequenceTitle}>{item.name}</Text>
-          {progress > 0 && (
-            <>
-              <View style={styles.progressBar}>
-                <View style={[styles.progress, { width: `${progress}%` }]} />
-              </View>
-              <Text style={styles.progressText}> {progress}%</Text>
-            </>
-          )}
+          <Text style={[styles.sequenceTitle, { marginLeft: 16 }]}>
+            {item.nbSequence}. {item.name}
+          </Text>
         </View>
         <Ionicons name="chevron-forward" size={24} color="#335296" />
       </View>
@@ -57,12 +67,11 @@ const styles = StyleSheet.create({
       ) / 2,
     width: Dimensions.get("window").width * 0.12,
     height: Dimensions.get("window").width * 0.12,
-    backgroundColor: "white",
+    backgroundColor: "green",
     justifyContent: "center",
     alignItems: "center",
     marginRight: 16,
-    borderWidth: 3,
-    borderColor: "#335296",
+    borderWidth: 2,
   },
   sequenceNumber: {
     color: "#335296",
@@ -78,25 +87,5 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     marginVertical: 4,
     color: "#335296",
-  },
-  progressBar: {
-    flexDirection: "row",
-    alignItems: "center",
-    height: 8,
-    backgroundColor: "#ddd",
-    borderRadius: 8,
-    overflow: "hidden",
-    marginTop: 5,
-  },
-  progress: {
-    height: 8,
-    backgroundColor: "#ff6d0b",
-  },
-  progressText: {
-    color: "#335296",
-    fontSize: 13,
-    fontWeight: "600",
-    textAlign: "right",
-    paddingTop: 5,
   },
 });

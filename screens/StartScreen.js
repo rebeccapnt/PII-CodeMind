@@ -4,7 +4,7 @@ import ChoiceAnswer from "../components/ChoiceAnswer";
 import Question from "../components/Question";
 import { LinearGradient } from "expo-linear-gradient";
 
-const QuizScreen = ({ navigation }) => {
+const StartScreen = ({ navigation }) => {
   return (
     //Ici,page détail avec description, s'affiche uniquement s'il n'a pas encore commencé le cours
     <View style={styles.container}>
@@ -29,4 +29,4 @@ const styles = StyleSheet.create({
     height: 100,
   },
 });
-export default QuizScreen;
+export default StartScreen;
