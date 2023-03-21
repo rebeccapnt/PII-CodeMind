@@ -1,11 +1,11 @@
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 
 export const ChoiceAnswer = ({ answer }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.button} onPress={() => {}} key={"test"}>
-        <Text style={styles.textAnswer}>{answer}</Text>
+        <Text style={styles.textAnswer}> {answer} </Text>
       </TouchableOpacity>
     </View>
   );

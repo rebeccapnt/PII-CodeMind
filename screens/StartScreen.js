@@ -5,6 +5,10 @@ import { Button } from "../components/Button";
 const StartScreen = ({ navigation, route }) => {
   const { sequenceId } = route.params;
 
+  const onPressStart = () => {
+    navigation.navigate("Quiz");
+  };
+
   return (
     <ImageBackground
       source={require("../assets/quiz-bg.png")}
@@ -17,7 +21,7 @@ const StartScreen = ({ navigation, route }) => {
           source={require("../assets/romy/romyhappy.png")}
         />
         <Text>Es-tu prêt à démarrer le quiz ? </Text>
-        <Button text="Commencer >" action="Sequence" />
+        <Button text="Commencer >" action={() => onPressStart()} />
         <Button text="< Retour au cours" action="Sequence" />
       </View>
     </ImageBackground>

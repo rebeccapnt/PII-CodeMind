@@ -16,11 +16,11 @@ const QuizScreen = ({ navigation }) => {
           source={require("../assets/romy/romysmile.png")}
         />
       </View>
-      <Question content="Quel est le mot clé utilisé pour commencer une boucle for en PHP ?" />
-      <ChoiceAnswer answer="for" />
+      {/* <Question content="Quel est le mot clé utilisé pour commencer une boucle for en PHP ?" /> */}
+      {/* <ChoiceAnswer answer="for" />
       <ChoiceAnswer answer="foreach" />
       <ChoiceAnswer answer="while" />
-      <ChoiceAnswer answer="do while" />
+      <ChoiceAnswer answer="do while" /> */}
     </ImageBackground>
   );
 };
