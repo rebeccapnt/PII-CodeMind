@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View, Text, ImageBackground } from "react-native";
 import { SequencesServices } from "../services/SequencesServices";
+import { Button } from "../components/Button";
 
 const DetailSequenceScreen = ({ navigation, route }) => {
   const { sequenceId } = route.params;
@@ -20,6 +21,11 @@ const DetailSequenceScreen = ({ navigation, route }) => {
   useEffect(() => {
     loadSequence();
   }, []);
+
+  const onPressQuiz = (sequence) => {
+    navigation.navigate("Start", { sequenceId: sequence.id });
+  };
+
   return (
     <ImageBackground
       source={require("../assets/home.png")}
@@ -27,6 +33,9 @@ const DetailSequenceScreen = ({ navigation, route }) => {
       style={styles.container}
     >
       <Text>{sequence.name}</Text>
+      <View>
+        <Button text="Faire le quiz" action={() => onPressQuiz(sequence)} />
+      </View>
     </ImageBackground>
   );
 };

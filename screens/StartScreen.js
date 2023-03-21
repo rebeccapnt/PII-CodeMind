@@ -1,20 +1,26 @@
-import { StyleSheet, View, Text, Image } from "react-native";
+import { StyleSheet, View, Text, Image, ImageBackground } from "react-native";
 import React from "react";
-import ChoiceAnswer from "../components/ChoiceAnswer";
-import Question from "../components/Question";
-import { LinearGradient } from "expo-linear-gradient";
+import { Button } from "../components/Button";
 
-const StartScreen = ({ navigation }) => {
+const StartScreen = ({ navigation, route }) => {
+  const { sequenceId } = route.params;
+
   return (
-    //Ici,page détail avec description, s'affiche uniquement s'il n'a pas encore commencé le cours
-    <View style={styles.container}>
-      <Image
-        style={styles.logo}
-        source={require("../assets/romy/romyhappy.png")}
-      />
-      <Text>Es-tu prêt à démarrer le cours ? </Text>
-      <Button text="Commencer >" action="Sequence" />
-    </View>
+    <ImageBackground
+      source={require("../assets/quiz-bg.png")}
+      resizeMode="cover"
+      style={styles.container}
+    >
+      <View style={styles.container}>
+        <Image
+          style={styles.logo}
+          source={require("../assets/romy/romyhappy.png")}
+        />
+        <Text>Es-tu prêt à démarrer le quiz ? </Text>
+        <Button text="Commencer >" action="Sequence" />
+        <Button text="< Retour au cours" action="Sequence" />
+      </View>
+    </ImageBackground>
   );
 };
 
