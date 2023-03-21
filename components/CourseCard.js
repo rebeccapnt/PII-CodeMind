@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { IMAGES_PATH } from "./globals";
 
 export const CourseCard = ({ item, onPress }) => {
-  const image = item.image;
   return (
     <TouchableOpacity
       onPress={() => onPress(item)}

@@ -10,12 +10,13 @@ import {
 import React, { useState, useEffect } from "react";
 import { FlatList } from "react-native-gesture-handler";
 import { getAuth } from "firebase/auth";
-import firebase from "../services/firebaseConfig.js";
+import { CoursesServices } from "../services/CoursesServices";
 import { HomeCard } from "../components/HomeCard";
 
 const HomeScreen = ({ navigation }) => {
   const [user, setUser] = useState(null);
   const [bestCourses, setBestCourses] = useState([]);
+  const [error, setError] = useState(false);
 
   const auth = getAuth();
   useEffect(() => {
@@ -26,24 +27,24 @@ const HomeScreen = ({ navigation }) => {
     return subscriber;
   }, []);
 
-  useEffect(() => {
-    const fetchBestCourses = async () => {
-      // récupérer une référence à la collection "cours"
-      const coursesCollection = firebase.db.collection("courses");
-      // trier les cours par ordre décroissant de nbReadings et récupérer les trois premières
-      const snapshot = await coursesCollection
-        .orderBy("nbReadings", "desc")
-        .limit(3)
-        .get();
-      const bestCoursesList = [];
-      snapshot.forEach((doc) => {
-        bestCoursesList.push(doc.data());
-      });
-      setBestCourses(bestCoursesList);
-    };
+  const loadBestsCourses = async () => {
+    try {
+      const bestCourses = await CoursesServices.fetchBestsCourses();
+      console.log(bestCourses);
+      setBestCourses(bestCourses);
+    } catch (error) {
+      console.error(error);
+      setError(true);
+    }
+  };
 
-    fetchBestCourses();
+  useEffect(() => {
+    loadBestsCourses();
   }, []);
+
+  const onPressCourse = (course) => {
+    navigation.navigate("Sequence", { courseId: course.id });
+  };
 
   return (
     <View style={styles.container}>
@@ -74,11 +75,11 @@ const HomeScreen = ({ navigation }) => {
               </TouchableOpacity>
             </View>
             <View style={styles.contentCourses}>
-              {/* Ici mettre formations de l'utilisateur, le voir tout ramène au profil ? */}
-              <HomeCard
+              {/* Ici mettre formations de l'utilisateur, le voir tout ramène au profil */}
+              {/* <HomeCard
                 action={() => navigation.navigate("Apprendre")}
                 progress="80"
-              />
+              /> */}
             </View>
             <View style={styles.bestCourses}>
               <Text style={styles.bestTitle}>Les cours populaires</Text>
@@ -93,13 +94,9 @@ const HomeScreen = ({ navigation }) => {
                 nestedScrollEnabled
                 data={bestCourses}
                 showsVerticalScrollIndicator={false}
-                keyExtractor={(item) => item.courseId}
+                keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
-                  <HomeCard
-                    item={item}
-                    action={() => navigation.navigate("Apprendre")}
-                    progress="25"
-                  />
+                  <HomeCard item={item} onPress={() => onPressCourse(item)} />
                 )}
               />
             </View>

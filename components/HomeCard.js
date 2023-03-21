@@ -3,25 +3,30 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { IMAGES_PATH } from "./globals";
 
-export const HomeCard = ({ action, progress }) => {
+export const HomeCard = ({ item, onPress }) => {
+  const progress = 45;
   return (
-    <TouchableOpacity onPress={action} style={styles.card} activeOpacity={0.6}>
-      <View style={styles.container}>
-        <Image source={IMAGES_PATH.iconJava} style={styles.logo} />
-        <View style={styles.content}>
-          <Text style={styles.title}>Les bases de Java</Text>
-          <Text style={styles.details}>
-            28 <Ionicons name="book" size={13} /> | chapitres{" "}
-            <Ionicons name="library" size={15} />
-          </Text>
-          <View style={styles.progressBar}>
-            <View style={[styles.progress, { width: `${progress}%` }]} />
-          </View>
-          <Text style={styles.progressText}> {progress}%</Text>
+    // <TouchableOpacity
+    //   onPress={() => onPress(item)}
+    //   style={styles.card}
+    //   activeOpacity={0.6}
+    // >
+    <View style={styles.container}>
+      <Image source={IMAGES_PATH[item.image]} style={styles.logo} />
+      <View style={styles.content}>
+        <Text style={styles.title}>{item.name}</Text>
+        <Text style={styles.details}>
+          {item.nbSequences} <Ionicons name="book" size={13} /> | chapitres{" "}
+          <Ionicons name="library" size={15} />
+        </Text>
+        <View style={styles.progressBar}>
+          <View style={[styles.progress, { width: `${progress}%` }]} />
         </View>
-        <Ionicons name="chevron-forward" size={24} color="#335296" />
+        <Text style={styles.progressText}> {progress}%</Text>
       </View>
-    </TouchableOpacity>
+      {/* <Ionicons name="chevron-forward" size={24} color="#335296" /> */}
+    </View>
+    // </TouchableOpacity>
   );
 };
 

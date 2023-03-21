@@ -18,7 +18,6 @@ const CourseScreen = ({ navigation }) => {
   const loadCourses = async () => {
     try {
       const courses = await CoursesServices.fetchCourses();
-      console.log(courses);
       setCourses(courses);
     } catch (error) {
       console.error(error);

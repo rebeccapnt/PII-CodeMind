@@ -19,7 +19,7 @@ const CourseStackNavigator = () => {
       <CourseStack.Screen
         name="Sequence"
         component={SequenceScreen}
-        options={{ title: "Découverte PHP" }}
+        options={{ title: "Chapitres" }}
       />
       <CourseStack.Screen
         name="Content"
