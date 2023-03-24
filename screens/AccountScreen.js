@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   Dimensions,
   TouchableHighlight,
@@ -10,9 +10,26 @@ import {
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { AuthenticatedUserContext } from "../App.js";
+import { UserServices } from "../services/UserServices";
 
 const AccountScreen = ({ navigation }) => {
+  const [userAuth, setUserAuth] = useState();
+  const [error, setError] = useState(false);
   const { user } = useContext(AuthenticatedUserContext);
+
+  const loadUser = async () => {
+    try {
+      const userAuth = await UserServices.getUser(user.email);
+      setUserAuth(userAuth);
+    } catch (error) {
+      console.error(error);
+      setError(true);
+    }
+  };
+
+  useEffect(() => {
+    loadUser();
+  }, []);
 
   return (
     <ImageBackground
@@ -25,7 +42,9 @@ const AccountScreen = ({ navigation }) => {
           <TouchableHighlight style={styles.circle}>
             <Text style={styles.nicknameInitial}> RP</Text>
           </TouchableHighlight>
-          <Text style={styles.userName}>{user.email}</Text>
+          <Text style={styles.userName}>
+            {userAuth ? userAuth.nickname : ""}
+          </Text>
           <Text style={styles.subtitle}>Actif depuis le 3 février 2023.</Text>
           <View style={styles.cardResume}>
             <View style={[styles.section, { backgroundColor: "#e17618" }]}>

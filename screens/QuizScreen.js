@@ -1,9 +1,14 @@
 import { StyleSheet, View, Text, Image, ImageBackground } from "react-native";
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import ChoiceAnswer from "../components/ChoiceAnswer";
 import Question from "../components/Question";
 
 const QuizScreen = ({ navigation }) => {
+
+  useLayoutEffect(() => {
+    navigation.setOptions({ headerShown: false });
+  }, [navigation]);
+  
   return (
     <ImageBackground
       source={require("../assets/quiz-bg.png")}

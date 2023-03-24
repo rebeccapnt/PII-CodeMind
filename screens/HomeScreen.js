@@ -68,6 +68,7 @@ const HomeScreen = ({ navigation }) => {
           <View style={styles.main}>
             <View style={styles.bestCourses}>
               <Text style={styles.bestTitle}>Continuer mes cours</Text>
+              {/* Penser à ne pas les mettre si aucuncours commencé, et mettre un message  */}
               <TouchableOpacity
                 onPress={() => navigation.navigate("Apprendre")}
               >

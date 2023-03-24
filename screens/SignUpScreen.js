@@ -31,7 +31,7 @@ const SignUpScreen = ({ navigation }) => {
     if (email !== "" && password !== "") {
       // Récupération de l'objet d'authentification Firebase et appel de la fonction createUserWithEmailAndPassword pour créer un nouvel utilisateur
       const auth = getAuth();
-      createUserWithEmailAndPassword(auth, email, password)
+      createUserWithEmailAndPassword(auth, email.toLowerCase(), password)
         .then(async (userCredential) => {
           // Récupération de l'objet utilisateur
           const user = userCredential.user;

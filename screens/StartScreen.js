@@ -1,5 +1,5 @@
 import { StyleSheet, View, Text, Image, ImageBackground } from "react-native";
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import { Button } from "../components/Button";
 
 const StartScreen = ({ navigation, route }) => {
@@ -8,6 +8,9 @@ const StartScreen = ({ navigation, route }) => {
   const onPressStart = () => {
     navigation.navigate("Quiz");
   };
+  useLayoutEffect(() => {
+    navigation.setOptions({ headerShown: false });
+  }, [navigation]);
 
   return (
     <ImageBackground
@@ -22,7 +25,7 @@ const StartScreen = ({ navigation, route }) => {
         />
         <Text>Es-tu prêt à démarrer le quiz ? </Text>
         <Button text="Commencer >" action={() => onPressStart()} />
-        <Button text="< Retour au cours" action="Sequence" />
+        <Button text="< Retour au cours" action={() => navigation.goBack()} />
       </View>
     </ImageBackground>
   );

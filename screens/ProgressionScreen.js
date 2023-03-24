@@ -10,6 +10,10 @@ const ProgressionScreen = () => {
     >
       <View style={styles.main}>
         <Text> ProgressionScreen </Text>
+        {/* Mettre la date actuelle en haut à droite
+        peut etre le nombre de fois qu'il a lu un cours / Fait un quiz
+        Penser à faire la distinction sur la page si pas de cours commencé
+        Peut être mettre un nombre de pièce?*/}
       </View>
     </ImageBackground>
   );
