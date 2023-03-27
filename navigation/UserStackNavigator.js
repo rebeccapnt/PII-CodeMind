@@ -2,6 +2,7 @@ import * as React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AccountScreen from "../screens/AccountScreen";
 import SettingsScreen from "../screens/SettingsScreen";
+import LoginScreen from "../screens/LoginScreen";
 
 import { Ionicons } from "@expo/vector-icons";
 
@@ -37,6 +38,7 @@ const UserStackNavigator = ({ navigation }) => {
         component={SettingsScreen}
         options={{ title: "Paramètres" }}
       />
+      <UserStack.Screen name="Login" component={LoginScreen} />
     </UserStack.Navigator>
   );
 };

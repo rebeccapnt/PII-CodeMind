@@ -24,7 +24,7 @@ const LoginScreen = ({ navigation }) => {
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           const user = userCredential.user;
-          navigation.navigate("Accueil"); // Redirection vers l'écran "Accueil" si la connexion a été effectuée
+          navigation.navigate("Home"); // Redirection vers l'écran "Accueil" si la connexion a été effectuée
         })
         .catch((error) => {
           // Si la connexion échoue, récupère l'objet d'erreur

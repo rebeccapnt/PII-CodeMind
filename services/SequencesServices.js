@@ -11,6 +11,7 @@ export const SequencesServices = {
         throw new Error(`Cours avec l'id ${courseId} n'existe pas.`);
       }
 
+      const courseData = courseDoc.data();
       const courseRef = courseDoc.ref;
       const sequencesCollection = firebase.db.collection("sequences");
       const snapshot = await sequencesCollection
@@ -21,10 +22,11 @@ export const SequencesServices = {
         sequence.id = doc.id;
         return sequence;
       });
-      return sequencesList;
+      sequencesList.sort((a, b) => a.nbSequence - b.nbSequence); //Trie des séquences en fonction du numéro de séquence
+      return { courseName: courseData.name, sequencesList }; // Retourne le nom du cours ainsi que la liste des séquences
     } catch (error) {
       console.error(error);
-      throw new Error("Erreur dans la récupération des cours");
+      throw new Error("Erreur dans la récupération des séquences");
     }
   },
 

@@ -50,7 +50,7 @@ const SignUpScreen = ({ navigation }) => {
             .catch((error) => console.error(error));
         })
         .then(() => {
-          navigation.navigate("Accueil"); // Redirection vers la page d'accueil si tout s'est bien passé
+          navigation.navigate("Home"); // Redirection vers la page d'accueil si tout s'est bien passé
         })
         .catch((err) => Alert.alert("Erreur de connexion :", err.message)); // Affichage d'une alerte en cas d'erreur de connexion
     } else {

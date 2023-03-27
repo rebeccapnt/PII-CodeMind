@@ -17,4 +17,18 @@ export const UserServices = {
       throw new Error("Erreur dans la récupération de l'utilisateur connecté");
     }
   },
+
+  async getCoursesUser(idUser) {
+    try {
+      const workflowCollection = await firebase.db
+        .collection("workflow")
+        .where("email", "==", email)
+        .get();
+
+      return userDoc ? userDoc.data() : null;
+    } catch (error) {
+      console.error(error);
+      throw new Error("Erreur dans la récupération des cours de l'utilisateur");
+    }
+  },
 };

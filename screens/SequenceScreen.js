@@ -13,12 +13,14 @@ import { SequencesServices } from "../services/SequencesServices";
 const SequenceScreen = ({ route, navigation }) => {
   const { courseId } = route.params;
   const [sequences, setSequences] = useState([]);
+  const [courseName, setCourseName] = useState();
   const [error, setError] = useState(false);
 
   const loadSequences = async () => {
     try {
       const sequences = await SequencesServices.fetchSequences(courseId);
-      setSequences(sequences);
+      setSequences(sequences.sequencesList);
+      setCourseName(sequences.courseName);
     } catch (error) {
       console.error(error);
       setError(true);
@@ -44,7 +46,7 @@ const SequenceScreen = ({ route, navigation }) => {
           style={styles.logo}
           source={require("../assets/romy/romyhappyfilled.png")}
         />
-        <Text style={styles.headerTitle}>Cours de PHP</Text>
+        <Text style={styles.headerTitle}>{courseName}</Text>
         <Text style={styles.headerSubtitle}>
           Voici à ta disposition tous les chapitres de ce cours.
         </Text>
