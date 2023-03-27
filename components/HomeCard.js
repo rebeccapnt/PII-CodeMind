@@ -16,8 +16,9 @@ export const HomeCard = ({ item, onPress }) => {
       <View style={styles.content}>
         <Text style={styles.title}>{item.name}</Text>
         <Text style={styles.details}>
-          {item.nbSequences} <Ionicons name="book" size={13} /> | chapitres{" "}
-          <Ionicons name="library" size={15} />
+          {item.nbSequences}
+          <Ionicons name="library" size={14} /> chapitres | {item.nbReadings}
+          <Ionicons name="book" size={12} /> lectures
         </Text>
         <View style={styles.progressBar}>
           <View style={[styles.progress, { width: `${progress}%` }]} />

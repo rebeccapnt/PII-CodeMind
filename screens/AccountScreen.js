@@ -8,12 +8,15 @@ import {
   View,
   ImageBackground,
 } from "react-native";
+import { FlatList } from "react-native-gesture-handler";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { AuthenticatedUserContext } from "../App.js";
 import { UserServices } from "../services/UserServices";
+import { HomeCard } from "../components/HomeCard";
 
 const AccountScreen = ({ navigation }) => {
   const [userAuth, setUserAuth] = useState();
+  const [coursesStarted, setCoursesStarted] = useState([]);
   const [error, setError] = useState(false);
   const { user } = useContext(AuthenticatedUserContext);
 
@@ -27,8 +30,21 @@ const AccountScreen = ({ navigation }) => {
     }
   };
 
+  const loadCoursesStarted = async () => {
+    try {
+      const coursesStarted = await UserServices.getCoursesStartedByUser(
+        user.email
+      );
+      setCoursesStarted(coursesStarted);
+    } catch (error) {
+      console.error(error);
+      setError(true);
+    }
+  };
+
   useEffect(() => {
     loadUser();
+    loadCoursesStarted();
   }, []);
 
   return (
@@ -40,7 +56,7 @@ const AccountScreen = ({ navigation }) => {
       <ScrollView style={styles.container}>
         <View style={styles.header}>
           <TouchableHighlight style={styles.circle}>
-            <Text style={styles.nicknameInitial}> RP</Text>
+            <Text style={styles.nicknameInitial}> RP </Text>
           </TouchableHighlight>
           <Text style={styles.userName}>
             {userAuth ? userAuth.nickname : ""}
@@ -87,6 +103,17 @@ const AccountScreen = ({ navigation }) => {
           <View>
             <Text style={styles.title}>Cours commencé(s)</Text>
             {/* Mettre ici un scrollview horizontal avec les courses commencés (attention ceux commencé et pas terminés, faire ça dans un autre scrollview) */}
+            <View style={styles.contentCourses}>
+              <FlatList
+                nestedScrollEnabled
+                data={coursesStarted}
+                showsVerticalScrollIndicator={false}
+                keyExtractor={(item) => item.id}
+                renderItem={({ item }) => (
+                  <HomeCard item={item} onPress={() => onPressCourse(item)} />
+                )}
+              />
+            </View>
           </View>
         </View>
       </ScrollView>

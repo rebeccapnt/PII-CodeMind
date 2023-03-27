@@ -11,24 +11,46 @@ export const UserServices = {
       // Renvoie le premier document de Firebase
       const userDoc = userCollection.docs[0];
       // Si le document existe, renvoie ses données, sinon renvoie null
-      return userDoc ? userDoc.data() : null;
+      return userDoc ? { Id: userDoc.id, ...userDoc.data() } : null;
     } catch (error) {
       console.error(error);
       throw new Error("Erreur dans la récupération de l'utilisateur connecté");
     }
   },
 
-  async getCoursesUser(idUser) {
+  //Récupère les courses commencées par l'utilisateur connecté
+
+  async getCoursesStartedByUser(email) {
     try {
-      const workflowCollection = await firebase.db
-        .collection("workflow")
-        .where("email", "==", email)
+      const user = await UserServices.getUser(email);
+      const userRef = firebase.db.doc(`users/${user.Id}`);
+      const workflowCollection = firebase.db.collection("workflow");
+      const snapshot = await workflowCollection
+        .where("user", "==", userRef)
         .get();
 
-      return userDoc ? userDoc.data() : null;
+      const workflowList = snapshot.docs.map((doc) => {
+        const workflow = doc.data();
+        workflow.id = doc.id;
+        return workflow;
+      });
+      // Récupération des références aux cours
+      const courseRefs = workflowList.map((workflow) => workflow.course);
+
+      // Récupération des documents des cours
+      const courseDocs = await Promise.all(courseRefs.map((ref) => ref.get()));
+      const coursesList = courseDocs.map((doc) => {
+        const course = doc.data();
+        course.id = doc.id;
+        return course;
+      });
+
+      return coursesList;
     } catch (error) {
       console.error(error);
-      throw new Error("Erreur dans la récupération des cours de l'utilisateur");
+      throw new Error(
+        "Erreur dans la récupération des cours commencés par l'utilisateur"
+      );
     }
   },
 };

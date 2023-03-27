@@ -30,7 +30,6 @@ const HomeScreen = ({ navigation }) => {
   const loadBestsCourses = async () => {
     try {
       const bestCourses = await CoursesServices.fetchBestsCourses();
-      console.log(bestCourses);
       setBestCourses(bestCourses);
     } catch (error) {
       console.error(error);
@@ -90,7 +89,7 @@ const HomeScreen = ({ navigation }) => {
                 <Text style={styles.seeAllCourses}>Voir tout</Text>
               </TouchableOpacity>
             </View>
-            <View style={styles.contentCourses}>
+            <View>
               <FlatList
                 nestedScrollEnabled
                 data={bestCourses}
