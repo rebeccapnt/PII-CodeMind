@@ -11,10 +11,12 @@ import React, { useState, useEffect } from "react";
 import { FlatList } from "react-native-gesture-handler";
 import { getAuth } from "firebase/auth";
 import { CoursesServices } from "../services/CoursesServices";
+import { UserServices } from "../services/UserServices";
 import { HomeCard } from "../components/HomeCard";
 
 const HomeScreen = ({ navigation }) => {
   const [user, setUser] = useState(null);
+  const [coursesStarted, setCoursesStarted] = useState([]);
   const [bestCourses, setBestCourses] = useState([]);
   const [error, setError] = useState(false);
 
@@ -27,6 +29,18 @@ const HomeScreen = ({ navigation }) => {
     return subscriber;
   }, []);
 
+  const loadCoursesStarted = async () => {
+    try {
+      const coursesStarted = await UserServices.getCoursesStartedByUser(
+        user.email
+      );
+      setCoursesStarted(coursesStarted);
+    } catch (error) {
+      console.error(error);
+      setError(true);
+    }
+  };
+
   const loadBestsCourses = async () => {
     try {
       const bestCourses = await CoursesServices.fetchBestsCourses();
@@ -38,6 +52,7 @@ const HomeScreen = ({ navigation }) => {
   };
 
   useEffect(() => {
+    loadCoursesStarted();
     loadBestsCourses();
   }, []);
 
@@ -69,22 +84,26 @@ const HomeScreen = ({ navigation }) => {
               <Text style={styles.bestTitle}>Continuer mes cours</Text>
               {/* Penser à ne pas les mettre si aucuncours commencé, et mettre un message  */}
               <TouchableOpacity
-                onPress={() => navigation.navigate("Apprendre")}
+                onPress={() => navigation.navigate("Progression")}
               >
                 <Text style={styles.seeAllCourses}>Voir tout</Text>
               </TouchableOpacity>
             </View>
-            <View style={styles.contentCourses}>
-              {/* Ici mettre formations de l'utilisateur, le voir tout ramène au profil */}
-              {/* <HomeCard
-                action={() => navigation.navigate("Apprendre")}
-                progress="80"
-              /> */}
+            <View>
+              <FlatList
+                nestedScrollEnabled
+                data={coursesStarted}
+                showsVerticalScrollIndicator={false}
+                keyExtractor={(item) => item.id}
+                renderItem={({ item }) => (
+                  <HomeCard item={item} onPress={() => onPressCourse(item)} />
+                )}
+              />
             </View>
             <View style={styles.bestCourses}>
               <Text style={styles.bestTitle}>Les cours populaires</Text>
               <TouchableOpacity
-                onPress={() => navigation.navigate("Apprendre")}
+                onPress={() => navigation.navigate("Learn")}
               >
                 <Text style={styles.seeAllCourses}>Voir tout</Text>
               </TouchableOpacity>
