@@ -6,28 +6,28 @@ import { IMAGES_PATH } from "./globals";
 export const HomeCard = ({ item, onPress }) => {
   const progress = 45;
   return (
-    // <TouchableOpacity
-    //   onPress={() => onPress(item)}
-    //   style={styles.card}
-    //   activeOpacity={0.6}
-    // >
-    <View style={styles.container}>
-      <Image source={IMAGES_PATH[item.image]} style={styles.logo} />
-      <View style={styles.content}>
-        <Text style={styles.title}>{item.name}</Text>
-        <Text style={styles.details}>
-          {item.nbSequences}
-          <Ionicons name="library" size={14} /> chapitres | {item.nbReadings}
-          <Ionicons name="book" size={12} /> lectures
-        </Text>
-        <View style={styles.progressBar}>
-          <View style={[styles.progress, { width: `${progress}%` }]} />
+    <TouchableOpacity
+      onPress={() => onPress(item)}
+      style={styles.card}
+      activeOpacity={0.6}
+    >
+      <View style={styles.container}>
+        <Image source={IMAGES_PATH[item.image]} style={styles.logo} />
+        <View style={styles.content}>
+          <Text style={styles.title}>{item.name}</Text>
+          <Text style={styles.details}>
+            {item.nbSequences}
+            <Ionicons name="library" size={14} /> chapitres | {item.nbReadings}
+            <Ionicons name="book" size={12} /> lectures
+          </Text>
+          <View style={styles.progressBar}>
+            <View style={[styles.progress, { width: `${progress}%` }]} />
+          </View>
+          <Text style={styles.progressText}> {progress}%</Text>
         </View>
-        <Text style={styles.progressText}> {progress}%</Text>
+        <Ionicons name="chevron-forward" size={24} color="#335296" />
       </View>
-      {/* <Ionicons name="chevron-forward" size={24} color="#335296" /> */}
-    </View>
-    // </TouchableOpacity>
+    </TouchableOpacity>
   );
 };
 

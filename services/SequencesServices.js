@@ -23,7 +23,7 @@ export const SequencesServices = {
         return sequence;
       });
       sequencesList.sort((a, b) => a.nbSequence - b.nbSequence); //Trie des séquences en fonction du numéro de séquence
-      return { courseName: courseData.name, sequencesList }; // Retourne le nom du cours ainsi que la liste des séquences
+      return { course: courseData, sequencesList }; // Retourne le cours ainsi que la liste des séquences
     } catch (error) {
       console.error(error);
       throw new Error("Erreur dans la récupération des séquences");

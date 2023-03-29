@@ -25,16 +25,24 @@ const HomeScreen = ({ navigation }) => {
     const subscriber = auth.onAuthStateChanged((user) => {
       setUser(user);
     });
-
     return subscriber;
   }, []);
 
+  useEffect(() => {
+    if (user) {
+      loadCoursesStarted();
+      loadBestsCourses();
+    }
+  }, [user]);
+
   const loadCoursesStarted = async () => {
     try {
-      const coursesStarted = await UserServices.getCoursesStartedByUser(
-        user.email
-      );
-      setCoursesStarted(coursesStarted);
+      if (user) {
+        const coursesStarted = await UserServices.getCoursesStartedByUser(
+          user.email
+        );
+        setCoursesStarted(coursesStarted);
+      }
     } catch (error) {
       console.error(error);
       setError(true);
@@ -51,18 +59,12 @@ const HomeScreen = ({ navigation }) => {
     }
   };
 
-  useEffect(() => {
-    loadCoursesStarted();
-    loadBestsCourses();
-  }, []);
-
   const onPressCourse = (course) => {
     navigation.navigate("Sequence", { courseId: course.id });
   };
 
   return (
     <View style={styles.container}>
-      {/* <Text>Bonjour {user.email}</Text> */}
       <ImageBackground
         source={require("../assets/home.png")}
         resizeMode="cover"
@@ -90,20 +92,25 @@ const HomeScreen = ({ navigation }) => {
               </TouchableOpacity>
             </View>
             <View>
-              <FlatList
-                nestedScrollEnabled
-                data={coursesStarted}
-                showsVerticalScrollIndicator={false}
-                keyExtractor={(item) => item.id}
-                renderItem={({ item }) => (
-                  <HomeCard item={item} onPress={() => onPressCourse(item)} />
-                )}
-              />
+              {coursesStarted ? (
+                <FlatList
+                  nestedScrollEnabled
+                  data={coursesStarted}
+                  showsVerticalScrollIndicator={false}
+                  keyExtractor={(item) => item.id}
+                  renderItem={({ item }) => (
+                    <HomeCard item={item} onPress={() => onPressCourse(item)} />
+                  )}
+                />
+              ) : (
+                <ActivityIndicator size="large" />
+              )}
             </View>
+
             <View style={styles.bestCourses}>
               <Text style={styles.bestTitle}>Les cours populaires</Text>
               <TouchableOpacity
-                onPress={() => navigation.navigate("Learn")}
+                onPress={() => navigation.navigate("Apprendre")}
               >
                 <Text style={styles.seeAllCourses}>Voir tout</Text>
               </TouchableOpacity>

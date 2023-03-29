@@ -20,7 +20,7 @@ const SequenceScreen = ({ route, navigation }) => {
     try {
       const sequences = await SequencesServices.fetchSequences(courseId);
       setSequences(sequences.sequencesList);
-      setCourseName(sequences.courseName);
+      setCourseName(sequences.course.name);
     } catch (error) {
       console.error(error);
       setError(true);
@@ -32,7 +32,10 @@ const SequenceScreen = ({ route, navigation }) => {
   }, []);
 
   const onPressSequence = (sequence) => {
-    navigation.navigate("Detail", { sequenceId: sequence.id });
+    navigation.navigate("Detail", {
+      sequenceId: sequence.id,
+      courseId: courseId,
+    });
   };
 
   return (

@@ -1,16 +1,40 @@
 import { StyleSheet, View, Text, Image, ImageBackground } from "react-native";
-import React, { useLayoutEffect } from "react";
+import React, { useLayoutEffect, useState, useEffect } from "react";
 import { Button } from "../components/Button";
+import { WorkflowsServices } from "../services/WorkflowsServices";
+import { getAuth } from "firebase/auth";
 
 const StartScreen = ({ navigation, route }) => {
-  const { sequenceId } = route.params;
+  const { sequenceId, courseId } = route.params;
+  const [workflow, setWorkflow] = useState(null);
+  const [user, setUser] = useState(null);
 
-  const onPressStart = () => {
-    navigation.navigate("Quiz");
-  };
+  const auth = getAuth();
+
+  useEffect(() => {
+    const subscriber = auth.onAuthStateChanged((user) => {
+      setUser(user);
+    });
+    return subscriber;
+  }, []);
+
   useLayoutEffect(() => {
     navigation.setOptions({ headerShown: false });
   }, [navigation]);
+
+  const onPressStart = async () => {
+    try {
+      const workflow = await WorkflowsServices.createWorkflow(
+        sequenceId,
+        courseId,
+        user.uid
+      );
+      setWorkflow(workflow);
+    } catch (error) {
+      console.error(error);
+      setError(true);
+    }
+  };
 
   return (
     <ImageBackground
@@ -23,7 +47,8 @@ const StartScreen = ({ navigation, route }) => {
           style={styles.logo}
           source={require("../assets/romy/romyhappy.png")}
         />
-        <Text>Es-tu prêt à démarrer le quiz ? </Text>
+        <Text>Es-tu prêt à démarrer le quiz ?</Text>
+        {/* Dire vous n'avez pasdetemps limité etc permet de voir si t'as bien compris le cours */}
         <Button text="Commencer >" action={() => onPressStart()} />
         <Button text="< Retour au cours" action={() => navigation.goBack()} />
       </View>

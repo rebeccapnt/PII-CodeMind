@@ -4,7 +4,7 @@ import { SequencesServices } from "../services/SequencesServices";
 import { Button } from "../components/Button";
 
 const DetailSequenceScreen = ({ navigation, route }) => {
-  const { sequenceId } = route.params;
+  const { sequenceId, courseId } = route.params;
   const [sequence, setSequence] = useState([]);
   const [error, setError] = useState(false);
 
@@ -23,7 +23,12 @@ const DetailSequenceScreen = ({ navigation, route }) => {
   }, []);
 
   const onPressQuiz = (sequence) => {
-    navigation.navigate("Start", { sequenceId: sequence.id });
+    console.log(sequence.id);
+    console.log(courseId);
+    navigation.navigate("Start", {
+      sequenceId: sequenceId,
+      courseId: courseId,
+    });
   };
 
   return (

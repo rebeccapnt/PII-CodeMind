@@ -40,7 +40,7 @@ export const UserServices = {
       // Récupération des documents des cours
       const courseDocs = await Promise.all(courseRefs.map((ref) => ref.get()));
       const coursesList = courseDocs.map((doc) => {
-        const course = doc.data();
+        const course = doc.data() || {};
         course.id = doc.id;
         return course;
       });
