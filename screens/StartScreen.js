@@ -30,6 +30,11 @@ const StartScreen = ({ navigation, route }) => {
         user.uid
       );
       setWorkflow(workflow);
+      navigation.navigate("Quiz", {
+        sequenceId: sequenceId,
+        courseId: courseId,
+        workflowId: workflow,
+      });
     } catch (error) {
       console.error(error);
       setError(true);

@@ -1,14 +1,13 @@
 import { StyleSheet, View, Text, Image, ImageBackground } from "react-native";
 import React, { useLayoutEffect } from "react";
-import ChoiceAnswer from "../components/ChoiceAnswer";
-import Question from "../components/Question";
+import { ChoiceAnswer } from "../components/ChoiceAnswer";
+import { Question } from "../components/Question";
 
 const QuizScreen = ({ navigation }) => {
-
   useLayoutEffect(() => {
     navigation.setOptions({ headerShown: false });
   }, [navigation]);
-  
+
   return (
     <ImageBackground
       source={require("../assets/quiz-bg.png")}
@@ -21,11 +20,11 @@ const QuizScreen = ({ navigation }) => {
           source={require("../assets/romy/romysmile.png")}
         />
       </View>
-      {/* <Question content="Quel est le mot clé utilisé pour commencer une boucle for en PHP ?" /> */}
-      {/* <ChoiceAnswer answer="for" />
+      <Question content="Quel est le mot clé utilisé pour commencer une boucle for en PHP ?" />
+      <ChoiceAnswer answer="for" />
       <ChoiceAnswer answer="foreach" />
       <ChoiceAnswer answer="while" />
-      <ChoiceAnswer answer="do while" /> */}
+      <ChoiceAnswer answer="do while" />
     </ImageBackground>
   );
 };

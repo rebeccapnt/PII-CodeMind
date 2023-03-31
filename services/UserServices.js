@@ -1,7 +1,7 @@
 import firebase from "./firebaseConfig.js";
 
 export const UserServices = {
-  //Récupère les informations de l'utilisateur grâce à l'adresse mail
+  //Récupération des informations de l'utilisateur grâce à l'adresse mail
   async getUser(email) {
     try {
       const userCollection = await firebase.db
@@ -18,8 +18,7 @@ export const UserServices = {
     }
   },
 
-  //Récupère les courses commencées par l'utilisateur connecté
-
+  //Récupération des cours commencés par l'utilisateur connecté
   async getCoursesStartedByUser(email) {
     try {
       const user = await UserServices.getUser(email);
@@ -27,6 +26,7 @@ export const UserServices = {
       const workflowCollection = firebase.db.collection("workflow");
       const snapshot = await workflowCollection
         .where("user", "==", userRef)
+        .limit(3)
         .get();
 
       const workflowList = snapshot.docs.map((doc) => {
@@ -34,11 +34,19 @@ export const UserServices = {
         workflow.id = doc.id;
         return workflow;
       });
-      // Récupération des références aux cours
-      const courseRefs = workflowList.map((workflow) => workflow.course);
 
-      // Récupération des documents des cours
-      const courseDocs = await Promise.all(courseRefs.map((ref) => ref.get()));
+      // Utilisation d'un Set pour stocker les références uniques aux cours
+      const courseRefs = new Set(
+        workflowList.map((workflow) => workflow.course.id)
+      );
+
+      // Récupération des documents de cours correspondant aux références uniques de cours
+      const courseDocs = await Promise.all(
+        [...courseRefs].map((courseId) =>
+          firebase.db.collection("courses").doc(courseId).get()
+        )
+      );
+
       const coursesList = courseDocs.map((doc) => {
         const course = doc.data() || {};
         course.id = doc.id;
@@ -52,5 +60,11 @@ export const UserServices = {
         "Erreur dans la récupération des cours commencés par l'utilisateur"
       );
     }
+  },
+  async getNbStartedCourses(email) {
+    //TODO
+  },
+  async getNbFinishedCourses(email) {
+    //TODO
   },
 };

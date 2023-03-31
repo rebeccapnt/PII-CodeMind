@@ -84,7 +84,6 @@ const HomeScreen = ({ navigation }) => {
           <View style={styles.main}>
             <View style={styles.bestCourses}>
               <Text style={styles.bestTitle}>Continuer mes cours</Text>
-              {/* Penser à ne pas les mettre si aucuncours commencé, et mettre un message  */}
               <TouchableOpacity
                 onPress={() => navigation.navigate("Progression")}
               >
@@ -92,18 +91,25 @@ const HomeScreen = ({ navigation }) => {
               </TouchableOpacity>
             </View>
             <View>
-              {coursesStarted ? (
+              {coursesStarted.length > 0 ? (
                 <FlatList
                   nestedScrollEnabled
                   data={coursesStarted}
                   showsVerticalScrollIndicator={false}
-                  keyExtractor={(item) => item.id}
+                  keyExtractor={(item, index) => index.toString()}
                   renderItem={({ item }) => (
                     <HomeCard item={item} onPress={() => onPressCourse(item)} />
                   )}
                 />
               ) : (
-                <ActivityIndicator size="large" />
+                <Text style={styles.noCoursesStarted}>
+                  Vous n'avez pas encore commencé un de nos cours.{" "}
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate("Apprendre")}
+                  >
+                    <Text style={styles.startNow}>Débutez maintenant !</Text>
+                  </TouchableOpacity>
+                </Text>
               )}
             </View>
 
@@ -120,7 +126,7 @@ const HomeScreen = ({ navigation }) => {
                 nestedScrollEnabled
                 data={bestCourses}
                 showsVerticalScrollIndicator={false}
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item, index) => item.id.toString()}
                 renderItem={({ item }) => (
                   <HomeCard item={item} onPress={() => onPressCourse(item)} />
                 )}
@@ -187,6 +193,18 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     marginBottom: 12,
     color: "#00216d",
+  },
+  noCoursesStarted: {
+    textAlign: "center",
+    fontSize: 14,
+    fontWeight: "400",
+    color: "#00216d",
+    marginVertical: 20,
+  },
+  startNow: {
+    color: "#ff6363",
+    fontWeight: "800",
+    marginTop: 8,
   },
 });
 export default HomeScreen;

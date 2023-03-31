@@ -6,6 +6,7 @@ import {
   Text,
   ScrollView,
   View,
+  TouchableOpacity,
   ImageBackground,
 } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
@@ -102,17 +103,27 @@ const AccountScreen = ({ navigation }) => {
         <View style={styles.main}>
           <View>
             <Text style={styles.title}>Cours commencé(s)</Text>
-            {/* Mettre ici un scrollview horizontal avec les courses commencés (attention ceux commencé et pas terminés, faire ça dans un autre scrollview) */}
             <View style={styles.contentCourses}>
-              <FlatList
-                nestedScrollEnabled
-                data={coursesStarted}
-                showsVerticalScrollIndicator={false}
-                keyExtractor={(item) => item.id}
-                renderItem={({ item }) => (
-                  <HomeCard item={item} onPress={() => onPressCourse(item)} />
-                )}
-              />
+              {coursesStarted.length > 0 ? (
+                <FlatList
+                  nestedScrollEnabled
+                  data={coursesStarted}
+                  showsVerticalScrollIndicator={false}
+                  keyExtractor={(item, index) => index.toString()}
+                  renderItem={({ item }) => (
+                    <HomeCard item={item} onPress={() => onPressCourse(item)} />
+                  )}
+                />
+              ) : (
+                <Text style={styles.noCoursesStarted}>
+                  Vous n'avez pas encore commencé un de nos cours.{" "}
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate("Apprendre")}
+                  >
+                    <Text style={styles.startNow}>Débutez maintenant !</Text>
+                  </TouchableOpacity>
+                </Text>
+              )}
             </View>
           </View>
         </View>
@@ -204,7 +215,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "500",
   },
-
   iconBackground: {
     borderRadius:
       Math.round(
@@ -215,6 +225,18 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 10,
+  },
+  noCoursesStarted: {
+    textAlign: "center",
+    fontSize: 14,
+    fontWeight: "400",
+    color: "#00216d",
+    marginVertical: 20,
+  },
+  startNow: {
+    color: "#ff6363",
+    fontWeight: "800",
+    marginTop: 8,
   },
 });
 export default AccountScreen;
