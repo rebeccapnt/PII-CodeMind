@@ -23,6 +23,7 @@
         "expo-status-bar": "~1.4.2",
         "firebase": "^9.17.1",
         "md5-file": "^5.0.0",
+        "moment": "^2.29.4",
         "react": "18.1.0",
         "react-native": "0.70.5",
         "react-native-gesture-handler": "~2.8.0",

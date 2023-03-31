@@ -5,6 +5,7 @@ import {
   ImageBackground,
   FlatList,
   Image,
+  TouchableOpacity,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { CourseCard } from "../components/CourseCard";
@@ -14,10 +15,21 @@ import { CoursesServices } from "../services/CoursesServices";
 const CourseScreen = ({ navigation }) => {
   const [courses, setCourses] = useState([]);
   const [error, setError] = useState(false);
+  const [searchText, setSearchText] = useState("");
 
   const loadCourses = async () => {
     try {
       const courses = await CoursesServices.fetchCourses();
+      setCourses(courses);
+    } catch (error) {
+      console.error(error);
+      setError(true);
+    }
+  };
+
+  const searchCourses = async (name) => {
+    try {
+      const courses = await CoursesServices.searchCourses(name);
       setCourses(courses);
     } catch (error) {
       console.error(error);
@@ -31,6 +43,20 @@ const CourseScreen = ({ navigation }) => {
 
   const onPressCourse = (course) => {
     navigation.navigate("Sequence", { courseId: course.id });
+  };
+
+  const handleSearch = (text) => {
+    setSearchText(text);
+    if (text === "") {
+      loadCourses();
+    } else {
+      searchCourses(text);
+    }
+  };
+
+  const handleReset = () => {
+    setSearchText("");
+    loadCourses();
   };
 
   return (
@@ -56,8 +82,14 @@ const CourseScreen = ({ navigation }) => {
         <Input
           style={styles.search}
           placeholder="Rechercher un cours..."
-          // onSearch={({ nativeEvent: { text } }) => loadCourses(text)}
+          value={searchText}
+          onSearch={handleSearch}
         />
+        {searchText !== "" && (
+          <TouchableOpacity onPress={handleReset}>
+            <Text style={styles.seeAllButtonText}>Voir tout</Text>
+          </TouchableOpacity>
+        )}
       </View>
       <FlatList
         style={styles.main}
@@ -88,6 +120,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     paddingVertical: 4,
+  },
+  seeAllButtonText: {
+    textAlign: "center",
+    color: "white",
+    fontWeight: "600",
   },
   content: {
     flex: 1,

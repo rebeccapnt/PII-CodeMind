@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Button } from "../components/Button";
 import { ButtonOutline } from "../components/ButtonOutline";
 import {
@@ -10,34 +10,32 @@ import {
   ImageBackground,
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { getAuth, signOut } from "firebase/auth";
+import { AuthenticatedUserContext } from "../App.js";
+import { UserServices } from "../services/UserServices";
+import { signOut } from "firebase/auth";
 
 const SettingsScreen = ({ navigation }) => {
-  const [user, setUser] = useState(null);
+  const [userAuth, setUserAuth] = useState();
 
-  const auth = getAuth();
+  const { user } = useContext(AuthenticatedUserContext);
+
+  const loadUser = async () => {
+    try {
+      const userAuth = await UserServices.getUser(user.email);
+      setUserAuth(userAuth);
+    } catch (error) {
+      console.error(error);
+      setError(true);
+    }
+  };
+
   useEffect(() => {
-    const subscriber = auth.onAuthStateChanged((user) => {
-      setUser(user);
-    });
-
-    return subscriber;
+    loadUser();
   }, []);
 
-  //Récupérer toutes les informations de l'utilisateur avec l'adresse mail :
-  useEffect(() => {
-    const fetchCourses = async () => {
-      const userCollection = firebase.db
-        .collection("users")
-        .where("email", "==", user.email);
-      const snapshot = await userCollection.get();
-      setUser(snapshot);
-    };
-
-    fetchCourses();
-  }, []);
-
-  const onUpdatePress = () => {};
+  const onUpdatePress = () => {
+    navigation.navigate("UpdateUser");
+  };
 
   const onSignOut = () => {
     // Récupération de l'objet d'authentification Firebase et appel de la fonction SignOut pour déconnecter l'utilisateur actuel
@@ -67,19 +65,19 @@ const SettingsScreen = ({ navigation }) => {
           <Text style={styles.label}>
             <Ionicons name="happy-outline" size="18" /> Surnom :
           </Text>
-          <Text style={styles.input}>rbk98</Text>
+          <Text style={styles.input}> {userAuth ? userAuth.nickname : ""}</Text>
         </View>
         <View style={styles.formGroup}>
           <Text style={styles.label}>
             <Ionicons name="mail-outline" size="18" /> Email :
           </Text>
-          {/* <Text style={styles.input}>{user.email}</Text> */}
+          <Text style={styles.input}> {userAuth ? userAuth.email : ""}</Text>
         </View>
         <View style={styles.formGroup}>
           <Text style={styles.label}>
             <Ionicons name="lock-closed-outline" size="18" /> Mot de passe :
           </Text>
-          <Text style={styles.input}>........</Text>
+          <Text style={styles.input}>{userAuth ? userAuth.password : ""}</Text>
         </View>
       </View>
       <Button text="Modifier" action={onUpdatePress} />

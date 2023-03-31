@@ -5,6 +5,7 @@ import SettingsScreen from "../screens/SettingsScreen";
 import LoginScreen from "../screens/LoginScreen";
 
 import { Ionicons } from "@expo/vector-icons";
+import UpdateUserScreen from "../screens/UpdateUserScreen";
 
 // Screen stack for home tab
 const UserStack = createNativeStackNavigator();
@@ -37,6 +38,11 @@ const UserStackNavigator = ({ navigation }) => {
         name="Settings"
         component={SettingsScreen}
         options={{ title: "Paramètres" }}
+      />
+      <UserStack.Screen
+        name="UpdateUser"
+        component={UpdateUserScreen}
+        options={{ title: "Modifier ses informations" }}
       />
       <UserStack.Screen name="Login" component={LoginScreen} />
     </UserStack.Navigator>

@@ -7,39 +7,36 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { FlatList } from "react-native-gesture-handler";
-import { getAuth } from "firebase/auth";
+import { AuthenticatedUserContext } from "../App.js";
 import { CoursesServices } from "../services/CoursesServices";
 import { UserServices } from "../services/UserServices";
 import { HomeCard } from "../components/HomeCard";
 
 const HomeScreen = ({ navigation }) => {
-  const [user, setUser] = useState(null);
+  const [userAuth, setUserAuth] = useState();
   const [coursesStarted, setCoursesStarted] = useState([]);
   const [bestCourses, setBestCourses] = useState([]);
   const [error, setError] = useState(false);
 
-  const auth = getAuth();
-  useEffect(() => {
-    const subscriber = auth.onAuthStateChanged((user) => {
-      setUser(user);
-    });
-    return subscriber;
-  }, []);
+  const { user } = useContext(AuthenticatedUserContext);
 
-  useEffect(() => {
-    if (user) {
-      loadCoursesStarted();
-      loadBestsCourses();
+  const loadUser = async () => {
+    try {
+      const userAuth = await UserServices.getUser(user.email);
+      setUserAuth(userAuth);
+    } catch (error) {
+      console.error(error);
+      setError(true);
     }
-  }, [user]);
+  };
 
   const loadCoursesStarted = async () => {
     try {
-      if (user) {
+      if (userAuth) {
         const coursesStarted = await UserServices.getCoursesStartedByUser(
-          user.email
+          userAuth.email
         );
         setCoursesStarted(coursesStarted);
       }
@@ -63,6 +60,14 @@ const HomeScreen = ({ navigation }) => {
     navigation.navigate("Sequence", { courseId: course.id });
   };
 
+  useEffect(() => {
+    loadUser();
+    if (userAuth) {
+      loadCoursesStarted();
+      loadBestsCourses();
+    }
+  }, [userAuth]);
+
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -76,7 +81,9 @@ const HomeScreen = ({ navigation }) => {
               style={styles.logo}
               source={require("../assets/romy/romyhappyfilled.png")}
             />
-            <Text style={styles.headerTitle}>Bienvenue, Rebecca</Text>
+            <Text style={styles.headerTitle}>
+              Bienvenue, {userAuth ? userAuth.nickname : ""}
+            </Text>
             <Text style={styles.headerSubtitle}>
               Commençons de nouvelles aventures.
             </Text>

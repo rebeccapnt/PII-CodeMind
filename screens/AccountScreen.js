@@ -14,9 +14,12 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { AuthenticatedUserContext } from "../App.js";
 import { UserServices } from "../services/UserServices";
 import { HomeCard } from "../components/HomeCard";
+import moment from "moment";
+import "moment/locale/fr";
 
 const AccountScreen = ({ navigation }) => {
   const [userAuth, setUserAuth] = useState();
+  const [formattedDate, setFormattedDate] = useState();
   const [coursesStarted, setCoursesStarted] = useState([]);
   const [error, setError] = useState(false);
   const { user } = useContext(AuthenticatedUserContext);
@@ -25,6 +28,11 @@ const AccountScreen = ({ navigation }) => {
     try {
       const userAuth = await UserServices.getUser(user.email);
       setUserAuth(userAuth);
+      console.log(userAuth.createdAt);
+      const formattedDate = moment(userAuth.createdAt)
+        .locale("fr")
+        .format("LL");
+      setFormattedDate(formattedDate);
     } catch (error) {
       console.error(error);
       setError(true);
@@ -62,7 +70,7 @@ const AccountScreen = ({ navigation }) => {
           <Text style={styles.userName}>
             {userAuth ? userAuth.nickname : ""}
           </Text>
-          <Text style={styles.subtitle}>Actif depuis le 3 février 2023.</Text>
+          <Text style={styles.subtitle}>Actif depuis le {formattedDate}.</Text>
           <View style={styles.cardResume}>
             <View style={[styles.section, { backgroundColor: "#e17618" }]}>
               <View
@@ -125,6 +133,9 @@ const AccountScreen = ({ navigation }) => {
                 </Text>
               )}
             </View>
+          </View>
+          <View>
+            <Text style={styles.title}>Cours terminé(s)</Text>
           </View>
         </View>
       </ScrollView>
