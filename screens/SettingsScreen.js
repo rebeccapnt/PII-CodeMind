@@ -12,7 +12,7 @@ import {
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { AuthenticatedUserContext } from "../services/AuthContext";
 import { UserServices } from "../services/UserServices";
-import { signOut } from "firebase/auth";
+import { getAuth, signOut } from "firebase/auth";
 
 const SettingsScreen = ({ navigation }) => {
   const [userAuth, setUserAuth] = useState();
@@ -53,7 +53,7 @@ const SettingsScreen = ({ navigation }) => {
 
   return (
     <ImageBackground
-      source={require("../assets/authentification.png")}
+      source={require("../assets/home.png")}
       resizeMode="cover"
       style={styles.container}
     >

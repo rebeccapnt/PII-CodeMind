@@ -21,4 +21,8 @@ export const WorkflowsServices = {
   async isWorklowFinished(sequenceId, courseId, userId) {
     //TODO : Bouton gris ou vert partie séquence : une fois que le workflow a la propriété FinishedAt remplie
   },
+
+  async getScoreByUser(userId) {
+    //TODO : récupérer le score total en fonction de tous les workflows
+  },
 };

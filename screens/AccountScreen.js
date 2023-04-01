@@ -58,14 +58,16 @@ const AccountScreen = ({ navigation }) => {
 
   return (
     <ImageBackground
-      source={require("../assets/authentification.png")}
+      source={require("../assets/home.png")}
       resizeMode="cover"
       style={styles.container}
     >
       <ScrollView style={styles.container}>
         <View style={styles.header}>
           <TouchableHighlight style={styles.circle}>
-            <Text style={styles.nicknameInitial}> RP </Text>
+            <Text style={styles.nicknameInitial}>
+              {userAuth ? userAuth.nickname.charAt(0) : ""}
+            </Text>
           </TouchableHighlight>
           <Text style={styles.userName}>
             {userAuth ? userAuth.nickname : ""}
@@ -163,7 +165,7 @@ const styles = StyleSheet.create({
   title: {
     paddingTop: 30,
     paddingBottom: 20,
-    fontWeight: "500",
+    fontWeight: "700",
     fontSize: 20,
     color: "#00216d",
   },
