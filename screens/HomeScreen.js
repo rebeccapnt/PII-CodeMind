@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import React, { useState, useEffect, useContext } from "react";
 import { FlatList } from "react-native-gesture-handler";
-import { AuthenticatedUserContext } from "../App.js";
+import { AuthenticatedUserContext } from "../services/AuthContext";
 import { CoursesServices } from "../services/CoursesServices";
 import { UserServices } from "../services/UserServices";
 import { HomeCard } from "../components/HomeCard";
@@ -167,7 +167,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     width: 200,
     height: 200,
-    marginTop: 10,
   },
   headerTitle: {
     textAlign: "center",

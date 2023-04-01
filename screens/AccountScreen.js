@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { AuthenticatedUserContext } from "../App.js";
+import { AuthenticatedUserContext } from "../services/AuthContext";
 import { UserServices } from "../services/UserServices";
 import { HomeCard } from "../components/HomeCard";
 import moment from "moment";
@@ -84,7 +84,7 @@ const AccountScreen = ({ navigation }) => {
                 />
               </View>
               <Text style={[styles.sectionLabel, { color: "white" }]}>
-                Cours commencés
+                Cours commencé(s)
               </Text>
               <Text style={[styles.sectionNumber, { color: "white" }]}>3</Text>
             </View>
@@ -100,7 +100,7 @@ const AccountScreen = ({ navigation }) => {
                 />
               </View>
               <Text style={[styles.sectionLabel, { color: "#00216d" }]}>
-                Cours terminés
+                Cours terminé(s)
               </Text>
               <Text style={[styles.sectionNumber, { color: "#00216d" }]}>
                 7

@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, ImageBackground } from "react-native";
+import { StyleSheet, View, Text, ImageBackground, Image } from "react-native";
 import React from "react";
 
 const ProgressionScreen = () => {
@@ -8,12 +8,16 @@ const ProgressionScreen = () => {
       resizeMode="cover"
       style={styles.container}
     >
+      <View style={styles.header}>
+        <Image
+          style={styles.logo}
+          source={require("../assets/romy/romycrownfilled.png")}
+        />
+        <Text style={styles.headerTitle}>Score</Text>
+      </View>
       <View style={styles.main}>
-        <Text> ProgressionScreen </Text>
-        {/* Mettre la date actuelle en haut à droite
-        peut etre le nombre de fois qu'il a lu un cours / Fait un quiz
-        Penser à faire la distinction sur la page si pas de cours commencé
-        Peut être mettre un nombre de pièce?*/}
+        <Text>Badge</Text>
+        <Text>Détails</Text>
       </View>
     </ImageBackground>
   );
@@ -24,7 +28,32 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   main: {
-    paddingHorizontal: 10,
+    padding: 15,
+  },
+  header: {
+    justifyContent: "center",
+    width: "100%",
+    alignItems: "center",
+    backgroundColor: "#335296",
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
+    borderWidth: 1,
+    borderColor: "#00216d",
+  },
+  logo: {
+    marginTop: 10,
+    width: 200,
+    height: 200,
+  },
+  headerTitle: {
+    textAlign: "center",
+    color: "white",
+    fontSize: 23,
+    fontWeight: "700",
+    paddingVertical: 7,
+  },
+  main: {
+    padding: 15,
   },
 });
 export default ProgressionScreen;

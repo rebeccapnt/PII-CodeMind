@@ -5,20 +5,10 @@ import AuthentificationStackNavigator from "./navigation/AuthentificationStackNa
 import { onAuthStateChanged } from "firebase/auth";
 import { View, ActivityIndicator } from "react-native";
 import { getAuth } from "firebase/auth";
-
-export const AuthenticatedUserContext = createContext({
-  user: null,
-  setUser: () => {},
-});
-
-const AuthenticatedUserProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  return (
-    <AuthenticatedUserContext.Provider value={{ user, setUser }}>
-      {children}
-    </AuthenticatedUserContext.Provider>
-  );
-};
+import {
+  AuthenticatedUserProvider,
+  AuthenticatedUserContext,
+} from "./services/AuthContext";
 
 const RootNavigator = () => {
   const { user, setUser } = useContext(AuthenticatedUserContext);

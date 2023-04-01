@@ -10,7 +10,7 @@ import {
   ImageBackground,
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { AuthenticatedUserContext } from "../App.js";
+import { AuthenticatedUserContext } from "../services/AuthContext";
 import { UserServices } from "../services/UserServices";
 import { signOut } from "firebase/auth";
 
