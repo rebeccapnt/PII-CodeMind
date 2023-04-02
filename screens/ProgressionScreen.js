@@ -68,7 +68,7 @@ const ProgressionScreen = () => {
         )}
         {activeTab === "badge" && (
           <View>
-            <Text style={styles.title}>Mes badges</Text>
+            <Text style={styles.title}>Mes badges obtenus</Text>
           </View>
         )}
       </View>

@@ -6,6 +6,7 @@ import {
   FlatList,
   View,
   Image,
+  ActivityIndicator,
 } from "react-native";
 import { SequenceCard } from "../components/SequenceCard";
 import { SequencesServices } from "../services/SequencesServices";
@@ -15,6 +16,7 @@ const SequenceScreen = ({ route, navigation }) => {
   const [sequences, setSequences] = useState([]);
   const [courseName, setCourseName] = useState();
   const [error, setError] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const loadSequences = async () => {
     try {
@@ -24,6 +26,8 @@ const SequenceScreen = ({ route, navigation }) => {
     } catch (error) {
       console.error(error);
       setError(true);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -37,6 +41,14 @@ const SequenceScreen = ({ route, navigation }) => {
       courseId: courseId,
     });
   };
+
+  if (isLoading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#335296" />
+      </View>
+    );
+  }
 
   return (
     <ImageBackground
@@ -106,5 +118,11 @@ const styles = StyleSheet.create({
   },
   main: {
     padding: 15,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
   },
 });

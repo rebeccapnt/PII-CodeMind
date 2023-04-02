@@ -2,12 +2,16 @@ import React from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { IMAGES_PATH } from "./globals";
+import { useNavigation } from '@react-navigation/native';
 
-export const HomeCard = ({ item, onPress }) => {
+export const HomeCard = ({ item }) => {
+  const navigation = useNavigation();
   const progress = 45;
   return (
     <TouchableOpacity
-      onPress={() => onPress(item)}
+      onPress={() =>
+        navigation.navigate('Sequence', { courseId: item.id })
+      }
       style={styles.card}
       activeOpacity={0.6}
     >
@@ -30,6 +34,7 @@ export const HomeCard = ({ item, onPress }) => {
     </TouchableOpacity>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {

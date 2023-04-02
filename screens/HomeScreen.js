@@ -6,9 +6,9 @@ import {
   ScrollView,
   TouchableOpacity,
   ImageBackground,
+  ActivityIndicator,
 } from "react-native";
 import React, { useState, useEffect, useContext } from "react";
-import { FlatList } from "react-native-gesture-handler";
 import { AuthenticatedUserContext } from "../services/AuthContext";
 import { CoursesServices } from "../services/CoursesServices";
 import { UserServices } from "../services/UserServices";
@@ -19,6 +19,7 @@ const HomeScreen = ({ navigation }) => {
   const [coursesStarted, setCoursesStarted] = useState([]);
   const [bestCourses, setBestCourses] = useState([]);
   const [error, setError] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const { user } = useContext(AuthenticatedUserContext);
 
@@ -43,6 +44,8 @@ const HomeScreen = ({ navigation }) => {
     } catch (error) {
       console.error(error);
       setError(true);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -53,11 +56,9 @@ const HomeScreen = ({ navigation }) => {
     } catch (error) {
       console.error(error);
       setError(true);
+    } finally {
+      setIsLoading(false);
     }
-  };
-
-  const onPressCourse = (course) => {
-    navigation.navigate("Sequence", { courseId: course.id });
   };
 
   useEffect(() => {
@@ -67,6 +68,14 @@ const HomeScreen = ({ navigation }) => {
       loadBestsCourses();
     }
   }, [userAuth]);
+
+  if (isLoading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#335296" />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -99,15 +108,9 @@ const HomeScreen = ({ navigation }) => {
             </View>
             <View>
               {coursesStarted.length > 0 ? (
-                <FlatList
-                  nestedScrollEnabled
-                  data={coursesStarted}
-                  showsVerticalScrollIndicator={false}
-                  keyExtractor={(item, index) => index.toString()}
-                  renderItem={({ item }) => (
-                    <HomeCard item={item} onPress={() => onPressCourse(item)} />
-                  )}
-                />
+                coursesStarted.map((item) => {
+                  return <HomeCard key={item.id} item={item} />;
+                })
               ) : (
                 <Text style={styles.noCoursesStarted}>
                   Vous n'avez pas encore commencé un de nos cours.{" "}
@@ -129,15 +132,9 @@ const HomeScreen = ({ navigation }) => {
               </TouchableOpacity>
             </View>
             <View>
-              <FlatList
-                nestedScrollEnabled
-                data={bestCourses}
-                showsVerticalScrollIndicator={false}
-                keyExtractor={(item, index) => item.id.toString()}
-                renderItem={({ item }) => (
-                  <HomeCard item={item} onPress={() => onPressCourse(item)} />
-                )}
-              />
+              {bestCourses.map((item) => {
+                return <HomeCard key={item.id} item={item} />;
+              })}
             </View>
           </View>
         </ScrollView>
@@ -211,6 +208,12 @@ const styles = StyleSheet.create({
     fontWeight: "800",
     marginTop: 8,
     fontSize: 17,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
   },
 });
 export default HomeScreen;

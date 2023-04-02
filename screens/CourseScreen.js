@@ -6,6 +6,7 @@ import {
   FlatList,
   Image,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { CourseCard } from "../components/CourseCard";
@@ -16,6 +17,7 @@ const CourseScreen = ({ navigation }) => {
   const [courses, setCourses] = useState([]);
   const [error, setError] = useState(false);
   const [searchText, setSearchText] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   const loadCourses = async () => {
     try {
@@ -24,6 +26,8 @@ const CourseScreen = ({ navigation }) => {
     } catch (error) {
       console.error(error);
       setError(true);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -58,6 +62,14 @@ const CourseScreen = ({ navigation }) => {
     setSearchText("");
     loadCourses();
   };
+
+  if (isLoading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#335296" />
+      </View>
+    );
+  }
 
   return (
     <ImageBackground
@@ -174,6 +186,12 @@ const styles = StyleSheet.create({
     color: "#00216d",
     textAlign: "center",
     paddingHorizontal: 30,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
   },
 });
 

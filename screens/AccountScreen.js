@@ -51,6 +51,10 @@ const AccountScreen = ({ navigation }) => {
     }
   };
 
+  const onPressCourse = (course) => {
+    navigation.navigate("Sequence", { courseId: course.id });
+  };
+
   useEffect(() => {
     loadUser();
     loadCoursesStarted();
@@ -115,15 +119,9 @@ const AccountScreen = ({ navigation }) => {
             <Text style={styles.title}>Cours commencé(s)</Text>
             <View style={styles.contentCourses}>
               {coursesStarted.length > 0 ? (
-                <FlatList
-                  nestedScrollEnabled
-                  data={coursesStarted}
-                  showsVerticalScrollIndicator={false}
-                  keyExtractor={(item, index) => index.toString()}
-                  renderItem={({ item }) => (
-                    <HomeCard item={item} onPress={() => onPressCourse(item)} />
-                  )}
-                />
+                coursesStarted.map((item) => {
+                  return <HomeCard key={item.id} item={item} />;
+                })
               ) : (
                 <Text style={styles.noCoursesStarted}>
                   Vous n'avez pas encore commencé un de nos cours.{" "}
@@ -250,6 +248,12 @@ const styles = StyleSheet.create({
     color: "#ff6363",
     fontWeight: "800",
     marginTop: 8,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
   },
 });
 export default AccountScreen;

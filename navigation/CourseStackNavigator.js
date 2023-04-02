@@ -20,7 +20,10 @@ const CourseStackNavigator = () => {
       <CourseStack.Screen
         name="Sequence"
         component={SequenceScreen}
-        options={{ title: "Chapitres" }}
+        options={({ route }) => ({
+          title: "Chapitre",
+          headerShown: true,
+        })}
       />
       <CourseStack.Screen
         name="Detail"
