@@ -17,7 +17,7 @@ const QuizScreen = ({ navigation }) => {
       <View style={styles.counterPoints}>
         <Image
           style={styles.logo}
-          source={require("../assets/romy/romysmile.png")}
+          source={require("../assets/romy/romystudy.png")}
         />
       </View>
       <Question content="Quel est le mot clé utilisé pour commencer une boucle for en PHP ?" />
@@ -35,17 +35,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  background: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    top: 0,
-    height: 1000,
-  },
+
   logo: {
-    width: 100,
-    height: 100,
-    marginBottom: 20,
+    width: 200,
+    height: 200,
+    marginVertical: 10,
   },
 });
 export default QuizScreen;

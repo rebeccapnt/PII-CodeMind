@@ -52,7 +52,7 @@ const SettingsScreen = ({ navigation }) => {
 
   return (
     <ImageBackground
-      source={require("../assets/home.png")}
+      source={require("../assets/authentification.png")}
       resizeMode="cover"
       style={styles.container}
     >
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
   },
   title: {
     paddingTop: 30,
-    paddingBottom: 20,
+    paddingBottom: 30,
     fontWeight: "700",
     fontSize: 22,
     color: "#00216d",

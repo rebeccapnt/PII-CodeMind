@@ -100,9 +100,7 @@ const HomeScreen = ({ navigation }) => {
           <View style={styles.main}>
             <View style={styles.bestCourses}>
               <Text style={styles.bestTitle}>Continuer mes cours</Text>
-              <TouchableOpacity
-                onPress={() => navigation.navigate("Progression")}
-              >
+              <TouchableOpacity onPress={() => navigation.navigate("Profil")}>
                 <Text style={styles.seeAllCourses}>Voir tout</Text>
               </TouchableOpacity>
             </View>

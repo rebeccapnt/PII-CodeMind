@@ -28,7 +28,6 @@ const AccountScreen = ({ navigation }) => {
     try {
       const userAuth = await UserServices.getUser(user.email);
       setUserAuth(userAuth);
-      console.log(userAuth.createdAt);
       const formattedDate = moment(userAuth.createdAt)
         .locale("fr")
         .format("LL");

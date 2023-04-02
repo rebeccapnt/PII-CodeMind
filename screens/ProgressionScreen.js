@@ -5,11 +5,44 @@ import {
   ImageBackground,
   Image,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { AuthenticatedUserContext } from "../services/AuthContext";
+import { UserServices } from "../services/UserServices";
 
 const ProgressionScreen = () => {
   const [activeTab, setActiveTab] = useState("details");
+  const [userAuth, setUserAuth] = useState();
+  const [error, setError] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const { user } = useContext(AuthenticatedUserContext);
+
+  const loadUser = async () => {
+    try {
+      const userAuth = await UserServices.getUser(user.email);
+      setUserAuth(userAuth);
+    } catch (error) {
+      console.error(error);
+      setError(true);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadUser();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#00216d" />
+      </View>
+    );
+  }
+
   return (
     <ImageBackground
       source={require("../assets/home.png")}
@@ -28,7 +61,7 @@ const ProgressionScreen = () => {
               style={styles.coinIcon}
               source={require("../assets/icon_money.png")}
             />
-            <Text style={styles.scoreText}>30 points</Text>
+            <Text style={styles.scoreText}>{userAuth.score} points</Text>
           </View>
         </View>
       </View>
@@ -69,6 +102,31 @@ const ProgressionScreen = () => {
         {activeTab === "badge" && (
           <View>
             <Text style={styles.title}>Mes badges obtenus</Text>
+            <View style={styles.badgeContainer}>
+              <View style={styles.badgeItem}>
+                <Image
+                  style={styles.badgeIcon}
+                  source={require("../assets/badge.png")}
+                />
+                <Text style={styles.badgeLabel}>Begginer</Text>
+              </View>
+              <View style={styles.badgeItem}>
+                <Image
+                  style={styles.badgeIcon}
+                  source={require("../assets/badge.png")}
+                />
+                <Text style={styles.badgeLabel}>Apprenti</Text>
+              </View>
+              {/* {userAuth.badges.map((badge, index) => (
+                <View style={styles.badgeItem} key={index}>
+                  <Image
+                    style={styles.badgeIcon}
+                    source={require("../assets/romy/romycrownfilled.png")}
+                  />
+                  <Text style={styles.badgeLabel}>{badge.label}</Text>
+                </View>
+              ))} */}
+            </View>
           </View>
         )}
       </View>
@@ -183,6 +241,28 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     color: "#00216d",
     paddingTop: 10,
+  },
+  badgeContainer: {
+    marginTop: 16,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-around",
+    padding: 10,
+    borderRadius: 20,
+    backgroundColor: "white",
+  },
+  badgeItem: {
+    // marginRight: 5,
+  },
+  badgeIcon: {
+    width: 90,
+    height: 90,
+  },
+  badgeLabel: {
+    color: "#00216d",
+    fontWeight: "bold",
+    fontSize: 14,
+    textAlign: "center",
   },
 });
 

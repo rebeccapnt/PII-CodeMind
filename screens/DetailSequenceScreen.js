@@ -6,6 +6,7 @@ import {
   ImageBackground,
   ScrollView,
   ActivityIndicator,
+  Image,
 } from "react-native";
 import { SequencesServices } from "../services/SequencesServices";
 import { Button } from "../components/Button";
@@ -61,11 +62,22 @@ const DetailSequenceScreen = ({ navigation, route }) => {
     <ImageBackground
       source={require("../assets/home.png")}
       resizeMode="cover"
-      style={styles.container}
+      style={{ flex: 1 }}
     >
+      <View style={styles.header}>
+        <View style={styles.headerContent}>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.title}>{sequence.name}</Text>
+          </View>
+          <Image
+            source={require("../assets/romy/romystudy.png")}
+            style={styles.icon}
+          />
+        </View>
+      </View>
+
       <ScrollView>
         <View style={styles.container}>
-          <Text style={styles.title}>{sequence.name}</Text>
           <View style={styles.main}>
             <Text style={styles.subtitle}>
               {sequence.introduction.replace(/\\n/g, "\n")}
@@ -92,8 +104,7 @@ const DetailSequenceScreen = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    alignItems:"center",
   },
   main: {
     padding: 15,
@@ -101,11 +112,25 @@ const styles = StyleSheet.create({
     margin: 14,
     borderRadius: 8,
   },
+  header: {
+    backgroundColor: "#00216d",
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
+    borderWidth: 1,
+    borderColor: "#00216d",
+    paddingHorizontal: 10,
+    paddingBottom: 2,
+    marginBottom: 6,
+  },
+  headerContent: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
   title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginVertical: 15,
-    color: "#00216d",
+    fontSize: 22,
+    fontWeight: "600",
+    color: "white",
   },
   subtitle: {
     fontSize: 16,
@@ -130,6 +155,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "white",
+  },
+  icon: {
+    width: 100,
+    height: 100,
   },
 });
 

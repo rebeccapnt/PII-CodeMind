@@ -46,6 +46,7 @@ const SignUpScreen = ({ navigation }) => {
               nickname,
               email,
               createdAt: currentDate,
+              score: 0,
             })
             .catch((error) => console.error(error));
         })
