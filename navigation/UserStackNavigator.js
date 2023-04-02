@@ -42,7 +42,7 @@ const UserStackNavigator = ({ navigation }) => {
       <UserStack.Screen
         name="UpdateUser"
         component={UpdateUserScreen}
-        options={{ title: "Modifier ses informations" }}
+        options={{ title: "Modifier mes informations" }}
       />
       <UserStack.Screen name="Login" component={LoginScreen} />
     </UserStack.Navigator>

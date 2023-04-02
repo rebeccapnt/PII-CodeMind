@@ -43,7 +43,7 @@ const StartScreen = ({ navigation, route }) => {
 
   return (
     <ImageBackground
-      source={require("../assets/quiz-bg.png")}
+      source={require("../assets/background.png")}
       resizeMode="cover"
       style={styles.container}
     >

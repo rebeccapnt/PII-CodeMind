@@ -164,7 +164,6 @@ const styles = StyleSheet.create({
     borderColor: "#00216d",
   },
   logo: {
-    marginTop: 10,
     width: 200,
     height: 200,
   },
@@ -211,6 +210,7 @@ const styles = StyleSheet.create({
     color: "#ff6363",
     fontWeight: "800",
     marginTop: 8,
+    fontSize: 17,
   },
 });
 export default HomeScreen;

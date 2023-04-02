@@ -21,12 +21,15 @@ const ProgressionScreen = () => {
           style={styles.logo}
           source={require("../assets/romy/romycrownfilled.png")}
         />
-        <View style={styles.scoreContainer}>
-          <Image
-            style={styles.coinIcon}
-            source={require("../assets/icon_money.png")}
-          />
-          <Text style={styles.scoreText}>30 points</Text>
+        <View style={styles.userInfo}>
+          <Text style={styles.subtitle}>Vous avez un score total de : </Text>
+          <View style={styles.scoreContainer}>
+            <Image
+              style={styles.coinIcon}
+              source={require("../assets/icon_money.png")}
+            />
+            <Text style={styles.scoreText}>30 points</Text>
+          </View>
         </View>
       </View>
       <View style={styles.main}>
@@ -81,19 +84,34 @@ const styles = StyleSheet.create({
     padding: 15,
   },
   header: {
-    justifyContent: "center",
-    width: "100%",
+    flexDirection: "row",
     alignItems: "center",
     backgroundColor: "#335296",
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
     borderWidth: 1,
     borderColor: "#00216d",
+    padding: 10,
   },
   logo: {
-    marginTop: 5,
-    width: 180,
-    height: 180,
+    width: 140,
+    height: 140,
+  },
+  userInfo: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  subtitle: {
+    fontSize: 14,
+    fontWeight: "500",
+    color: "white",
+    marginBottom: 5,
+  },
+  points: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#ff6d0b",
   },
   scoreContainer: {
     flexDirection: "row",
@@ -104,7 +122,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingHorizontal: 10,
     paddingVertical: 8,
-    marginBottom: 10,
+    marginTop: 10,
   },
   coinIcon: {
     width: 30,
@@ -112,7 +130,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   scoreText: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "700",
     color: "#ff6d0b",
   },
@@ -138,9 +156,30 @@ const styles = StyleSheet.create({
     color: "#00216d",
     textAlign: "center",
   },
+  userContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginVertical: 10,
+  },
+  userImage: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    marginRight: 10,
+  },
+  userNickname: {
+    fontSize: 16,
+    fontWeight: "700",
+    color: "#00216d",
+  },
+  userPoints: {
+    fontSize: 14,
+    fontWeight: "500",
+    color: "#335296",
+  },
   title: {
     textAlign: "left",
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "700",
     color: "#00216d",
     paddingTop: 10,

@@ -9,7 +9,6 @@ import {
   View,
   ImageBackground,
 } from "react-native";
-import Ionicons from "react-native-vector-icons/Ionicons";
 import { AuthenticatedUserContext } from "../services/AuthContext";
 import { UserServices } from "../services/UserServices";
 import { getAuth, signOut } from "firebase/auth";
@@ -62,29 +61,26 @@ const SettingsScreen = ({ navigation }) => {
       </View>
       <View style={styles.background}>
         <View style={styles.formGroup}>
-          <Text style={styles.label}>
-            <Ionicons name="happy-outline" size="18" /> Surnom :
-          </Text>
-          <Text style={styles.input}> {userAuth ? userAuth.nickname : ""}</Text>
+          <View style={styles.row}>
+            <Text style={styles.label}>Surnom :</Text>
+            <Text style={styles.value}>
+              {userAuth ? userAuth.nickname : ""}
+            </Text>
+          </View>
         </View>
         <View style={styles.formGroup}>
-          <Text style={styles.label}>
-            <Ionicons name="mail-outline" size="18" /> Email :
-          </Text>
-          <Text style={styles.input}> {userAuth ? userAuth.email : ""}</Text>
-        </View>
-        <View style={styles.formGroup}>
-          <Text style={styles.label}>
-            <Ionicons name="lock-closed-outline" size="18" /> Mot de passe :
-          </Text>
-          <Text style={styles.input}>{userAuth ? userAuth.password : ""}</Text>
+          <View style={styles.row}>
+            <Text style={styles.label}>E-mail :</Text>
+            <Text style={styles.value}>{userAuth ? userAuth.email : ""}</Text>
+          </View>
         </View>
       </View>
-      <Button text="Modifier" action={onUpdatePress} />
+      <Button text="Modifier mon mot de passe" action={onUpdatePress} />
       <ButtonOutline text="Se déconnecter" action={onSignOut} />
     </ImageBackground>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -94,32 +90,35 @@ const styles = StyleSheet.create({
   },
   background: {
     backgroundColor: "white",
-    width: "100%",
+    width: "90%",
     borderRadius: 8,
-    padding: 10,
+    paddingHorizontal: 30,
+    paddingVertical: 20,
   },
   title: {
     paddingTop: 30,
     paddingBottom: 20,
-    fontWeight: "500",
+    fontWeight: "700",
     fontSize: 22,
     color: "#00216d",
   },
   formGroup: {
-    marginBottom: 20,
+    marginVertical: 10,
     width: "100%",
+  },
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
   },
   label: {
     color: "#00216d",
-    fontSize: 16,
+    fontSize: 17,
     fontWeight: "bold",
-    marginBottom: 10,
+    marginRight: 10,
   },
-  input: {
+  value: {
     fontSize: 16,
-    width: "100%",
   },
-  inline: {},
 });
 
 export default SettingsScreen;

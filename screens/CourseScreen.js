@@ -91,15 +91,27 @@ const CourseScreen = ({ navigation }) => {
           </TouchableOpacity>
         )}
       </View>
-      <FlatList
-        style={styles.main}
-        data={courses}
-        showsVerticalScrollIndicator={false}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <CourseCard item={item} onPress={() => onPressCourse(item)} />
-        )}
-      />
+      {courses.length > 0 ? (
+        <FlatList
+          style={styles.main}
+          data={courses}
+          showsVerticalScrollIndicator={false}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <CourseCard item={item} onPress={() => onPressCourse(item)} />
+          )}
+        />
+      ) : (
+        <View style={styles.empty}>
+          <Image
+            source={require("../assets/romy/romysad.png")}
+            style={styles.emptyIcon}
+          />
+          <Text style={styles.emptyText}>
+            Nous sommes désolés mais nous n'avons pas trouvé de cours à ce nom.
+          </Text>
+        </View>
+      )}
     </ImageBackground>
   );
 };
@@ -145,6 +157,23 @@ const styles = StyleSheet.create({
   },
   main: {
     padding: 15,
+  },
+  empty: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  emptyIcon: {
+    width: 100,
+    height: 100,
+    marginBottom: 10,
+  },
+  emptyText: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#00216d",
+    textAlign: "center",
+    paddingHorizontal: 30,
   },
 });
 

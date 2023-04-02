@@ -5,7 +5,7 @@ export const Button = ({ action, text }) => {
   return (
     <View style={styles.buttonContainer}>
       <TouchableOpacity onPress={action} style={styles.button}>
-        <Text style={styles.buttonText}>{text}</Text>
+        <Text style={styles.buttonText}> {text} </Text>
       </TouchableOpacity>
     </View>
   );
@@ -13,9 +13,10 @@ export const Button = ({ action, text }) => {
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    width: "50%",
+    width: "60%",
     justifyContent: "center",
     alignItems: "center",
+    textAlign: "center",
     marginTop: 20,
   },
   button: {
@@ -30,5 +31,6 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "500",
     fontSize: 16,
+    textAlign: "center",
   },
 });
