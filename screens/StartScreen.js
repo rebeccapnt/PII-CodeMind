@@ -3,6 +3,7 @@ import React, { useLayoutEffect, useState, useEffect } from "react";
 import { Button } from "../components/Button";
 import { WorkflowsServices } from "../services/WorkflowsServices";
 import { getAuth } from "firebase/auth";
+import { ButtonOutline } from "../components/ButtonOutline";
 
 const StartScreen = ({ navigation, route }) => {
   const { sequenceId, courseId } = route.params;
@@ -50,12 +51,18 @@ const StartScreen = ({ navigation, route }) => {
       <View style={styles.container}>
         <Image
           style={styles.logo}
-          source={require("../assets/romy/romyhappy.png")}
+          source={require("../assets/romy/romyhappyfilled.png")}
         />
-        <Text>Es-tu prêt à démarrer le quiz ?</Text>
-        {/* Dire vous n'avez pasdetemps limité etc permet de voir si t'as bien compris le cours */}
-        <Button text="Commencer >" action={() => onPressStart()} />
-        <Button text="< Retour au cours" action={() => navigation.goBack()} />
+        <Text style={styles.title}>Es-tu prêt(e) à démarrer le quiz ?</Text>
+        <Text style={styles.subTitle}>
+          Tu n'auras pas de limite de temps pour faire le quiz. L'important est
+          de voir si tu as compris et retenu le cours !
+        </Text>
+        <Button text="Je suis prêt(e) ! " action={() => onPressStart()} />
+        <ButtonOutline
+          text="Retourner lire le cours"
+          action={() => navigation.goBack()}
+        />
       </View>
     </ImageBackground>
   );
@@ -68,8 +75,23 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   logo: {
-    width: 100,
-    height: 100,
+    width: 240,
+    height: 240,
+  },
+  title: {
+    textAlign: "center",
+    color: "#00216d",
+    fontSize: 23,
+    fontWeight: "700",
+    paddingVertical: 10,
+    marginTop: 20,
+  },
+  subTitle: {
+    textAlign: "center",
+    color: "#00216d",
+    fontSize: 15,
+    padding: 10,
+    paddingHorizontal: 20,
   },
 });
 export default StartScreen;

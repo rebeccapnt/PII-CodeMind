@@ -45,7 +45,7 @@ const SequenceScreen = ({ route, navigation }) => {
   if (isLoading) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#335296" />
+        <ActivityIndicator size="large" color="#00216d" />
       </View>
     );
   }
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     textAlign: "center",
-    color: "#335296",
+    color: "#00216d",
     fontSize: 23,
     fontWeight: "700",
     paddingVertical: 7,
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "400",
     paddingBottom: 20,
-    color: "#335296",
+    color: "#00216d",
   },
   main: {
     padding: 15,

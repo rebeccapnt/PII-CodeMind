@@ -66,7 +66,7 @@ const CourseScreen = ({ navigation }) => {
   if (isLoading) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#335296" />
+        <ActivityIndicator size="large" color="#00216d" />
       </View>
     );
   }

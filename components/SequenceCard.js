@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   sequenceNumber: {
-    color: "#335296",
+    color: "#00216d",
     fontSize: 20,
     fontWeight: "700",
   },
@@ -86,6 +86,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "700",
     marginVertical: 4,
-    color: "#335296",
+    color: "#00216d",
   },
 });
