@@ -30,11 +30,11 @@ const SequenceScreen = ({ route, navigation }) => {
       const sequences = await SequencesServices.fetchSequences(courseId);
       const updatedSequences = await Promise.all(
         sequences.sequencesList.map(async (seq) => {
-          const workflow = await WorkflowsServices.isWorklowFinished(
+          const isFinished = await WorkflowsServices.isWorklowFinished(
             seq.id,
             user.uid
           );
-          if (workflow) {
+          if (isFinished) {
             return { ...seq, isFinished: true };
           }
           return seq;
