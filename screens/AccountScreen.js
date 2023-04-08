@@ -21,6 +21,7 @@ const AccountScreen = ({ navigation }) => {
   const [userAuth, setUserAuth] = useState();
   const [formattedDate, setFormattedDate] = useState();
   const [coursesStarted, setCoursesStarted] = useState([]);
+  const [coursesFinished, setCoursesFinished] = useState([]);
   const [error, setError] = useState(false);
   const { user } = useContext(AuthenticatedUserContext);
 
@@ -50,6 +51,18 @@ const AccountScreen = ({ navigation }) => {
     }
   };
 
+  const loadCoursesFinished = async () => {
+    try {
+      const coursesFinished = await UserServices.getCoursesFinishedByUser(
+        user.email
+      );
+      setCoursesFinished(coursesFinished);
+    } catch (error) {
+      console.error(error);
+      setError(true);
+    }
+  };
+
   const onPressCourse = (course) => {
     navigation.navigate("Sequence", { courseId: course.id });
   };
@@ -57,6 +70,7 @@ const AccountScreen = ({ navigation }) => {
   useEffect(() => {
     loadUser();
     loadCoursesStarted();
+    loadCoursesFinished();
   }, []);
 
   return (
@@ -91,7 +105,9 @@ const AccountScreen = ({ navigation }) => {
               <Text style={[styles.sectionLabel, { color: "white" }]}>
                 Cours commencé(s)
               </Text>
-              <Text style={[styles.sectionNumber, { color: "white" }]}>3</Text>
+              <Text style={[styles.sectionNumber, { color: "white" }]}>
+                {coursesStarted.length}
+              </Text>
             </View>
             <View style={[styles.section, { backgroundColor: "white" }]}>
               <View
@@ -108,7 +124,7 @@ const AccountScreen = ({ navigation }) => {
                 Cours terminé(s)
               </Text>
               <Text style={[styles.sectionNumber, { color: "#00216d" }]}>
-                7
+                {coursesFinished.length}
               </Text>
             </View>
           </View>
@@ -135,6 +151,22 @@ const AccountScreen = ({ navigation }) => {
           </View>
           <View>
             <Text style={styles.title}>Cours terminé(s)</Text>
+            <View style={styles.contentCourses}>
+              {coursesFinished.length > 0 ? (
+                coursesFinished.map((item) => {
+                  return <HomeCard key={item.id} item={item} />;
+                })
+              ) : (
+                <Text style={styles.noCoursesStarted}>
+                  Vous n'avez pas encore terminé un de nos cours.{" "}
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate("Apprendre")}
+                  >
+                    <Text style={styles.startNow}>Continuez maintenant !</Text>
+                  </TouchableOpacity>
+                </Text>
+              )}
+            </View>
           </View>
         </View>
       </ScrollView>
@@ -244,9 +276,10 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   startNow: {
-    color: "#ff6363",
+    color: "#00216d",
     fontWeight: "800",
     marginTop: 8,
+    fontSize: 16,
   },
   loadingContainer: {
     flex: 1,

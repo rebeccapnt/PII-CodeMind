@@ -5,8 +5,9 @@ import SequenceScreen from "../screens/SequenceScreen";
 import DetailSequenceScreen from "../screens/DetailSequenceScreen";
 import QuizScreen from "../screens/QuizScreen";
 import StartScreen from "../screens/StartScreen";
+import EndQuizScreen from "../screens/EndQuizScreen";
 
-// Screen stack for home tab
+// Screen stack for Course tab
 const CourseStack = createNativeStackNavigator();
 
 const CourseStackNavigator = () => {
@@ -39,6 +40,11 @@ const CourseStackNavigator = () => {
         name="Quiz"
         component={QuizScreen}
         options={{ title: "Quiz" }}
+      />
+      <CourseStack.Screen
+        name="EndQuiz"
+        component={EndQuizScreen}
+        options={{ title: "Fin du quiz" }}
       />
     </CourseStack.Navigator>
   );

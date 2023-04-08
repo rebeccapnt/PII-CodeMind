@@ -2,7 +2,7 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ProgressionScreen from "../screens/ProgressionScreen";
 
-// Screen stack for home tab
+// Screen stack for progress tab
 const ProgressStack = createNativeStackNavigator();
 
 const ProgressStackNavigator = () => {

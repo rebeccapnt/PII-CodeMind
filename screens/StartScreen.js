@@ -6,9 +6,10 @@ import { getAuth } from "firebase/auth";
 import { ButtonOutline } from "../components/ButtonOutline";
 
 const StartScreen = ({ navigation, route }) => {
-  const { sequenceId, courseId } = route.params;
+  const { sequenceId, courseId, quizId } = route.params;
   const [workflow, setWorkflow] = useState(null);
   const [user, setUser] = useState(null);
+  const [error, setError] = useState(false);
 
   const auth = getAuth();
 
@@ -28,13 +29,14 @@ const StartScreen = ({ navigation, route }) => {
       const workflow = await WorkflowsServices.createWorkflow(
         sequenceId,
         courseId,
+        quizId,
         user.uid
       );
       setWorkflow(workflow);
       navigation.navigate("Quiz", {
         sequenceId: sequenceId,
-        courseId: courseId,
         workflowId: workflow,
+        quizId: quizId,
       });
     } catch (error) {
       console.error(error);

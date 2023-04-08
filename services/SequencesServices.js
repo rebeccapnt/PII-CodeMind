@@ -40,4 +40,19 @@ export const SequencesServices = {
     }
     return doc.data();
   },
+
+  //Récupère la prochaine séquence en fonction d'un id de séquence
+  async fetchNextSequence(sequenceId) {
+    const sequence = await SequencesServices.fetchSequence(sequenceId);
+    if (sequence) {
+      const nextId = sequence.nbSequence + 1;
+      const sequencesCollection = await firebase.db
+        .collection("sequences")
+        .where("nbSequence", "==", nextId)
+        .get();
+      const sequenceDoc = sequencesCollection.docs[0];
+      // Si le document existe, renvoie ses données, sinon renvoie null
+      return sequenceDoc ? { Id: sequenceDoc.id, ...sequenceDoc.data() } : null;
+    }
+  },
 };

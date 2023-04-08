@@ -1,36 +1,73 @@
 import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
-export const ChoiceAnswer = ({ answer }) => {
+export const ChoiceAnswer = ({ answer, onPress, isSelected }) => {
+  const buttonStyle = isSelected ? styles.selectedButton : styles.button;
+  const textStyle = isSelected ? styles.selectedText : styles.text;
+
   return (
-    <View style={styles.container}>
-      <TouchableOpacity style={styles.button} onPress={() => {}} key={"test"}>
-        <Text style={styles.textAnswer}> {answer} </Text>
-      </TouchableOpacity>
-    </View>
+    <TouchableOpacity
+      style={buttonStyle}
+      onPress={onPress}
+    >
+      <View style={styles.row}>
+        <Text style={textStyle}>
+          {answer}
+        </Text>
+        {isSelected && (
+          <Ionicons
+            name="checkmark-circle"
+            size={22}
+            color="white"
+            style={styles.icon}
+          />
+        )}
+      </View>
+    </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    width: "90%",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 10,
-  },
   button: {
+    backgroundColor: "white",
     borderWidth: 1,
     borderColor: "#00216d",
-    backgroundColor: "white",
+    borderRadius: 5,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    marginVertical: 5,
     width: "100%",
-    padding: 15,
-    marginTop: 2,
-    borderRadius: 8,
-    alignItems: "center",
   },
-  textAnswer: {
-    fontSize: 16,
+  selectedButton: {
+    backgroundColor: "#00216d",
+    borderWidth: 1,
+    borderColor: "#00216d",
+    borderRadius: 5,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    marginVertical: 5,
+    width: "100%",
+  },
+  text: {
     color: "#00216d",
-    fontWeight: "500",
+    textAlign: "left",
+    flex: 1,
+    fontSize: 16,
+  },
+  selectedText: {
+    color: "white",
+    textAlign: "left",
+    fontWeight: "700",
+    fontSize: 17,
+    flex: 1,
+  },
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  icon: {
+    marginLeft: 10,
   },
 });

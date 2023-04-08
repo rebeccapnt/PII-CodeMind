@@ -10,12 +10,17 @@ import {
 import React, { useState, useEffect, useContext } from "react";
 import { AuthenticatedUserContext } from "../services/AuthContext";
 import { UserServices } from "../services/UserServices";
+import { QuizCard } from "../components/QuizCard";
 
 const ProgressionScreen = () => {
   const [activeTab, setActiveTab] = useState("details");
   const [userAuth, setUserAuth] = useState();
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
+  const formationName = "Python";
+  const quizScore = "80%";
+  const quizDate = "02/04/2023";
 
   const { user } = useContext(AuthenticatedUserContext);
 
@@ -97,6 +102,16 @@ const ProgressionScreen = () => {
         {activeTab === "details" && (
           <View>
             <Text style={styles.title}>Mes derniers quiz</Text>
+            <QuizCard
+              formationName={formationName}
+              quizScore={quizScore}
+              quizDate={quizDate}
+            />
+            <QuizCard
+              formationName={formationName}
+              quizScore={quizScore}
+              quizDate={quizDate}
+            />
           </View>
         )}
         {activeTab === "badge" && (
@@ -190,7 +205,7 @@ const styles = StyleSheet.create({
   scoreText: {
     fontSize: 16,
     fontWeight: "700",
-    color: "#ff6d0b",
+    color: "#E86231",
   },
   tabsContainer: {
     flexDirection: "row",
@@ -233,7 +248,7 @@ const styles = StyleSheet.create({
   userPoints: {
     fontSize: 14,
     fontWeight: "500",
-    color: "#335296",
+    color: "#B93100",
   },
   title: {
     textAlign: "left",
@@ -251,9 +266,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: "white",
   },
-  badgeItem: {
-    // marginRight: 5,
-  },
   badgeIcon: {
     width: 90,
     height: 90,
@@ -263,6 +275,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 14,
     textAlign: "center",
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
   },
 });
 

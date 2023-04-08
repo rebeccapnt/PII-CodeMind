@@ -17,6 +17,10 @@ const DetailSequenceScreen = ({ navigation, route }) => {
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
+  useEffect(() => {
+    navigation.setOptions({ title: sequence.name });
+  }, [sequence.name]);
+
   const loadSequence = async () => {
     try {
       const sequence = await SequencesServices.fetchSequence(sequenceId);
@@ -34,11 +38,10 @@ const DetailSequenceScreen = ({ navigation, route }) => {
   }, []);
 
   const onPressQuiz = (sequence) => {
-    console.log(sequence.id);
-    console.log(courseId);
     navigation.navigate("Start", {
       sequenceId: sequenceId,
       courseId: courseId,
+      quizId: sequence.quiz.id,
     });
   };
 
@@ -79,12 +82,14 @@ const DetailSequenceScreen = ({ navigation, route }) => {
       <ScrollView>
         <View style={styles.container}>
           <View style={styles.main}>
+            <Text style={styles.introduction}>Introduction</Text>
             <Text style={styles.subtitle}>
               {sequence.introduction.replace(/\\n/g, "\n")}
             </Text>
 
             {sequence.subChapter.map((item, index) => (
               <View key={index}>
+                <View style={styles.separator} />
                 <Text style={styles.subChapterTitle}>{item.title}</Text>
                 <Text style={styles.subChapterContent}>
                   {item.content.replace(/\\n/g, "\n")}
@@ -104,7 +109,7 @@ const DetailSequenceScreen = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems:"center",
+    alignItems: "center",
   },
   main: {
     padding: 15,
@@ -113,7 +118,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   header: {
-    backgroundColor: "#00216d",
+    backgroundColor: "#335296",
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
     borderWidth: 1,
@@ -131,6 +136,16 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: "600",
     color: "white",
+    paddingHorizontal: 10,
+    alignSelf: "center",
+    textAlign: "center",
+  },
+  introduction: {
+    textAlign: "center",
+    fontWeight: "700",
+    color: "#00216d",
+    fontSize: 22,
+    paddingBottom: 16,
   },
   subtitle: {
     fontSize: 16,
@@ -145,7 +160,6 @@ const styles = StyleSheet.create({
   },
   subChapterContent: {
     fontSize: 16,
-    marginBottom: 10,
   },
   buttonContainer: {
     marginBottom: 40,
@@ -159,6 +173,12 @@ const styles = StyleSheet.create({
   icon: {
     width: 100,
     height: 100,
+  },
+  separator: {
+    borderBottomWidth: 2,
+    borderBottomColor: "#335296",
+    marginVertical: 10,
+    width: "20%",
   },
 });
 

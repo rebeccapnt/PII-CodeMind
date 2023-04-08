@@ -7,7 +7,7 @@ import LoginScreen from "../screens/LoginScreen";
 import { Ionicons } from "@expo/vector-icons";
 import UpdateUserScreen from "../screens/UpdateUserScreen";
 
-// Screen stack for home tab
+// Screen stack for user tab
 const UserStack = createNativeStackNavigator();
 
 const UserStackNavigator = ({ navigation }) => {

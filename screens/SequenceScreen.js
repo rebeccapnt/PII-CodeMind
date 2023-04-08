@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   StyleSheet,
   Text,
@@ -10,17 +10,36 @@ import {
 } from "react-native";
 import { SequenceCard } from "../components/SequenceCard";
 import { SequencesServices } from "../services/SequencesServices";
+import { WorkflowsServices } from "../services/WorkflowsServices";
+import { AuthenticatedUserContext } from "../services/AuthContext";
 
 const SequenceScreen = ({ route, navigation }) => {
+  const { user } = useContext(AuthenticatedUserContext);
   const { courseId } = route.params;
   const [sequences, setSequences] = useState([]);
   const [courseName, setCourseName] = useState();
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
+  useEffect(() => {
+    navigation.setOptions({ title: courseName });
+  }, [courseName]);
+
   const loadSequences = async () => {
     try {
       const sequences = await SequencesServices.fetchSequences(courseId);
+      const updatedSequences = await Promise.all(
+        sequences.sequencesList.map(async (seq) => {
+          const workflow = await WorkflowsServices.isWorklowFinished(
+            seq.id,
+            user.uid
+          );
+          if (workflow) {
+            return { ...seq, isFinished: true };
+          }
+          return seq;
+        })
+      );
       setSequences(sequences.sequencesList);
       setCourseName(sequences.course.name);
     } catch (error) {
@@ -59,7 +78,7 @@ const SequenceScreen = ({ route, navigation }) => {
       <View style={styles.header}>
         <Image
           style={styles.logo}
-          source={require("../assets/romy/romyhappyfilled.png")}
+          source={require("../assets/romy/romystudy.png")}
         />
         <Text style={styles.headerTitle}>{courseName}</Text>
         <Text style={styles.headerSubtitle}>
@@ -92,20 +111,19 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: "100%",
     alignItems: "center",
-    backgroundColor: "white",
+    backgroundColor: "#335296",
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
     marginBottom: 15,
   },
   logo: {
     marginTop: 10,
-    width: 100,
-    height: 100,
-    marginTop: 10,
+    width: 140,
+    height: 140,
   },
   headerTitle: {
     textAlign: "center",
-    color: "#00216d",
+    color: "white",
     fontSize: 23,
     fontWeight: "700",
     paddingVertical: 7,
@@ -114,7 +132,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "400",
     paddingBottom: 20,
-    color: "#00216d",
+    color: "white",
   },
   main: {
     padding: 15,

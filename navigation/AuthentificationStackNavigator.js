@@ -4,7 +4,7 @@ import LoginScreen from "../screens/LoginScreen";
 import SignUpScreen from "../screens/SignUpScreen";
 import HomeScreen from "../screens/HomeScreen";
 
-// Screen stack for home tab
+// Screen stack for authentification tab
 const AuthStack = createNativeStackNavigator();
 
 const AuthentificationStackNavigator = () => {

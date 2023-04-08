@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   startNow: {
-    color: "#ff6363",
+    color: "#00216d",
     fontWeight: "800",
     marginTop: 8,
     fontSize: 17,

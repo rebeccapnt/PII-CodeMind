@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   content: {
     padding: 20,
     marginBottom: 20,
-    paddingVertical: 80,
+    paddingVertical: 40,
     paddingHorizontal: 20,
     borderRadius: 10,
     backgroundColor: "white",
