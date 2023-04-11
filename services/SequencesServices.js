@@ -4,9 +4,11 @@ export const SequencesServices = {
   //Récupère la liste des séquences selon un cours
   async fetchSequences(courseId) {
     try {
+      // Récupération de la collection des cours sur Firebase
       const coursesCollection = firebase.db.collection("courses");
       const courseDoc = await coursesCollection.doc(courseId).get();
 
+      // Vérifier si le document de cours avec l'id spécifié existe
       if (!courseDoc.exists) {
         throw new Error(`Cours avec l'id ${courseId} n'existe pas.`);
       }
@@ -14,12 +16,15 @@ export const SequencesServices = {
       const courseData = courseDoc.data();
       const courseRef = courseDoc.ref;
       const sequencesCollection = firebase.db.collection("sequences");
+
+      // Récupération des séquences associées au cours
       const snapshot = await sequencesCollection
         .where("course", "==", courseRef)
         .get();
+
       const sequencesList = snapshot.docs.map((doc) => {
         const sequence = doc.data();
-        sequence.id = doc.id;
+        sequence.id = doc.id; // Ajout de l'ID de la séquence
         return sequence;
       });
       sequencesList.sort((a, b) => a.nbSequence - b.nbSequence); //Trie des séquences en fonction du numéro de séquence

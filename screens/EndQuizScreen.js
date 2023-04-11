@@ -47,7 +47,7 @@ const EndQuizScreen = ({ navigation, route }) => {
       }
     };
     loadWorkflow();
-  }, []);
+  }, [workflow]);
 
   if (isLoading) {
     return (
@@ -82,7 +82,7 @@ const EndQuizScreen = ({ navigation, route }) => {
         </Text>
         <View style={styles.contentResult}>
           <Text style={styles.score}>
-            Tu as gagné X points, et tu as réussi à 80%. Tu peux aller voir tes
+            Tu as gagné {workflow.score} points. Tu peux aller voir tes
             résultats dans la partie progression. Si score élevé, romy happy
             sinon romy sad.
           </Text>
@@ -135,5 +135,11 @@ const styles = StyleSheet.create({
   score: {
     color: "#00216d",
     fontSize: 16,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
   },
 });

@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-export const SequenceCard = ({ item, progress, onPress }) => {
+export const SequenceCard = ({ item, onPress, isFinished }) => {
   return (
     <TouchableOpacity
       onPress={() => onPress(item)}
@@ -20,12 +20,12 @@ export const SequenceCard = ({ item, progress, onPress }) => {
           style={[
             styles.circle,
             {
-              backgroundColor: progress < 0 ? "green" : "silver",
-              borderColor: progress < 0 ? "darkgreen" : "lightslategrey",
+              backgroundColor: isFinished ? "green" : "silver",
+              borderColor: isFinished ? "darkgreen" : "lightslategrey",
             },
           ]}
         >
-          {progress < 0 ? (
+          {isFinished ? (
             <Ionicons name="checkmark-sharp" size={24} color="#FFF" />
           ) : (
             <Ionicons name="checkmark-sharp" size={24} color="white" />

@@ -30,17 +30,14 @@ const SequenceScreen = ({ route, navigation }) => {
       const sequences = await SequencesServices.fetchSequences(courseId);
       const updatedSequences = await Promise.all(
         sequences.sequencesList.map(async (seq) => {
-          const isFinished = await WorkflowsServices.isWorklowFinished(
+          const isFinished = await WorkflowsServices.isWorkflowFinished(
             seq.id,
             user.uid
           );
-          if (isFinished) {
-            return { ...seq, isFinished: true };
-          }
-          return seq;
+          return { ...seq, isFinished };
         })
       );
-      setSequences(sequences.sequencesList);
+      setSequences(updatedSequences);
       setCourseName(sequences.course.name);
     } catch (error) {
       console.error(error);
@@ -92,7 +89,7 @@ const SequenceScreen = ({ route, navigation }) => {
         renderItem={({ item }) => (
           <SequenceCard
             item={item}
-            progress="18"
+            isFinished={item.isFinished}
             onPress={() => onPressSequence(item)}
           />
         )}

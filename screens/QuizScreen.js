@@ -6,20 +6,26 @@ import {
   Image,
   ImageBackground,
   ActivityIndicator,
+  Animated,
 } from "react-native";
 import { ChoiceAnswer } from "../components/ChoiceAnswer";
 import { Question } from "../components/Question";
 import { QuizzesServices } from "../services/QuizzesServices";
+import { WorkflowsServices } from "../services/WorkflowsServices";
 import { Button } from "../components/Button";
 
 const QuizScreen = ({ navigation, route }) => {
-  const { sequenceId, workflowId, quizId } = route.params;
+  const { workflowId, quizId } = route.params;
   const [questions, setQuestions] = useState([]);
+  const allQuestions = questions.length;
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [showNextButton, setShowNextButton] = useState(false);
+  const [answers, setAnswers] = useState([]);
+  const [score, setScore] = useState(0);
   const [isAnswered, setIsAnswered] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
+  const currentQuestion = questions[currentQuestionIndex];
 
   useLayoutEffect(() => {
     navigation.setOptions({ headerShown: false });
@@ -44,9 +50,10 @@ const QuizScreen = ({ navigation, route }) => {
 
   const handleAnswer = (index) => {
     setIsAnswered(true);
-    const updatedQuestions = [...questions];
+    const updatedQuestions = [...questions]; //copie de "questions" actuel
     const currentQuestion = updatedQuestions[currentQuestionIndex];
 
+    // parcours des réponses de la question actuelle
     currentQuestion.responses.forEach((response, i) => {
       response.isSelected = i === index;
     });
@@ -55,6 +62,34 @@ const QuizScreen = ({ navigation, route }) => {
   };
 
   const handleNextQuestion = () => {
+    const selectedResponseIndex = currentQuestion.responses.findIndex(
+      (response) => response.isSelected
+    );
+    const isCorrect =
+      currentQuestion.responses[selectedResponseIndex].isCorrect;
+    const questionId = currentQuestionIndex;
+    const responseId = selectedResponseIndex;
+
+    const newAnswer = {
+      questionId: questionId,
+      responseId: responseId,
+      isCorrect: isCorrect,
+    };
+
+    // Accéder à la dernière valeur de answers et ajouter la réponse
+    setAnswers((prevAnswers) => {
+      const newAnswers = [...prevAnswers, newAnswer];
+      WorkflowsServices.updateAnswersWorkflow(workflowId, newAnswers);
+      return newAnswers;
+    });
+
+    // Accéder à la dernière valeur de score et ajouter +2 si bonne réponse
+    setScore((prevScore) => {
+      const newScore = prevScore + (isCorrect ? 2 : 0);
+      WorkflowsServices.updateScoreWorkflow(workflowId, newScore);
+      return newScore;
+    });
+
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1); // Passer à la question suivante
       setIsAnswered(false); // Réinitialiser l'état de la réponse sélectionnée
@@ -82,8 +117,6 @@ const QuizScreen = ({ navigation, route }) => {
     );
   }
 
-  const currentQuestion = questions[currentQuestionIndex];
-
   return (
     <ImageBackground
       source={require("../assets/background.png")}
@@ -95,7 +128,11 @@ const QuizScreen = ({ navigation, route }) => {
           style={styles.logo}
           source={require("../assets/romy/romystudy.png")}
         />
-        <Question content={currentQuestion.question} />
+        <Question
+          content={currentQuestion.question}
+          currentQuestion={currentQuestionIndex + 1}
+          nbQuestions={allQuestions}
+        />
       </View>
       <View style={styles.quizSection}>
         {currentQuestion.responses.map((response, index) => (
@@ -121,7 +158,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  header: { alignItems: "center" },
+  header: { alignItems: "center", width: "100%", paddingHorizontal: 20 },
   logo: {
     width: 200,
     height: 200,

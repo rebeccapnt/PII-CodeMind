@@ -107,11 +107,6 @@ const ProgressionScreen = () => {
               quizScore={quizScore}
               quizDate={quizDate}
             />
-            <QuizCard
-              formationName={formationName}
-              quizScore={quizScore}
-              quizDate={quizDate}
-            />
           </View>
         )}
         {activeTab === "badge" && (

@@ -32,7 +32,7 @@ export const WorkflowsServices = {
   },
 
   //Vérification si un workflow a été terminé
-  async isWorklowFinished(sequenceId, userId) {
+  async isWorkflowFinished(sequenceId, userId) {
     // Récupération des références aux documents 'sequences' et 'users' dans Firebase
     const sequenceRef = firebase.db.collection("sequences").doc(sequenceId);
     const userRef = firebase.db.collection("users").doc(userId);
@@ -64,5 +64,54 @@ export const WorkflowsServices = {
     }
     // Renvoie les données du workflow
     return doc.data();
+  },
+
+  async updateAnswersWorkflow(workflowId, answers) {
+    const currentDate = new Date().toISOString();
+    try {
+      // Récupération de la référence du workflow avec l'id
+      const workflowRef = firebase.db.collection("workflows").doc(workflowId);
+      const doc = await workflowRef.get();
+      if (!doc.exists) {
+        // Le workflow n'a pas été trouvé
+        return null;
+      }
+
+      // Mise à jour du champ "answers" dans le workflow
+      await workflowRef.update({
+        answers: answers,
+        finishedAt: currentDate,
+      });
+
+      return true;
+    } catch (error) {
+      console.error(error);
+      throw new Error(
+        "Erreur dans l'ajout des réponses de l'utilisateur dans le workflow"
+      );
+    }
+  },
+
+  async updateScoreWorkflow(workflowId, score) {
+    try {
+      // Récupération de la référence du workflow avec l'id
+      const workflowRef = firebase.db.collection("workflows").doc(workflowId);
+      const doc = await workflowRef.get();
+      if (!doc.exists) {
+        // Le workflow n'a pas été trouvé
+        return null;
+      }
+      // Mise à jour du score dans le workflow
+      await workflowRef.update({
+        score: score,
+      });
+
+      return true;
+    } catch (error) {
+      console.error(error);
+      throw new Error(
+        "Erreur dans la modification du score de l'utilisateur dans le workflow"
+      );
+    }
   },
 };
