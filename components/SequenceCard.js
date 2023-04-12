@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
     elevation: 3,
     marginBottom: 5,
   },
+  card: { paddingBottom: 4 },
   circle: {
     borderRadius:
       Math.round(

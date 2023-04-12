@@ -24,14 +24,14 @@ export const CourseCard = ({ item, onPress }) => {
       <View style={styles.footer}>
         <View style={styles.footerItem}>
           <Text style={styles.footerText}>
-            {item.nbSequences} <Ionicons name="library" size="18" />
+            {item.nbSequences} <Ionicons name="library" size={18} />
           </Text>
           <Text style={styles.footerLabel}>chapitres</Text>
         </View>
         <View style={styles.footerBar}></View>
         <View style={styles.footerItem}>
           <Text style={styles.footerText}>
-            {item.nbReadings} <Ionicons name="book" size="16" />
+            {item.nbReadings} <Ionicons name="book" size={16} />
           </Text>
           <Text style={styles.footerLabel}>Lectures</Text>
         </View>
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#335296",
     flexDirection: "row",
     alignItems: "center",
-    padding: 2,
+    padding: 5,
     borderRadius: 4,
   },
   footerItem: {

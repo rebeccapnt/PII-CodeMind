@@ -94,7 +94,7 @@ const HomeScreen = ({ navigation }) => {
               Bienvenue, {userAuth ? userAuth.nickname : ""}
             </Text>
             <Text style={styles.headerSubtitle}>
-              Commençons de nouvelles aventures.
+              Commençons de nouvelles aventures !
             </Text>
           </View>
           <View style={styles.main}>

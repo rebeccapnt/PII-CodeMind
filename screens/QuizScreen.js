@@ -26,6 +26,7 @@ const QuizScreen = ({ navigation, route }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
   const currentQuestion = questions[currentQuestionIndex];
+  const currentDate = new Date().toISOString();
 
   useLayoutEffect(() => {
     navigation.setOptions({ headerShown: false });
@@ -79,7 +80,11 @@ const QuizScreen = ({ navigation, route }) => {
     // Accéder à la dernière valeur de answers et ajouter la réponse
     setAnswers((prevAnswers) => {
       const newAnswers = [...prevAnswers, newAnswer];
-      WorkflowsServices.updateAnswersWorkflow(workflowId, newAnswers);
+      WorkflowsServices.updateAnswersWorkflow(
+        workflowId,
+        newAnswers,
+        currentDate
+      );
       return newAnswers;
     });
 

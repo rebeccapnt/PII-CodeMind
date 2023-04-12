@@ -32,9 +32,12 @@ const EndQuizScreen = ({ navigation, route }) => {
 
   useEffect(() => {
     const loadWorkflow = async () => {
+      console.log(workflowId);
+
       try {
         const workflow = await WorkflowsServices.fetchWorkflow(workflowId);
         setWorkflow(workflow);
+        console.log(workflow);
         const nextSequence = await SequencesServices.fetchNextSequence(
           workflow.sequence.id
         );
