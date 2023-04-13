@@ -41,7 +41,6 @@ const DetailSequenceScreen = ({ navigation, route }) => {
     navigation.navigate("Start", {
       sequenceId: sequenceId,
       courseId: courseId,
-      quizId: sequence.quiz.id,
     });
   };
 

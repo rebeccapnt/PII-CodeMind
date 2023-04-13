@@ -4,7 +4,7 @@ import { UserServices } from "./UserServices.js";
 
 export const WorkflowsServices = {
   //Création d'un workflow en fonction de l'ID de la séquence, du cours, et de l'utilisateur
-  async createWorkflow(sequenceId, courseId, quizId, userId) {
+  async createWorkflow(sequenceId, courseId, userId) {
     // Récupération des références aux documents 'sequences' et 'users' dans Firebase
     const sequenceRef = firebase.db.collection("sequences").doc(sequenceId);
     const userRef = firebase.db.collection("users").doc(userId);
@@ -28,7 +28,6 @@ export const WorkflowsServices = {
           // Références aux documents correspondant dans Firebase
           course: firebase.db.doc("courses/" + courseId),
           sequence: firebase.db.doc("sequences/" + sequenceId),
-          quiz: firebase.db.doc("quizzes/" + quizId),
           user: firebase.db.doc("users/" + userId),
           score: 0, // Initialisation du score de quiz à 0
           startedAt: currentDate,

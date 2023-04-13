@@ -60,4 +60,25 @@ export const SequencesServices = {
       return sequenceDoc ? { Id: sequenceDoc.id, ...sequenceDoc.data() } : null;
     }
   },
+
+  //Récupération des questions du quiz en fonction de l'ID de la séquence
+  async fetchQuestionsForQuiz(sequenceId) {
+    // Récupération de la référence du workflow avec l'id
+    const sequenceRef = firebase.db.collection("sequences").doc(sequenceId);
+    const doc = await sequenceRef.get();
+    if (!doc.exists) {
+      // La séquence n'a pas pas été trouvée
+      return null;
+    }
+    // Récupération de toutes les questions qui ont pour référence le document sequence
+    const questionsRef = firebase.db
+      .collection("questions")
+      .where("sequence", "==", sequenceRef);
+    const questionsSnapshot = await questionsRef.get();
+
+    // Map des données de chaque document question dans un tableau de questions
+    const questions = questionsSnapshot.docs.map((doc) => doc.data());
+
+    return questions;
+  },
 };

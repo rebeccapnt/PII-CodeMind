@@ -10,13 +10,13 @@ import {
 } from "react-native";
 import { ChoiceAnswer } from "../components/ChoiceAnswer";
 import { Question } from "../components/Question";
-import { QuizzesServices } from "../services/QuizzesServices";
 import { WorkflowsServices } from "../services/WorkflowsServices";
 import { Button } from "../components/Button";
 import { UserServices } from "../services/UserServices";
+import { SequencesServices } from "../services/SequencesServices";
 
 const QuizScreen = ({ navigation, route }) => {
-  const { workflowId, quizId } = route.params;
+  const { workflowId, sequenceId } = route.params;
   const [questions, setQuestions] = useState([]);
   const allQuestions = questions.length;
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -36,7 +36,9 @@ const QuizScreen = ({ navigation, route }) => {
   useEffect(() => {
     const loadQuestions = async () => {
       try {
-        const questions = await QuizzesServices.fetchQuestionsForQuiz(quizId);
+        const questions = await SequencesServices.fetchQuestionsForQuiz(
+          sequenceId
+        );
         if (questions) {
           setQuestions(questions[0].questions);
         }
@@ -93,7 +95,7 @@ const QuizScreen = ({ navigation, route }) => {
     setScore((prevScore) => {
       const newScore = prevScore + (isCorrect ? 2 : 0);
       WorkflowsServices.updateScoreWorkflow(workflowId, newScore);
-      UserServices
+      UserServices;
       return newScore;
     });
 
