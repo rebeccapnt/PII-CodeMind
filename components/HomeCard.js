@@ -2,16 +2,13 @@ import React from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { IMAGES_PATH } from "./globals";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native";
 
-export const HomeCard = ({ item }) => {
+export const HomeCard = ({ item, progress }) => {
   const navigation = useNavigation();
-  const progress = 45;
   return (
     <TouchableOpacity
-      onPress={() =>
-        navigation.navigate('Sequence', { courseId: item.id })
-      }
+      onPress={() => navigation.navigate("Sequence", { courseId: item.id })}
       style={styles.card}
       activeOpacity={0.6}
     >
@@ -25,16 +22,32 @@ export const HomeCard = ({ item }) => {
             <Ionicons name="book" size={12} /> lectures
           </Text>
           <View style={styles.progressBar}>
-            <View style={[styles.progress, { width: `${progress}%` }]} />
+            <View
+              style={[
+                styles.progress,
+                {
+                  width: `${progress}%`,
+                  backgroundColor: progress === 100 ? "#00C853" : "#ff6d0b",
+                },
+              ]}
+            />
           </View>
-          <Text style={styles.progressText}> {progress}%</Text>
+
+          <Text
+            style={[
+              styles.progressText,
+              { color: progress === 100 ? "#00C853" : "#ff6d0b" },
+            ]}
+          >
+            {" "}
+            {progress}%
+          </Text>
         </View>
         <Ionicons name="chevron-forward" size={24} color="#335296" />
       </View>
     </TouchableOpacity>
   );
 };
-
 
 const styles = StyleSheet.create({
   container: {

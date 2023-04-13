@@ -18,6 +18,34 @@ export const UserServices = {
     }
   },
 
+  // Récupère la progression de l'utilisateur pour un cours donné
+  async getCourseProgress(userRef, courseId) {
+    const courseRef = firebase.db.collection("courses").doc(courseId);
+    const doc = await courseRef.get();
+
+    if (!doc.exists) {
+      // Le cours n'a pas été trouvé
+      return null;
+    }
+    const nbSequences = doc.data().nbSequences;
+
+    const workflowCollection = firebase.db.collection("workflows");
+    const snapshot = await workflowCollection
+      .where("user", "==", userRef)
+      .where("course", "==", courseRef)
+      .get();
+
+    const workflows = snapshot.docs.map((doc) => doc.data());
+    let progress = 0;
+    workflows.forEach((workflow) => {
+      if (workflow.finishedAt != "") {
+        progress += 1;
+      }
+    });
+
+    return Math.round((progress / nbSequences) * 100);
+  },
+
   //Récupération des cours commencés par l'utilisateur connecté
   async getCoursesStartedByUser(email) {
     try {
@@ -86,22 +114,33 @@ export const UserServices = {
 
       // Récupération des documents de cours correspondant aux références uniques de cours
       const courseDocs = await Promise.all(
-        [...courseRefs].map((courseId) =>
-          firebase.db.collection("courses").doc(courseId).get()
-        )
+        [...courseRefs].map(async (courseId) => {
+          const courseRef = firebase.db.collection("courses").doc(courseId);
+          const courseDoc = await courseRef.get();
+          if (courseDoc.exists) {
+            const courseData = courseDoc.data();
+            const courseProgress = await this.getCourseProgress(
+              userRef,
+              courseId
+            );
+            return {
+              id: courseDoc.id,
+              ...courseData,
+              progress: courseProgress,
+            };
+          }
+          return null;
+        })
       );
 
-      const coursesList = courseDocs.map((doc) => {
-        const course = doc.data() || {};
-        course.id = doc.id;
-        return course;
+      const coursesList = courseDocs.filter((course) => {
+        return course !== null && course.progress === 100;
       });
-
       return coursesList;
     } catch (error) {
       console.error(error);
       throw new Error(
-        "Erreur dans la récupération des cours commencés par l'utilisateur"
+        "Erreur dans la récupération des cours terminés par l'utilisateur"
       );
     }
   },
