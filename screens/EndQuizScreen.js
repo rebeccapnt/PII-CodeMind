@@ -32,12 +32,9 @@ const EndQuizScreen = ({ navigation, route }) => {
 
   useEffect(() => {
     const loadWorkflow = async () => {
-      console.log(workflowId);
-
       try {
         const workflow = await WorkflowsServices.fetchWorkflow(workflowId);
         setWorkflow(workflow);
-        console.log(workflow);
         const nextSequence = await SequencesServices.fetchNextSequence(
           workflow.sequence.id
         );
@@ -75,26 +72,49 @@ const EndQuizScreen = ({ navigation, route }) => {
       style={styles.container}
     >
       <View style={styles.container}>
-        <Image
-          style={styles.logo}
-          source={require("../assets/romy/romyhappyfilled.png")}
-        />
-        <Text style={styles.title}>Félicitations !</Text>
-        <Text style={styles.subTitle}>
-          Tu viens de terminer le quiz, voici les scores obtenus :
-        </Text>
-        <View style={styles.contentResult}>
-          <Text style={styles.score}>
-            Tu as gagné {workflow.score} points. Tu peux aller voir tes
-            résultats dans la partie progression. Si score élevé, romy happy
-            sinon romy sad.
-          </Text>
-        </View>
-        <Button text="Voir mes résultats" action={() => onPressResult()} />
-        <ButtonOutline
-          text="Voir le chapitre suivant"
-          action={() => onPressNextSequence()}
-        />
+        {workflow.score === 0 ? (
+          <>
+            <Image
+              style={styles.logo}
+              source={require("../assets/romy/romysadfilled.png")}
+            />
+            <Text style={styles.title}>Retente ta chance !</Text>
+            <View style={styles.contentResult}>
+              <Text style={styles.score}>
+                Tu n'as pas obtenu de points à ce quiz... Tu peux retourner lire
+                le cours si tu n'as pas compris quelques notions, et recommencer
+                le quiz lorsque tu te sentiras prêt(e) !
+              </Text>
+            </View>
+            <Button text="Voir mes résultats" action={() => onPressResult()} />
+            <ButtonOutline
+              text="Retourner lire le chapitre"
+              action={() => onPressNextSequence()}
+            />
+          </>
+        ) : (
+          <>
+            <Image
+              style={styles.logo}
+              source={require("../assets/romy/romyhappyfilled.png")}
+            />
+            <Text style={styles.title}>Félicitations !</Text>
+            <Text style={styles.subTitle}>
+              Tu viens de terminer le quiz, voici les scores obtenus :
+            </Text>
+            <View style={styles.contentResult}>
+              <Text style={styles.score}>
+                Tu as gagné {workflow.score} points. Tu peux aller voir tes
+                résultats dans la partie progression.
+              </Text>
+            </View>
+            <Button text="Voir mes résultats" action={() => onPressResult()} />
+            <ButtonOutline
+              text="Voir le chapitre suivant"
+              action={() => onPressNextSequence()}
+            />
+          </>
+        )}
       </View>
     </ImageBackground>
   );

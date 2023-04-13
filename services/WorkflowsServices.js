@@ -1,5 +1,6 @@
 import firebase from "./firebaseConfig.js";
 import { SequencesServices } from "./SequencesServices.js";
+import { UserServices } from "./UserServices.js";
 
 export const WorkflowsServices = {
   //Création d'un workflow en fonction de l'ID de la séquence, du cours, et de l'utilisateur
@@ -94,13 +95,13 @@ export const WorkflowsServices = {
         // Le workflow n'a pas été trouvé
         return null;
       }
+      const workflow = doc.data();
 
       // Mise à jour du champ "answers" dans le workflow
       await workflowRef.update({
         answers: answers,
         finishedAt: currentDate,
       });
-
       return true;
     } catch (error) {
       console.error(error);

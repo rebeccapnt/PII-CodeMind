@@ -13,6 +13,7 @@ import { Question } from "../components/Question";
 import { QuizzesServices } from "../services/QuizzesServices";
 import { WorkflowsServices } from "../services/WorkflowsServices";
 import { Button } from "../components/Button";
+import { UserServices } from "../services/UserServices";
 
 const QuizScreen = ({ navigation, route }) => {
   const { workflowId, quizId } = route.params;
@@ -92,6 +93,7 @@ const QuizScreen = ({ navigation, route }) => {
     setScore((prevScore) => {
       const newScore = prevScore + (isCorrect ? 2 : 0);
       WorkflowsServices.updateScoreWorkflow(workflowId, newScore);
+      UserServices
       return newScore;
     });
 
