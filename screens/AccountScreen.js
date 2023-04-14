@@ -154,13 +154,7 @@ const AccountScreen = ({ navigation }) => {
             <View style={styles.contentCourses}>
               {coursesFinished.length > 0 ? (
                 coursesFinished.map((item) => {
-                  return (
-                    <HomeCard
-                      key={item.id}
-                      item={item}
-                      progress={item.progress}
-                    />
-                  );
+                  return <HomeCard key={item.id} item={item} progress={item.progress} />;
                 })
               ) : (
                 <Text style={styles.noCoursesStarted}>

@@ -161,4 +161,24 @@ export const WorkflowsServices = {
       );
     }
   },
+
+  async fetchWorkflows(userId) {
+    try {
+      const userRef = firebase.db.collection("users").doc(userId);
+
+      // Récupération de la collection des workflows sur Firebase
+      const workflowsCollection = firebase.db.collection("workflows");
+      const snapshot = await workflowsCollection
+        .where("user", "==", userRef)
+        .get();
+
+      //Ici faire la récupération des données des séquences
+
+      // Retourne la liste des objets "course"
+      return coursesList;
+    } catch (error) {
+      console.error(error);
+      throw new Error("Erreur dans la récupération des cours");
+    }
+  },
 };

@@ -8,7 +8,14 @@ export const HomeCard = ({ item, progress }) => {
   const navigation = useNavigation();
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate("Sequence", { courseId: item.id })}
+      onPress={() =>
+        navigation.navigate("Apprendre", {
+          screen: "Sequence",
+          params:{
+            courseId: item.id,
+          }
+        })
+      }
       style={styles.card}
       activeOpacity={0.6}
     >

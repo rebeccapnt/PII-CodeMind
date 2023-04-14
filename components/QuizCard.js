@@ -1,12 +1,12 @@
 import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 
-export const QuizCard = ({ formationName, quizScore, quizDate }) => {
+export const QuizCard = ({item, workflow}) => {
   return (
     <View style={styles.card}>
-      <Text style={styles.formationName}>{formationName}</Text>
+      <Text style={styles.formationName}>{item.name}</Text>
       <Text style={styles.quizScore}>Score: {quizScore}</Text>
-      <Text style={styles.quizDate}>Date: {quizDate}</Text>
+      <Text style={styles.quizDate}>Date: {workflow.finishedAt}</Text>
     </View>
   );
 };

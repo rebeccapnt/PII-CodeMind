@@ -11,16 +11,13 @@ import React, { useState, useEffect, useContext } from "react";
 import { AuthenticatedUserContext } from "../services/AuthContext";
 import { UserServices } from "../services/UserServices";
 import { QuizCard } from "../components/QuizCard";
+import { WorkflowsServices } from "../services/WorkflowsServices";
 
 const ProgressionScreen = () => {
   const [activeTab, setActiveTab] = useState("details");
   const [userAuth, setUserAuth] = useState();
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-
-  const formationName = "Python";
-  const quizScore = "80%";
-  const quizDate = "02/04/2023";
 
   const { user } = useContext(AuthenticatedUserContext);
 
@@ -35,6 +32,18 @@ const ProgressionScreen = () => {
       setIsLoading(false);
     }
   };
+
+  // const loadEndedQuiz = async ()=>{
+  //   try {
+  //     const workflows = await WorkflowsServices.fetchWorkflow();
+  //     setUserAuth(userAuth);
+  //   } catch (error) {
+  //     console.error(error);
+  //     setError(true);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
   useEffect(() => {
     loadUser();
@@ -102,11 +111,10 @@ const ProgressionScreen = () => {
         {activeTab === "details" && (
           <View>
             <Text style={styles.title}>Mes derniers quiz</Text>
-            <QuizCard
-              formationName={formationName}
-              quizScore={quizScore}
-              quizDate={quizDate}
-            />
+            {/* <QuizCard
+            item={}
+            workflow={}
+            /> */}
           </View>
         )}
         {activeTab === "badge" && (

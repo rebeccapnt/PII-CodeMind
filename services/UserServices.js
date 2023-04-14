@@ -70,17 +70,28 @@ export const UserServices = {
 
       // Récupération des documents de cours correspondant aux références uniques de cours
       const courseDocs = await Promise.all(
-        [...courseRefs].map((courseId) =>
-          firebase.db.collection("courses").doc(courseId).get()
-        )
+        [...courseRefs].map(async (courseId) => {
+          const courseRef = firebase.db.collection("courses").doc(courseId);
+          const courseDoc = await courseRef.get();
+          if (courseDoc.exists) {
+            const courseData = courseDoc.data();
+            const courseProgress = await this.getCourseProgress(
+              userRef,
+              courseId
+            );
+            return {
+              id: courseDoc.id,
+              ...courseData,
+              progress: courseProgress,
+            };
+          }
+          return null;
+        })
       );
 
-      const coursesList = courseDocs.map((doc) => {
-        const course = doc.data() || {};
-        course.id = doc.id;
-        return course;
+      const coursesList = courseDocs.filter((course) => {
+        return course !== null && course.progress !== 100;
       });
-
       return coursesList;
     } catch (error) {
       console.error(error);

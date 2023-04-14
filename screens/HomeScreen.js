@@ -107,7 +107,13 @@ const HomeScreen = ({ navigation }) => {
             <View>
               {coursesStarted.length > 0 ? (
                 coursesStarted.map((item) => {
-                  return <HomeCard key={item.id} item={item} />;
+                  return (
+                    <HomeCard
+                      key={item.id}
+                      item={item}
+                      progress={item.progress}
+                    />
+                  );
                 })
               ) : (
                 <Text style={styles.noCoursesStarted}>
