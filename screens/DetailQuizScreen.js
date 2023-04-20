@@ -70,7 +70,7 @@ const DetailQuizScreen = ({ navigation, route }) => {
           {workflow.incorrectQuestions.length > 0 ? (
             <View>
               <Text style={styles.numberError}>
-                Mais attention ! Tu as fait {workflow.incorrectQuestions.length}{" "}
+                Attention ! Tu as fait {workflow.incorrectQuestions.length}{" "}
                 erreur(s)...
               </Text>
               {workflow.incorrectQuestions.map((question, index) => (
