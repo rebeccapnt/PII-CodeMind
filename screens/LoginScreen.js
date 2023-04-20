@@ -37,7 +37,7 @@ const LoginScreen = ({ navigation }) => {
           }
         });
     } else {
-      setErrorMessage("Attention ! Veuillez remplir tous les champs."); // Affichage d'un message d'erreur si les champs email et de mot de passe sont obligatoires
+      setErrorMessage("Attention ! Veuillez remplir tous les champs."); // Affichage d'un message d'erreur si les champs email et de mot de passe ne sont pas remplis
       return;
     }
   };

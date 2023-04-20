@@ -59,7 +59,6 @@ export const WorkflowsServices = {
       .collection("workflows")
       .where("sequence", "==", sequenceRef)
       .where("user", "==", userRef)
-      // .where("finishedAt", "!=", "null") //Requires an index
       .get();
 
     // Vérification si un workflow a été trouvé
@@ -79,8 +78,50 @@ export const WorkflowsServices = {
       // Le workflow n'a pas été trouvé
       return null;
     }
-    // Renvoie les données du workflow
-    return doc.data();
+
+    // Récupère les données du workflow
+    const workflowData = doc.data();
+    const sequenceRef = workflowData.sequence;
+    const sequenceDoc = await sequenceRef.get();
+    const sequence = sequenceDoc.data();
+
+    // Calcule le score du quiz
+    const quizScore = await WorkflowsServices.calculateQuizScore(
+      workflowData.answers
+    );
+
+    // Récupère les mauvaises réponses
+    const incorrectAnswers = workflowData.answers.filter(
+      (answer) => answer.isCorrect === false
+    );
+
+    // Récupère les questions et les réponses associées
+    const questionsRef = firebase.db
+      .collection("questions")
+      .doc(sequence.questions.id);
+    const questionsDoc = await questionsRef.get();
+    const questionsData = questionsDoc.data();
+
+    // Associe les questions et les réponses aux mauvaises réponses
+    const incorrectQuestions = incorrectAnswers.map((answer) => {
+      const question = questionsData.questions[answer.questionId];
+      const response = question.responses.find(
+        (r) => question.responses.indexOf(r) === answer.responseId
+      );
+      return {
+        question: question.question,
+        response: response.response,
+      };
+    });
+
+    // Retourne les données du workflow avec les informations sur les mauvaises réponses
+    return {
+      id: doc.id,
+      sequenceName: sequence.name,
+      quizScore,
+      incorrectQuestions,
+      ...workflowData,
+    };
   },
 
   //Modification des réponses de l'utilisateur à un quiz
@@ -124,6 +165,9 @@ export const WorkflowsServices = {
       await workflowRef.update({
         score: score,
       });
+      const workflow = doc.data();
+      //Mise à jour du score dans le document de l'utilisateur
+      await UserServices.updateScoreUser(workflow.user.id, score);
 
       return true;
     } catch (error) {
@@ -162,23 +206,49 @@ export const WorkflowsServices = {
     }
   },
 
-  async fetchWorkflows(userId) {
+  async fetchWorkflows(user) {
     try {
-      const userRef = firebase.db.collection("users").doc(userId);
+      const userRef = firebase.db.collection("users").doc(user.Id);
 
       // Récupération de la collection des workflows sur Firebase
       const workflowsCollection = firebase.db.collection("workflows");
       const snapshot = await workflowsCollection
         .where("user", "==", userRef)
+        .where("finishedAt", "!=", "")
+        .orderBy("finishedAt", "desc")
         .get();
 
-      //Ici faire la récupération des données des séquences
+      // Création de la liste des workflows avec les données à afficher
+      const workflowsList = await Promise.all(
+        snapshot.docs.map(async (doc) => {
+          const workflowData = doc.data();
+          const sequenceRef = workflowData.sequence;
+          const sequenceDoc = await sequenceRef.get();
+          const sequence = sequenceDoc.data();
+          const quizScore = await WorkflowsServices.calculateQuizScore(
+            workflowData.answers
+          );
+          return {
+            id: doc.id,
+            sequenceName: sequence.name,
+            quizScore: quizScore,
+            ...workflowData,
+          };
+        })
+      );
 
-      // Retourne la liste des objets "course"
-      return coursesList;
+      return workflowsList;
     } catch (error) {
       console.error(error);
-      throw new Error("Erreur dans la récupération des cours");
+      throw new Error("Erreur dans la récupération des quiz terminés");
     }
+  },
+
+  async calculateQuizScore(answers) {
+    const totalQuestions = answers.length;
+    const correctAnswers = answers.filter((answer) => answer.isCorrect);
+    const numCorrectAnswers = correctAnswers.length;
+    const score = Math.round((numCorrectAnswers / totalQuestions) * 100);
+    return score;
   },
 };

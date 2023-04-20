@@ -139,7 +139,7 @@ const AccountScreen = ({ navigation }) => {
                 })
               ) : (
                 <Text style={styles.noCoursesStarted}>
-                  Vous n'avez pas encore commencé un de nos cours.{" "}
+                  Tu n'as pas encore commencé un de nos cours.{" "}
                   <TouchableOpacity
                     onPress={() => navigation.navigate("Apprendre")}
                   >
@@ -154,11 +154,17 @@ const AccountScreen = ({ navigation }) => {
             <View style={styles.contentCourses}>
               {coursesFinished.length > 0 ? (
                 coursesFinished.map((item) => {
-                  return <HomeCard key={item.id} item={item} progress={item.progress} />;
+                  return (
+                    <HomeCard
+                      key={item.id}
+                      item={item}
+                      progress={item.progress}
+                    />
+                  );
                 })
               ) : (
                 <Text style={styles.noCoursesStarted}>
-                  Vous n'avez pas encore terminé un de nos cours.{" "}
+                  Tu n'as pas encore terminé un de nos cours.{" "}
                   <TouchableOpacity
                     onPress={() => navigation.navigate("Apprendre")}
                   >

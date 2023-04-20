@@ -6,7 +6,7 @@ import {
   Image,
   ImageBackground,
   ActivityIndicator,
-  Animated,
+  ScrollView,
 } from "react-native";
 import { ChoiceAnswer } from "../components/ChoiceAnswer";
 import { Question } from "../components/Question";
@@ -132,31 +132,35 @@ const QuizScreen = ({ navigation, route }) => {
       resizeMode="cover"
       style={styles.container}
     >
-      <View style={styles.header}>
-        <Image
-          style={styles.logo}
-          source={require("../assets/romy/romystudy.png")}
-        />
-        <Question
-          content={currentQuestion.question}
-          currentQuestion={currentQuestionIndex + 1}
-          nbQuestions={allQuestions}
-        />
-      </View>
-      <View style={styles.quizSection}>
-        {currentQuestion.responses.map((response, index) => (
-          <ChoiceAnswer
-            key={index}
-            answer={response.response}
-            onPress={() => handleAnswer(index)}
-            isAnswered={isAnswered}
-            isSelected={response.isSelected}
+      <ScrollView style={{ flex: 1, width:"100%"}}>
+        <View style={styles.header}>
+          <Image
+            style={styles.logo}
+            source={require("../assets/romy/romystudy.png")}
           />
-        ))}
-      </View>
-      {isAnswered && (
-        <Button text="Suivant" action={() => handleNextQuestion()} />
-      )}
+          <Question
+            content={currentQuestion.question}
+            currentQuestion={currentQuestionIndex + 1}
+            nbQuestions={allQuestions}
+          />
+        </View>
+        <View style={styles.quizSection}>
+          {currentQuestion.responses.map((response, index) => (
+            <ChoiceAnswer
+              key={index}
+              answer={response.response}
+              onPress={() => handleAnswer(index)}
+              isAnswered={isAnswered}
+              isSelected={response.isSelected}
+            />
+          ))}
+        </View>
+        <View style={styles.buttonNext}>
+          {isAnswered && (
+            <Button text="Suivant" action={() => handleNextQuestion()} />
+          )}
+        </View>
+      </ScrollView>
     </ImageBackground>
   );
 };
@@ -171,7 +175,7 @@ const styles = StyleSheet.create({
   logo: {
     width: 200,
     height: 200,
-    marginTop: 20,
+    marginTop: 40,
   },
   loadingContainer: {
     flex: 1,
@@ -183,6 +187,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     width: "100%",
     alignItems: "center",
+  },
+  buttonNext: {
+    alignItems: "center",
+    marginBottom: 20,
   },
 });
 

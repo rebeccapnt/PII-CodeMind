@@ -6,6 +6,7 @@ import {
   ImageBackground,
   Image,
   ActivityIndicator,
+  ScrollView,
 } from "react-native";
 import { Button } from "../components/Button";
 import { ButtonOutline } from "../components/ButtonOutline";
@@ -24,9 +25,11 @@ const EndQuizScreen = ({ navigation, route }) => {
   };
 
   const onPressNextSequence = async () => {
-    navigation.navigate("Detail", {
-      courseId: workflow.course.id,
-      sequenceId: nextSequence,
+    navigation.navigate("Apprendre", {
+      screen: "Sequence",
+      params: {
+        courseId: workflow.course.id,
+      },
     });
   };
 
@@ -71,51 +74,59 @@ const EndQuizScreen = ({ navigation, route }) => {
       resizeMode="cover"
       style={styles.container}
     >
-      <View style={styles.container}>
-        {workflow.score === 0 ? (
-          <>
-            <Image
-              style={styles.logo}
-              source={require("../assets/romy/romysadfilled.png")}
-            />
-            <Text style={styles.title}>Retente ta chance !</Text>
-            <View style={styles.contentResult}>
-              <Text style={styles.score}>
-                Tu n'as pas obtenu de points à ce quiz... Tu peux retourner lire
-                le cours si tu n'as pas compris quelques notions, et recommencer
-                le quiz lorsque tu te sentiras prêt(e) !
+      <ScrollView>
+        <View style={styles.container}>
+          {workflow.score === 0 ? (
+            <>
+              <Image
+                style={styles.logo}
+                source={require("../assets/romy/romysadfilled.png")}
+              />
+              <Text style={styles.title}>Retente ta chance !</Text>
+              <View style={styles.contentResult}>
+                <Text style={styles.score}>
+                  Tu n'as pas obtenu de points à ce quiz... Tu peux retourner
+                  lire le cours si tu n'as pas compris quelques notions, et
+                  recommencer le quiz lorsque tu te sentiras prêt(e) !
+                </Text>
+              </View>
+              <Button
+                text="Voir mes résultats"
+                action={() => onPressResult()}
+              />
+              <ButtonOutline
+                text="Retourner lire le chapitre"
+                action={() => onPressNextSequence()}
+              />
+            </>
+          ) : (
+            <>
+              <Image
+                style={styles.logo}
+                source={require("../assets/romy/romyhappyfilled.png")}
+              />
+              <Text style={styles.title}>Félicitations !</Text>
+              <Text style={styles.subTitle}>
+                Tu viens de terminer le quiz, voici les scores obtenus :
               </Text>
-            </View>
-            <Button text="Voir mes résultats" action={() => onPressResult()} />
-            <ButtonOutline
-              text="Retourner lire le chapitre"
-              action={() => onPressNextSequence()}
-            />
-          </>
-        ) : (
-          <>
-            <Image
-              style={styles.logo}
-              source={require("../assets/romy/romyhappyfilled.png")}
-            />
-            <Text style={styles.title}>Félicitations !</Text>
-            <Text style={styles.subTitle}>
-              Tu viens de terminer le quiz, voici les scores obtenus :
-            </Text>
-            <View style={styles.contentResult}>
-              <Text style={styles.score}>
-                Tu as gagné {workflow.score} points. Tu peux aller voir tes
-                résultats dans la partie progression.
-              </Text>
-            </View>
-            <Button text="Voir mes résultats" action={() => onPressResult()} />
-            <ButtonOutline
-              text="Voir le chapitre suivant"
-              action={() => onPressNextSequence()}
-            />
-          </>
-        )}
-      </View>
+              <View style={styles.contentResult}>
+                <Text style={styles.score}>
+                  Tu as gagné {workflow.score} points. Tu peux aller voir tes
+                  résultats dans la partie progression.
+                </Text>
+              </View>
+              <Button
+                text="Voir mes résultats"
+                action={() => onPressResult()}
+              />
+              <ButtonOutline
+                text="Continuer"
+                action={() => onPressNextSequence()}
+              />
+            </>
+          )}
+        </View>
+      </ScrollView>
     </ImageBackground>
   );
 };

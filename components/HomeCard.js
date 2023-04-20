@@ -11,9 +11,9 @@ export const HomeCard = ({ item, progress }) => {
       onPress={() =>
         navigation.navigate("Apprendre", {
           screen: "Sequence",
-          params:{
+          params: {
             courseId: item.id,
-          }
+          },
         })
       }
       style={styles.card}
@@ -28,27 +28,31 @@ export const HomeCard = ({ item, progress }) => {
             <Ionicons name="library" size={14} /> chapitres | {item.nbReadings}
             <Ionicons name="book" size={12} /> lectures
           </Text>
-          <View style={styles.progressBar}>
-            <View
-              style={[
-                styles.progress,
-                {
-                  width: `${progress}%`,
-                  backgroundColor: progress === 100 ? "#00C853" : "#ff6d0b",
-                },
-              ]}
-            />
-          </View>
+          {progress > 0 && (
+            <>
+              <View style={styles.progressBar}>
+                <View
+                  style={[
+                    styles.progress,
+                    {
+                      width: `${progress}%`,
+                      backgroundColor: progress === 100 ? "#00C853" : "#ff6d0b",
+                    },
+                  ]}
+                />
+              </View>
 
-          <Text
-            style={[
-              styles.progressText,
-              { color: progress === 100 ? "#00C853" : "#ff6d0b" },
-            ]}
-          >
-            {" "}
-            {progress}%
-          </Text>
+              <Text
+                style={[
+                  styles.progressText,
+                  { color: progress === 100 ? "#00C853" : "#ff6d0b" },
+                ]}
+              >
+                {" "}
+                {progress}%
+              </Text>
+            </>
+          )}
         </View>
         <Ionicons name="chevron-forward" size={24} color="#335296" />
       </View>

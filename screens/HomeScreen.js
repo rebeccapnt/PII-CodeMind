@@ -51,8 +51,12 @@ const HomeScreen = ({ navigation }) => {
 
   const loadBestsCourses = async () => {
     try {
-      const bestCourses = await CoursesServices.fetchBestsCourses();
-      setBestCourses(bestCourses);
+      if (userAuth) {
+        const bestCourses = await CoursesServices.fetchBestsCourses(
+          userAuth.email
+        );
+        setBestCourses(bestCourses);
+      }
     } catch (error) {
       console.error(error);
       setError(true);
@@ -117,7 +121,7 @@ const HomeScreen = ({ navigation }) => {
                 })
               ) : (
                 <Text style={styles.noCoursesStarted}>
-                  Vous n'avez pas encore commencé un de nos cours.{" "}
+                  Tu n'as pas encore commencé un de nos cours.{" "}
                   <TouchableOpacity
                     onPress={() => navigation.navigate("Apprendre")}
                   >
@@ -137,7 +141,13 @@ const HomeScreen = ({ navigation }) => {
             </View>
             <View>
               {bestCourses.map((item) => {
-                return <HomeCard key={item.id} item={item} />;
+                return (
+                  <HomeCard
+                    key={item.id}
+                    item={item}
+                    progress={item.progress}
+                  />
+                );
               })}
             </View>
           </View>

@@ -1,44 +1,64 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import moment from "moment";
 
-export const QuizCard = ({item, workflow}) => {
+export const QuizCard = ({ workflow, onPress }) => {
+  const date = moment(workflow.finishedAt).format("DD MMMM YYYY");
   return (
-    <View style={styles.card}>
-      <Text style={styles.formationName}>{item.name}</Text>
-      <Text style={styles.quizScore}>Score: {quizScore}</Text>
-      <Text style={styles.quizDate}>Date: {workflow.finishedAt}</Text>
-    </View>
+    <TouchableOpacity style={styles.card} onPress={() => onPress()}>
+      <View style={styles.container}>
+        <View style={styles.content}>
+          <Text style={styles.formationName}>{workflow.sequenceName}</Text>
+          <Text style={styles.quizScore}>Score: {workflow.quizScore}%</Text>
+          <Text style={styles.quizDate}>Réalisé le {date}.</Text>
+        </View>
+        <Ionicons name="chevron-forward" size={24} color="#E86231" />
+      </View>
+    </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
-  card: {
+  container: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 12,
+    paddingVertical: 10,
     backgroundColor: "#fff",
-    borderRadius: 10,
-    padding: 20,
-    margin: 10,
+    borderColor: "#FFEFE6",
+    borderWidth: 1,
+    borderRadius: 8,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 1,
     },
-    shadowOpacity: 0.22,
-    shadowRadius: 2.22,
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
     elevation: 3,
+    marginBottom: 5,
+    marginHorizontal:4
+  },
+  card: { paddingBottom: 4 },
+  content: {
+    flex: 1,
+    marginRight: 10,
   },
   formationName: {
-    color: "#00216d",
-    fontWeight: "bold",
-    fontSize: 18,
-    marginBottom: 10,
+    color: "#E86231",
+    fontWeight: "700",
+    fontSize: 17,
+    marginBottom: 5,
   },
   quizScore: {
     color: "#00216d",
     fontSize: 16,
+    fontWeight: "600",
     marginBottom: 5,
   },
   quizDate: {
     color: "#00216d",
-    fontSize: 16,
+    fontSize: 15,
   },
 });

@@ -166,7 +166,7 @@ export const UserServices = {
         return null;
       }
       const user = doc.data();
-      const updatedScore = user.score + score;
+      const updatedScore = parseInt(user.score) + parseInt(score);
 
       // Mise à jour du score dans le workflow
       await usersRef.update({

@@ -12,11 +12,13 @@ import { AuthenticatedUserContext } from "../services/AuthContext";
 import { UserServices } from "../services/UserServices";
 import { QuizCard } from "../components/QuizCard";
 import { WorkflowsServices } from "../services/WorkflowsServices";
+import { ScrollView } from "react-native-gesture-handler";
 
-const ProgressionScreen = () => {
+const ProgressionScreen = ({ navigation }) => {
   const [activeTab, setActiveTab] = useState("details");
   const [userAuth, setUserAuth] = useState();
   const [error, setError] = useState(false);
+  const [workflows, setWorkflows] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const { user } = useContext(AuthenticatedUserContext);
@@ -33,21 +35,31 @@ const ProgressionScreen = () => {
     }
   };
 
-  // const loadEndedQuiz = async ()=>{
-  //   try {
-  //     const workflows = await WorkflowsServices.fetchWorkflow();
-  //     setUserAuth(userAuth);
-  //   } catch (error) {
-  //     console.error(error);
-  //     setError(true);
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
+  const loadFinishedQuiz = async () => {
+    try {
+      const workflows = await WorkflowsServices.fetchWorkflows(userAuth);
+      setWorkflows(workflows);
+    } catch (error) {
+      console.error(error);
+      setError(true);
+    }
+  };
 
   useEffect(() => {
     loadUser();
   }, []);
+
+  useEffect(() => {
+    if (userAuth) {
+      loadFinishedQuiz();
+    }
+  }, [userAuth]);
+
+  const onPressQuiz = (quiz) => {
+    navigation.navigate("Result", {
+      quizId: quiz.id,
+    });
+  };
 
   if (isLoading) {
     return (
@@ -111,10 +123,28 @@ const ProgressionScreen = () => {
         {activeTab === "details" && (
           <View>
             <Text style={styles.title}>Mes derniers quiz</Text>
-            {/* <QuizCard
-            item={}
-            workflow={}
-            /> */}
+            <ScrollView style={styles.containerWorkflows}>
+              {workflows.length > 0 ? (
+                workflows.map((item) => {
+                  return (
+                    <QuizCard
+                      key={item.id}
+                      workflow={item}
+                      onPress={() => onPressQuiz(item)}
+                    />
+                  );
+                })
+              ) : (
+                <Text style={styles.noCoursesStarted}>
+                  Tu n'as pas encore répondu à un de nos quiz.{" "}
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate("Apprendre")}
+                  >
+                    <Text style={styles.startNow}>Commences maintenant !</Text>
+                  </TouchableOpacity>
+                </Text>
+              )}
+            </ScrollView>
           </View>
         )}
         {activeTab === "badge" && (
@@ -135,15 +165,6 @@ const ProgressionScreen = () => {
                 />
                 <Text style={styles.badgeLabel}>Apprenti</Text>
               </View>
-              {/* {userAuth.badges.map((badge, index) => (
-                <View style={styles.badgeItem} key={index}>
-                  <Image
-                    style={styles.badgeIcon}
-                    source={require("../assets/romy/romycrownfilled.png")}
-                  />
-                  <Text style={styles.badgeLabel}>{badge.label}</Text>
-                </View>
-              ))} */}
             </View>
           </View>
         )}
@@ -179,7 +200,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   subtitle: {
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: "500",
     color: "white",
     marginBottom: 5,
@@ -199,6 +220,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 8,
     marginTop: 10,
+    borderColor: "#e17618",
+    borderWidth: 1,
   },
   coinIcon: {
     width: 30,
@@ -228,7 +251,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   tabText: {
-    fontSize: 18,
+    fontSize: 19,
     color: "#00216d",
     textAlign: "center",
   },
@@ -255,10 +278,11 @@ const styles = StyleSheet.create({
   },
   title: {
     textAlign: "left",
-    fontSize: 18,
+    fontSize: 19,
     fontWeight: "700",
     color: "#00216d",
     paddingTop: 10,
+    marginBottom: 12,
   },
   badgeContainer: {
     marginTop: 16,
