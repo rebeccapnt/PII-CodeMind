@@ -151,20 +151,29 @@ const ProgressionScreen = ({ navigation }) => {
           <View>
             <Text style={styles.title}>Mes badges obtenus</Text>
             <View style={styles.badgeContainer}>
-              <View style={styles.badgeItem}>
-                <Image
-                  style={styles.badgeIcon}
-                  source={require("../assets/badge.png")}
-                />
-                <Text style={styles.badgeLabel}>Begginer</Text>
-              </View>
-              <View style={styles.badgeItem}>
-                <Image
-                  style={styles.badgeIcon}
-                  source={require("../assets/badge.png")}
-                />
-                <Text style={styles.badgeLabel}>Apprenti</Text>
-              </View>
+              {userAuth.score < 10 && (
+                <Text style={styles.errorMessage}>
+                  Tu n'as pas encore réalisé assez de quiz...
+                </Text>
+              )}
+              {userAuth.score > 25 && (
+                <View style={styles.badgeItem}>
+                  <Image
+                    style={styles.badgeIcon}
+                    source={require("../assets/apprentiBadge.png")}
+                  />
+                  <Text style={styles.badgeLabel}>Apprenti</Text>
+                </View>
+              )}
+              {userAuth.score > 50 && (
+                <View style={styles.badgeItem}>
+                  <Image
+                    style={styles.badgeIcon}
+                    source={require("../assets/confirmBadge.png")}
+                  />
+                  <Text style={styles.badgeLabel}>Confirmé</Text>
+                </View>
+              )}
             </View>
           </View>
         )}
@@ -294,14 +303,15 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   badgeIcon: {
-    width: 90,
-    height: 90,
+    width: 70,
+    height: 80,
   },
   badgeLabel: {
     color: "#00216d",
     fontWeight: "bold",
     fontSize: 14,
     textAlign: "center",
+    marginTop: 10,
   },
   loadingContainer: {
     flex: 1,
