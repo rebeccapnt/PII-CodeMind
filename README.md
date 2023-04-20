@@ -14,9 +14,10 @@ Contenu
 ### Technologies
 <hr>
 Ce projet a été réalisé à l'aide des technologies suivantes : 
-* ReactNative
-* Firebase
-
+<ul> 
+ <li>ReactNative</li>
+ <li>Firebase</li>
+</ul>
 
 ### Installation
 <hr>
