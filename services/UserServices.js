@@ -101,6 +101,7 @@ export const UserServices = {
     }
   },
 
+  //Récupération des cours terminés par l'utilisateur
   async getCoursesFinishedByUser(email) {
     try {
       const user = await UserServices.getUser(email);
@@ -156,6 +157,7 @@ export const UserServices = {
     }
   },
 
+  //Modification du score global de l'utilisateur
   async updateScoreUser(userId, score) {
     try {
       // Récupération de la référence du workflow avec l'id

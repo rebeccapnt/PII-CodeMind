@@ -23,6 +23,7 @@ const ProgressionScreen = ({ navigation }) => {
 
   const { user } = useContext(AuthenticatedUserContext);
 
+  //Récupération de l'utilisateur connecté
   const loadUser = async () => {
     try {
       const userAuth = await UserServices.getUser(user.email);
@@ -35,6 +36,7 @@ const ProgressionScreen = ({ navigation }) => {
     }
   };
 
+  //Récupération des quiz terminés par l'utilisateur
   const loadFinishedQuiz = async () => {
     try {
       const workflows = await WorkflowsServices.fetchWorkflows(userAuth);

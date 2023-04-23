@@ -189,7 +189,7 @@ export const WorkflowsServices = {
         // Le workflow n'a pas été trouvé
         return null;
       }
-      // Mise à jour du score dans le workflow
+      // Mise à jour du score dans le workflow, et réinitialisation de la date de fin de quiz
       await workflowRef.update({
         score: 0,
         answers: [],
@@ -206,6 +206,7 @@ export const WorkflowsServices = {
     }
   },
 
+  //Récupération des workflows de l'utilisateur
   async fetchWorkflows(user) {
     try {
       const userRef = firebase.db.collection("users").doc(user.Id);
@@ -218,7 +219,7 @@ export const WorkflowsServices = {
         .orderBy("finishedAt", "desc")
         .get();
 
-      // Création de la liste des workflows avec les données à afficher
+      // Création de la liste des workflows avec les données à afficher : le nom du chapitre, le score obtenu, et les autres données du workflow
       const workflowsList = await Promise.all(
         snapshot.docs.map(async (doc) => {
           const workflowData = doc.data();
@@ -244,6 +245,7 @@ export const WorkflowsServices = {
     }
   },
 
+  //Permet de calculer en pourcentage la réussite d'un quiz en fonction des réponses de l'utilisateur
   async calculateQuizScore(answers) {
     const totalQuestions = answers.length;
     const correctAnswers = answers.filter((answer) => answer.isCorrect);

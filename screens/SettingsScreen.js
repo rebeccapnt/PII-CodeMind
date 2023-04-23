@@ -18,6 +18,7 @@ const SettingsScreen = ({ navigation }) => {
 
   const { user } = useContext(AuthenticatedUserContext);
 
+  //Récupération de l'utilisateur connecté
   const loadUser = async () => {
     try {
       const userAuth = await UserServices.getUser(user.email);

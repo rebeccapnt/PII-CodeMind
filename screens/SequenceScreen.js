@@ -25,6 +25,7 @@ const SequenceScreen = ({ route, navigation }) => {
     navigation.setOptions({ title: courseName });
   }, [courseName]);
 
+  //Récupération de tous les chapitres du cours
   const loadSequences = async () => {
     try {
       const sequences = await SequencesServices.fetchSequences(courseId);

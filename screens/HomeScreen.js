@@ -33,6 +33,7 @@ const HomeScreen = ({ navigation }) => {
     }
   };
 
+  //Récupération des cours commencés par l'utilisateur
   const loadCoursesStarted = async () => {
     try {
       if (userAuth) {
@@ -49,6 +50,7 @@ const HomeScreen = ({ navigation }) => {
     }
   };
 
+  //Récupération des 3 meilleurs cours
   const loadBestsCourses = async () => {
     try {
       if (userAuth) {

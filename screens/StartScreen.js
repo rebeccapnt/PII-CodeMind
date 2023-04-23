@@ -24,6 +24,7 @@ const StartScreen = ({ navigation, route }) => {
     navigation.setOptions({ headerShown: false });
   }, [navigation]);
 
+  //Création d'un workflow pour l'utilisateur lorsque le bouton "Commencer" est cliqué
   const onPressStart = async () => {
     try {
       const workflow = await WorkflowsServices.createWorkflow(

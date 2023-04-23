@@ -19,6 +19,7 @@ const EndQuizScreen = ({ navigation, route }) => {
   const [nextSequence, setNextSequence] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [resultQuiz, setResultQuiz] = useState();
 
   const onPressResult = async () => {
     navigation.navigate("Progression");
@@ -34,10 +35,15 @@ const EndQuizScreen = ({ navigation, route }) => {
   };
 
   useEffect(() => {
+    //Récupération du workflow pour afficher les données de fin du quiz
     const loadWorkflow = async () => {
       try {
         const workflow = await WorkflowsServices.fetchWorkflow(workflowId);
         setWorkflow(workflow);
+        const resultQuiz = await WorkflowsServices.calculateQuizScore(
+          workflow.answers
+        );
+        setResultQuiz(resultQuiz);
         const nextSequence = await SequencesServices.fetchNextSequence(
           workflow.sequence.id
         );
@@ -85,9 +91,10 @@ const EndQuizScreen = ({ navigation, route }) => {
               <Text style={styles.title}>Retente ta chance !</Text>
               <View style={styles.contentResult}>
                 <Text style={styles.score}>
-                  Tu n'as pas obtenu de points à ce quiz... Tu peux retourner
-                  lire le cours si tu n'as pas compris quelques notions, et
-                  recommencer le quiz lorsque tu te sentiras prêt(e) !
+                  Tu n'as eu aucune bonne réponse à ce quiz, et tu n'as donc pas
+                  obtenu de points... Tu peux retourner lire le cours si tu n'as
+                  pas compris quelques notions, et recommencer le quiz lorsque
+                  tu te sentiras prêt(e) !
                 </Text>
               </View>
               <Button
@@ -111,8 +118,13 @@ const EndQuizScreen = ({ navigation, route }) => {
               </Text>
               <View style={styles.contentResult}>
                 <Text style={styles.score}>
-                  Tu as gagné {workflow.score} points. Tu peux aller voir tes
-                  résultats dans la partie progression.
+                  Tu as réussi le quiz à{" "}
+                  <Text style={{ fontWeight: "700" }}>{resultQuiz}% </Text>et tu
+                  as gagné{" "}
+                  <Text style={{ fontWeight: "700" }}>
+                    {workflow.score} points
+                  </Text>{" "}
+                  ! Tu peux aller voir tes résultats dans la partie progression.
                 </Text>
               </View>
               <Button

@@ -34,6 +34,7 @@ const QuizScreen = ({ navigation, route }) => {
   }, [navigation]);
 
   useEffect(() => {
+    //Récupération des questions pour le quiz
     const loadQuestions = async () => {
       try {
         const questions = await SequencesServices.fetchQuestionsForQuiz(
@@ -65,6 +66,7 @@ const QuizScreen = ({ navigation, route }) => {
     setQuestions(updatedQuestions);
   };
 
+  //Récupération de la question suivante
   const handleNextQuestion = () => {
     const selectedResponseIndex = currentQuestion.responses.findIndex(
       (response) => response.isSelected
@@ -132,7 +134,7 @@ const QuizScreen = ({ navigation, route }) => {
       resizeMode="cover"
       style={styles.container}
     >
-      <ScrollView style={{ flex: 1, width:"100%"}}>
+      <ScrollView style={{ flex: 1, width: "100%" }}>
         <View style={styles.header}>
           <Image
             style={styles.logo}
