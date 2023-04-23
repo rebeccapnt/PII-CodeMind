@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -20,6 +20,10 @@ const EndQuizScreen = ({ navigation, route }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
   const [resultQuiz, setResultQuiz] = useState();
+
+  useLayoutEffect(() => {
+    navigation.setOptions({ headerShown: false });
+  }, [navigation]);
 
   const onPressResult = async () => {
     navigation.navigate("Progression");
@@ -152,6 +156,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   logo: {
+    marginTop: 50,
     width: 240,
     height: 240,
   },
