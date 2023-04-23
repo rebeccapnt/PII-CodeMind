@@ -16,7 +16,6 @@ import { SequencesServices } from "../services/SequencesServices";
 const EndQuizScreen = ({ navigation, route }) => {
   const { workflowId } = route.params;
   const [workflow, setWorkflow] = useState();
-  const [nextSequence, setNextSequence] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
   const [resultQuiz, setResultQuiz] = useState();
@@ -29,7 +28,7 @@ const EndQuizScreen = ({ navigation, route }) => {
     navigation.navigate("Progression");
   };
 
-  const onPressNextSequence = async () => {
+  const onPressSequence = async () => {
     navigation.navigate("Apprendre", {
       screen: "Sequence",
       params: {
@@ -48,10 +47,6 @@ const EndQuizScreen = ({ navigation, route }) => {
           workflow.answers
         );
         setResultQuiz(resultQuiz);
-        const nextSequence = await SequencesServices.fetchNextSequence(
-          workflow.sequence.id
-        );
-        setNextSequence(nextSequence.Id);
       } catch (error) {
         console.error(error);
         setError(true);
@@ -107,7 +102,7 @@ const EndQuizScreen = ({ navigation, route }) => {
               />
               <ButtonOutline
                 text="Retourner lire le chapitre"
-                action={() => onPressNextSequence()}
+                action={() => onPressSequence()}
               />
             </>
           ) : (
@@ -137,7 +132,7 @@ const EndQuizScreen = ({ navigation, route }) => {
               />
               <ButtonOutline
                 text="Continuer"
-                action={() => onPressNextSequence()}
+                action={() => onPressSequence()}
               />
             </>
           )}
