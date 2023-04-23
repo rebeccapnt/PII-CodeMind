@@ -21,6 +21,7 @@ Ce projet a été réalisé à l'aide des technologies suivantes :
 
 ### Installation
 <hr>
+Avant de commencer, assurez vous d'avoir NodeJS installé sur votre ordinateur (vous pouvez le vérifier avec la commande npm -v dans un terminal). <br> <br>
 Pour installer et lancer ce projet, il vous faudra suivre les étapes suivantes : 
 <br><br>
 
