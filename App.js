@@ -1,3 +1,5 @@
+import { LogBox } from "react-native";
+LogBox.ignoreAllLogs();
 import React, { useState, createContext, useContext, useEffect } from "react";
 import RootTabNavigator from "./navigation/RootTabNavigator";
 import { NavigationContainer } from "@react-navigation/native";
